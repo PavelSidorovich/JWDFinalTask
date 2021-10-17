@@ -1,0 +1,30 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<!--<suite name="JWDTask#2">-->
+<!--  <test name="ModelTests">-->
+<!--    <packages>-->
+<!--      <package name="com.epam.jwd.texthandling.model"/>-->
+<!--    </packages>-->
+<!--  </test>-->
+<!--  <test name="InterpreterTests">-->
+<!--    <packages>-->
+<!--      <package name="com.epam.jwd.texthandling.service.interpreter"/>-->
+<!--    </packages>-->
+<!--  </test>-->
+<!--  <test name="ParserTests">-->
+<!--    <packages>-->
+<!--      <package name="com.epam.jwd.texthandling.service.parser"/>-->
+<!--    </packages>-->
+<!--  </test>-->
+<!--  <test name="ReaderTests">-->
+<!--    <packages>-->
+<!--      <package name="com.epam.jwd.texthandling.service.reader"/>-->
+<!--    </packages>-->
+<!--  </test>-->
+<!--  <test name="SortTests">-->
+<!--    <packages>-->
+<!--      <package name="com.epam.jwd.texthandling.service.sort"/>-->
+<!--    </packages>-->
+<!--  </test>-->
+<!--</suite>-->
