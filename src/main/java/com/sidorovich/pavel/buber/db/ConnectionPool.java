@@ -1,5 +1,6 @@
 package com.sidorovich.pavel.buber.db;
 
+import com.sidorovich.pavel.buber.db.impl.LockingConnectionPool;
 import com.sidorovich.pavel.buber.exception.CouldNotInitializeConnectionPool;
 
 import java.sql.Connection;

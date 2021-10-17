@@ -1,4 +1,6 @@
-package com.sidorovich.pavel.buber.db;
+package com.sidorovich.pavel.buber.db.impl;
+
+import com.sidorovich.pavel.buber.db.ConnectionPool;
 
 import java.sql.Array;
 import java.sql.Blob;

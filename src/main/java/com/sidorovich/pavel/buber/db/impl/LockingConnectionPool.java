@@ -1,5 +1,6 @@
-package com.sidorovich.pavel.buber.db;
+package com.sidorovich.pavel.buber.db.impl;
 
+import com.sidorovich.pavel.buber.db.ConnectionPool;
 import com.sidorovich.pavel.buber.exception.CouldNotInitializeConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
