@@ -4,8 +4,8 @@ import java.util.Optional;
 
 public interface User {
 
-    void setId(Integer id);
+    void setId(Long id);
 
-    Optional<Integer> getId();
+    Optional<Long> getId();
 
 }

@@ -2,11 +2,11 @@ package com.sidorovich.pavel.buber.model;
 
 import java.util.Optional;
 
-public interface Builder<R> {
+public interface Builder<T, R> {
 
-    void setId(Integer id);
+//    T setId(Long id);
 
-    void reset();
+    T reset();
 
     Optional<R> getResult();
 

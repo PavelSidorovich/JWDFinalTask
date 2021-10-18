@@ -6,9 +6,9 @@ import com.sidorovich.pavel.buber.model.OrderStatus;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public class UserOrderBuilder implements Builder<UserOrder> {
+public class UserOrderBuilder implements Builder<UserOrderBuilder, UserOrder> {
 
-    private Integer id;
+    private Long id;
     private BuberUser client;
     private Driver driver;
     private BigDecimal price;
@@ -27,36 +27,43 @@ public class UserOrderBuilder implements Builder<UserOrder> {
         return UserOrderBuilder.InstanceCreator.INSTANCE;
     }
 
-    public void setId(Integer id) {
+    public UserOrderBuilder setId(Long id) {
         this.id = id;
+        return this;
     }
 
-    public void setClient(BuberUser client) {
+    public UserOrderBuilder setClient(BuberUser client) {
         this.client = client;
+        return this;
     }
 
-    public void setDriver(Driver driver) {
+    public UserOrderBuilder setDriver(Driver driver) {
         this.driver = driver;
+        return this;
     }
 
-    public void setPrice(BigDecimal price) {
+    public UserOrderBuilder setPrice(BigDecimal price) {
         this.price = price;
+        return this;
     }
 
-    public void setInitialCoordinates(Coordinates initialCoordinates) {
+    public UserOrderBuilder setInitialCoordinates(Coordinates initialCoordinates) {
         this.initialCoordinates = initialCoordinates;
+        return this;
     }
 
-    public void setEndCoordinates(Coordinates endCoordinates) {
+    public UserOrderBuilder setEndCoordinates(Coordinates endCoordinates) {
         this.endCoordinates = endCoordinates;
+        return this;
     }
 
-    public void setStatus(OrderStatus status) {
+    public UserOrderBuilder setStatus(OrderStatus status) {
         this.status = status;
+        return this;
     }
 
     @Override
-    public void reset() {
+    public UserOrderBuilder reset() {
         this.id = null;
         this.client = null;
         this.driver = null;
@@ -64,6 +71,7 @@ public class UserOrderBuilder implements Builder<UserOrder> {
         this.initialCoordinates = null;
         this.endCoordinates = null;
         this.status = null;
+        return this;
     }
 
     /**

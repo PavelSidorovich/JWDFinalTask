@@ -1,20 +1,27 @@
 package com.sidorovich.pavel.buber.dao;
 
+import com.sidorovich.pavel.buber.db.StatementExecutor;
+
 import java.util.List;
 import java.util.Optional;
 
 public interface GenericDao<T> {
 
-    void create(T entity);
+    StatementExecutor SQL_EXECUTOR = StatementExecutor.getInstance();
 
-    List<T> readAll();
+    boolean create(T entity) throws InterruptedException;
 
-    Optional<T> read(Long id);
+    List<T> readAll() throws InterruptedException;
 
-    boolean update(Long id, T entity);
+    Optional<T> read(Long id) throws InterruptedException;
 
-    boolean delete(Long id);
+    // FIXME: 10/18/2021 move to specification
+    Optional<T> read(String uniqueProperty) throws InterruptedException;
 
-    boolean delete(T entity);
+    boolean update(Long id, T entity) throws InterruptedException;
+
+    boolean delete(Long id) throws InterruptedException;
+
+    boolean delete(T entity) throws InterruptedException;
 
 }

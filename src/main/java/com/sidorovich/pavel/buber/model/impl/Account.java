@@ -8,12 +8,12 @@ import java.util.Optional;
 
 public class Account implements User {
 
-    private Integer id; // can be null
+    private Long id; // can be null
     private final String phone;
     private final String passwordHash;
     private final Role role;
 
-    public Account(Integer id, String phone, String passwordHash, Role role) {
+    public Account(Long id, String phone, String passwordHash, Role role) {
         this.id = id;
         this.phone = phone;
         this.passwordHash = passwordHash;
@@ -25,12 +25,12 @@ public class Account implements User {
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Override
-    public Optional<Integer> getId() {
+    public Optional<Long> getId() {
         return Optional.ofNullable(this.id);
     }
 

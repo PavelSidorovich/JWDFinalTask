@@ -1,23 +1,21 @@
 package com.sidorovich.pavel.buber.model.impl;
 
 import com.sidorovich.pavel.buber.model.Builder;
-import com.sidorovich.pavel.buber.model.Role;
-import com.sidorovich.pavel.buber.model.UserStatus;
+import com.sidorovich.pavel.buber.model.DriverStatus;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
  * Singleton
  */
-public class DriverBuilder implements Builder<Driver> {
+public class DriverBuilder implements Builder<DriverBuilder, Driver> {
 
-    private final BuberBuilder userBuilder;
+    private BuberUser buberUser;
     private String driverLicense;
     private Taxi taxi;
+    private DriverStatus driverStatus;
 
     private DriverBuilder() {
-        userBuilder = BuberBuilder.getInstance();
     }
 
     private static class InstanceCreator {
@@ -28,49 +26,25 @@ public class DriverBuilder implements Builder<Driver> {
         return DriverBuilder.InstanceCreator.INSTANCE;
     }
 
-    @Override
-    public void setId(Integer id) {
-        userBuilder.setId(id);
+    public DriverBuilder setDriverStatus(DriverStatus driverStatus) {
+        this.driverStatus = driverStatus;
+        return this;
     }
 
-    public void setPhone(String phone) {
-        userBuilder.setPhone(phone);
+    public DriverBuilder setBuberUser(BuberUser buberUser) {
+        this.buberUser = buberUser;
+        return this;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        userBuilder.setPasswordHash(passwordHash);
-    }
 
-    public void setRole(Role role) {
-        userBuilder.setRole(role);
-    }
-
-    public void setFirstName(String firstName) {
-        userBuilder.setFirstName(firstName);
-    }
-
-    public void setLastName(String lastName) {
-        userBuilder.setLastName(lastName);
-    }
-
-    public void setEmail(String email) {
-        userBuilder.setEmail(email);
-    }
-
-    public void setCash(BigDecimal cash) {
-        userBuilder.setCash(cash);
-    }
-
-    public void setStatus(UserStatus status) {
-        userBuilder.setStatus(status);
-    }
-
-    public void setDriverLicense(String driverLicense) {
+    public DriverBuilder setDriverLicense(String driverLicense) {
         this.driverLicense = driverLicense;
+        return this;
     }
 
-    public void setTaxi(Taxi taxi) {
+    public DriverBuilder setTaxi(Taxi taxi) {
         this.taxi = taxi;
+        return this;
     }
 
     /**
@@ -80,35 +54,24 @@ public class DriverBuilder implements Builder<Driver> {
      */
     @Override
     public Optional<Driver> getResult() {
-        Optional<BuberUser> result = userBuilder.getResult();
-        if (taxi == null || driverLicense == null || !result.isPresent()) {
+        if (buberUser == null || taxi == null ||
+            driverLicense == null || driverStatus == null) {
             reset();
             return Optional.empty();
         }
-        BuberUser user = result.get();
         Optional<Driver> driver = Optional.of(
-                new Driver(
-                        user.getId().orElse(null),
-                        user.getPhone(),
-                        user.getPasswordHash(),
-                        user.getRole(),
-                        user.getFirstName(),
-                        user.getLastName(),
-                        user.getEmail().orElse(null),
-                        user.getCash(),
-                        user.getStatus(),
-                        this.driverLicense,
-                        this.taxi
-                )
+                new Driver(buberUser, this.driverLicense, this.taxi, this.driverStatus)
         );
         reset();
         return driver;
     }
 
     @Override
-    public void reset() {
-        userBuilder.reset();
+    public DriverBuilder reset() {
+        this.buberUser = null;
         this.taxi = null;
         this.driverLicense = null;
+        this.driverStatus = null;
+        return this;
     }
 }

@@ -3,22 +3,21 @@ package com.sidorovich.pavel.buber.model;
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum OrderStatus {
-    IN_PROCESS("inProgress", 1),
-    COMPLETED("completed", 2),
-    CANCELLED("cancelled", 3);
+public enum DriverStatus {
+    BUSY("busy", 1),
+    FREE("free", 2);
 
     private final String name;
     private final int id;
 
-    OrderStatus(String name, int id) {
+    DriverStatus(String name, int id) {
         this.name = name;
         this.id = id;
     }
 
-    public static Optional<OrderStatus> getStatusById(Long id) {
+    public static Optional<DriverStatus> getStatusById(int id) {
         return Arrays.stream(values())
-                     .filter(role -> role.id == id)
+                     .filter(status -> status.id == id)
                      .findAny();
     }
 

@@ -1,23 +1,27 @@
 package com.sidorovich.pavel.buber.model.impl;
 
-import com.sidorovich.pavel.buber.model.Role;
-import com.sidorovich.pavel.buber.model.UserStatus;
+import com.sidorovich.pavel.buber.model.DriverStatus;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Driver extends BuberUser {
 
     private final String driverLicense;
     private final Taxi taxi;
+    private DriverStatus driverStatus;
 
     // can be created only using builder
-    Driver(Integer id, String phone, String passwordHash, Role role, String firstName, String lastName,
-           String email, BigDecimal cash, UserStatus status, String driverLicense,
-           Taxi taxi) {
-        super(id, phone, passwordHash, role, firstName, lastName, email, cash, status);
+    Driver(BuberUser buberUser, String driverLicense,
+           Taxi taxi, DriverStatus driverStatus) {
+        super(new Account(buberUser.getId().orElse(null),
+                          buberUser.getPhone(), buberUser.getPasswordHash(),
+                          buberUser.getRole()
+              ), buberUser.getFirstName(), buberUser.getLastName(),
+              buberUser.getEmail().orElse(null), buberUser.getCash(),
+              buberUser.getStatus());
         this.driverLicense = driverLicense;
         this.taxi = taxi;
+        this.driverStatus = driverStatus;
     }
 
     public String getDriverLicense() {
@@ -26,6 +30,14 @@ public class Driver extends BuberUser {
 
     public Taxi getTaxi() {
         return taxi;
+    }
+
+    public DriverStatus getDriverStatus() {
+        return driverStatus;
+    }
+
+    public void setDriverStatus(DriverStatus driverStatus) {
+        this.driverStatus = driverStatus;
     }
 
     @Override
@@ -40,11 +52,12 @@ public class Driver extends BuberUser {
             return false;
         }
         Driver driver = (Driver) o;
-        return Objects.equals(driverLicense, driver.driverLicense) && Objects.equals(taxi, driver.taxi);
+        return Objects.equals(driverLicense, driver.driverLicense) &&
+               Objects.equals(taxi, driver.taxi) && driverStatus == driver.driverStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), driverLicense, taxi);
+        return Objects.hash(super.hashCode(), driverLicense, taxi, driverStatus);
     }
 }

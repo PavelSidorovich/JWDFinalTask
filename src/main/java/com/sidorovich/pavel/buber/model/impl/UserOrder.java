@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class UserOrder implements Order {
 
-    private Integer id; // can be null
+    private Long id; // can be null
     private final BuberUser client;
     private final Driver driver;
     private final BigDecimal price;
@@ -17,9 +17,10 @@ public class UserOrder implements Order {
     private final Coordinates endCoordinates;
     private final OrderStatus status;
 
-    public UserOrder(Integer id, BuberUser client, Driver driver, BigDecimal price,
-                     Coordinates initialCoordinates, Coordinates endCoordinates,
-                     OrderStatus status) {
+    // can be instantiated only using builder
+    UserOrder(Long id, BuberUser client, Driver driver, BigDecimal price,
+              Coordinates initialCoordinates, Coordinates endCoordinates,
+              OrderStatus status) {
         this.id = id;
         this.client = client;
         this.driver = driver;
@@ -29,11 +30,11 @@ public class UserOrder implements Order {
         this.status = status;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Optional<Integer> getId() {
+    public Optional<Long> getId() {
         return Optional.ofNullable(this.id);
     }
 

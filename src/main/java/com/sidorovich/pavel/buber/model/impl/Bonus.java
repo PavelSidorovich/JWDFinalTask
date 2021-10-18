@@ -6,26 +6,28 @@ import java.util.Optional;
 
 public class Bonus {
 
-    private Integer id; // can be null
+    private Long id; // can be null
+    private final Long clientId;
     private final Double discount;
     private final Date expires;
 
-    public Bonus(Integer id, Double discount, Date expires) {
+    public Bonus(Long id, Long clientId, Double discount, Date expires) {
         this.id = id;
+        this.clientId = clientId;
         this.discount = discount;
         this.expires = expires;
     }
 
-    public Bonus(Double discount, Date expires) {
-        this(null, discount, expires);
+    public Bonus(Long clientId, Double discount, Date expires) {
+        this(null, clientId, discount, expires);
     }
 
-    public Optional<Integer> getId() {
-        return Optional.ofNullable(this.id);
-    }
-
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Optional<Long> getId() {
+        return Optional.ofNullable(this.id);
     }
 
     public Double getDiscount() {
@@ -34,6 +36,10 @@ public class Bonus {
 
     public Date getExpires() {
         return expires;
+    }
+
+    public Long getClientId() {
+        return clientId;
     }
 
     @Override
@@ -45,12 +51,22 @@ public class Bonus {
             return false;
         }
         Bonus bonus = (Bonus) o;
-        return Objects.equals(id, bonus.id) && Objects.equals(discount, bonus.discount) &&
-               Objects.equals(expires, bonus.expires);
+        return Objects.equals(id, bonus.id) && Objects.equals(clientId, bonus.clientId) &&
+               Objects.equals(discount, bonus.discount) && Objects.equals(expires, bonus.expires);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, discount, expires);
+        return Objects.hash(id, clientId, discount, expires);
+    }
+
+    @Override
+    public String toString() {
+        return "Bonus{" +
+               "id=" + id +
+               ", clientId=" + clientId +
+               ", discount=" + discount +
+               ", expires=" + expires +
+               '}';
     }
 }

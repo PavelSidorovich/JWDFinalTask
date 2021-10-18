@@ -5,13 +5,13 @@ import java.util.Optional;
 
 public class Taxi {
 
-    private Integer id; // can be null
+    private Long id; // can be null
     private final String carBrand;
     private final String carModel;
     private final String licensePlate;
     private Coordinates lastCoordinates;
 
-    public Taxi(Integer id, String carBrand, String carModel, String licensePlate,
+    public Taxi(Long id, String carBrand, String carModel, String licensePlate,
                 Coordinates lastCoordinates) {
         this.id = id;
         this.carBrand = carBrand;
@@ -25,7 +25,7 @@ public class Taxi {
         this(null, carBrand, carModel, licensePlate, lastCoordinates);
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -37,7 +37,7 @@ public class Taxi {
         return lastCoordinates;
     }
 
-    public Optional<Integer> getId() {
+    public Optional<Long> getId() {
         return Optional.ofNullable(this.id);
     }
 
@@ -72,4 +72,17 @@ public class Taxi {
     public int hashCode() {
         return Objects.hash(id, carBrand, carModel, licensePlate, lastCoordinates);
     }
+
+    @Override
+    public String toString() {
+        return "Taxi{" +
+               "id=" + id +
+               ", carBrand='" + carBrand + '\'' +
+               ", carModel='" + carModel + '\'' +
+               ", licensePlate='" + licensePlate + '\'' +
+               ", lastCoordinates=" + lastCoordinates +
+               '}';
+    }
+
+
 }

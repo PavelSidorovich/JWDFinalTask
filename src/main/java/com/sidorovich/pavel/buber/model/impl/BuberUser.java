@@ -1,6 +1,5 @@
 package com.sidorovich.pavel.buber.model.impl;
 
-import com.sidorovich.pavel.buber.model.Role;
 import com.sidorovich.pavel.buber.model.UserStatus;
 
 import java.math.BigDecimal;
@@ -16,9 +15,10 @@ public class BuberUser extends Account {
     private final UserStatus status;
 
     // can be created only using builder
-    BuberUser(Integer id, String phone, String passwordHash, Role role, String firstName, String lastName,
+    BuberUser(Account account, String firstName, String lastName,
               String email, BigDecimal cash, UserStatus status) {
-        super(id, phone, passwordHash, role);
+        super(account.getId().orElse(null), account.getPhone(),
+              account.getPasswordHash(), account.getRole());
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -79,4 +79,21 @@ public class BuberUser extends Account {
     public int hashCode() {
         return Objects.hash(super.hashCode(), firstName, lastName, email, cash, status);
     }
+
+    @Override
+    public String toString() {
+        return "BuberUser{" +
+               "id=" + getId() +
+               ", phone='" + getPhone() + '\'' +
+               ", passwordHash='" + getPasswordHash() + '\'' +
+               ", role=" + getRole() +
+               ", firstName='" + firstName + '\'' +
+               ", lastName='" + lastName + '\'' +
+               ", email='" + email + '\'' +
+               ", cash=" + cash +
+               ", status=" + status +
+               '}';
+    }
+
+
 }
