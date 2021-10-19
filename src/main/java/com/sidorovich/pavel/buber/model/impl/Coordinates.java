@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class Coordinates {
 
-    private Long id;
+    private final Long id;
     private final BigDecimal latitude;
     private final BigDecimal longitude;
 
@@ -20,8 +20,8 @@ public class Coordinates {
         this(null, latitude, longitude);
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Coordinates withId(Long id) {
+        return new Coordinates(id, latitude, longitude);
     }
 
     public BigDecimal getLatitude() {

@@ -1,14 +1,11 @@
 package com.sidorovich.pavel.buber.model.impl;
 
+import com.sidorovich.pavel.buber.exception.BuilderNullFieldsException;
 import com.sidorovich.pavel.buber.model.Builder;
 import com.sidorovich.pavel.buber.model.UserStatus;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
-/**
- * Singleton
- */
 public class BuberUserBuilder implements Builder<BuberUserBuilder, BuberUser> {
 
     private Account account;
@@ -17,17 +14,6 @@ public class BuberUserBuilder implements Builder<BuberUserBuilder, BuberUser> {
     private String email;
     private BigDecimal cash;
     private UserStatus status;
-
-    private BuberUserBuilder() {
-    }
-
-    private static class InstanceCreator {
-        static BuberUserBuilder INSTANCE = new BuberUserBuilder();
-    }
-
-    public static BuberUserBuilder getInstance() {
-        return BuberUserBuilder.InstanceCreator.INSTANCE;
-    }
 
     public BuberUserBuilder setAccount(Account account) {
         this.account = account;
@@ -62,23 +48,19 @@ public class BuberUserBuilder implements Builder<BuberUserBuilder, BuberUser> {
     /**
      * Automatically calls reset() method
      *
-     * @return optional value of BuberUser
+     * @return BuberUser entity
      */
     @Override
-    public Optional<BuberUser> getResult() {
+    public BuberUser getResult() {
         if (account == null || firstName == null ||
             lastName == null || cash == null || status == null) {
             reset();
-            return Optional.empty();
+            throw new BuilderNullFieldsException();
         }
-        Optional<BuberUser> result = Optional.of(
-                new BuberUser(
-                        account, firstName, lastName,
-                        email, cash, status
-                )
-        );
+        BuberUser buberUser = new BuberUser(account, firstName, lastName,
+                                            email, cash, status);
         reset();
-        return result;
+        return buberUser;
     }
 
     @Override

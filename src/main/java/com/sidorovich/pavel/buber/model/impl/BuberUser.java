@@ -1,24 +1,25 @@
 package com.sidorovich.pavel.buber.model.impl;
 
+import com.sidorovich.pavel.buber.model.Role;
 import com.sidorovich.pavel.buber.model.UserStatus;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
 
-public class BuberUser extends Account {
+public class BuberUser {
 
+    private final Account account;
     private final String firstName;
     private final String lastName;
-    private String email; // can be null
-    private BigDecimal cash;
+    private final String email; // can be null
     private final UserStatus status;
+    private BigDecimal cash;
 
     // can be created only using builder
     BuberUser(Account account, String firstName, String lastName,
               String email, BigDecimal cash, UserStatus status) {
-        super(account.getId().orElse(null), account.getPhone(),
-              account.getPasswordHash(), account.getRole());
+        this.account = account;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -30,8 +31,8 @@ public class BuberUser extends Account {
         this.status = status;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public BuberUser withEmail(String email) {
+        return new BuberUser(account, firstName, lastName, email, cash, status);
     }
 
     public void setCash(BigDecimal cash) {
@@ -56,6 +57,29 @@ public class BuberUser extends Account {
 
     public UserStatus getStatus() {
         return status;
+    }
+
+    public Account getAccount() {
+        return new Account(account.getId().orElse(null),
+                           account.getPhone(),
+                           account.getPasswordHash(),
+                           account.getRole());
+    }
+
+    public Optional<Long> getId() {
+        return account.getId();
+    }
+
+    public String getPhone() {
+        return account.getPhone();
+    }
+
+    public String getPasswordHash() {
+        return account.getPasswordHash();
+    }
+
+    public Role getRole() {
+        return account.getRole();
     }
 
     @Override
@@ -83,10 +107,10 @@ public class BuberUser extends Account {
     @Override
     public String toString() {
         return "BuberUser{" +
-               "id=" + getId() +
-               ", phone='" + getPhone() + '\'' +
-               ", passwordHash='" + getPasswordHash() + '\'' +
-               ", role=" + getRole() +
+               "id=" + account.getId() +
+               ", phone='" + account.getPhone() + '\'' +
+               ", passwordHash='" + account.getPasswordHash() + '\'' +
+               ", role=" + account.getRole() +
                ", firstName='" + firstName + '\'' +
                ", lastName='" + lastName + '\'' +
                ", email='" + email + '\'' +

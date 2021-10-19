@@ -1,30 +1,15 @@
 package com.sidorovich.pavel.buber.model.impl;
 
+import com.sidorovich.pavel.buber.exception.BuilderNullFieldsException;
 import com.sidorovich.pavel.buber.model.Builder;
 import com.sidorovich.pavel.buber.model.DriverStatus;
 
-import java.util.Optional;
-
-/**
- * Singleton
- */
 public class DriverBuilder implements Builder<DriverBuilder, Driver> {
 
     private BuberUser buberUser;
     private String driverLicense;
     private Taxi taxi;
     private DriverStatus driverStatus;
-
-    private DriverBuilder() {
-    }
-
-    private static class InstanceCreator {
-        static DriverBuilder INSTANCE = new DriverBuilder();
-    }
-
-    public static DriverBuilder getInstance() {
-        return DriverBuilder.InstanceCreator.INSTANCE;
-    }
 
     public DriverBuilder setDriverStatus(DriverStatus driverStatus) {
         this.driverStatus = driverStatus;
@@ -53,15 +38,13 @@ public class DriverBuilder implements Builder<DriverBuilder, Driver> {
      * @return optional value of Driver
      */
     @Override
-    public Optional<Driver> getResult() {
+    public Driver getResult() {
         if (buberUser == null || taxi == null ||
             driverLicense == null || driverStatus == null) {
             reset();
-            return Optional.empty();
+            throw new BuilderNullFieldsException();
         }
-        Optional<Driver> driver = Optional.of(
-                new Driver(buberUser, this.driverLicense, this.taxi, this.driverStatus)
-        );
+        Driver driver = new Driver(buberUser, this.driverLicense, this.taxi, this.driverStatus);
         reset();
         return driver;
     }

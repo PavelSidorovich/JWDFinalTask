@@ -25,7 +25,7 @@ public enum UserStatus {
         return name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 }

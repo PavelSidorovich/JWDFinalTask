@@ -26,7 +26,7 @@ public enum OrderStatus {
         return name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 }

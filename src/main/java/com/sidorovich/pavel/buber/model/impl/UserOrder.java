@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class UserOrder implements Order {
 
-    private Long id; // can be null
+    private final Long id; // can be null
     private final BuberUser client;
     private final Driver driver;
     private final BigDecimal price;
@@ -30,8 +30,8 @@ public class UserOrder implements Order {
         this.status = status;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public UserOrder withId(Long id) {
+        return new UserOrder(id, client, driver, price, initialCoordinates, endCoordinates, status);
     }
 
     public Optional<Long> getId() {

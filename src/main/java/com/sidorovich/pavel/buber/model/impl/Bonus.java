@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class Bonus {
 
-    private Long id; // can be null
+    private final Long id; // can be null
     private final Long clientId;
     private final Double discount;
     private final Date expires;
@@ -22,8 +22,8 @@ public class Bonus {
         this(null, clientId, discount, expires);
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Bonus bonusWithId(Long id) {
+        return new Bonus(id, clientId, discount, expires);
     }
 
     public Optional<Long> getId() {

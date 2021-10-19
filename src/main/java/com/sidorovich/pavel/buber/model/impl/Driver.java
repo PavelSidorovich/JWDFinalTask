@@ -11,14 +11,17 @@ public class Driver extends BuberUser {
     private DriverStatus driverStatus;
 
     // can be created only using builder
-    Driver(BuberUser buberUser, String driverLicense,
-           Taxi taxi, DriverStatus driverStatus) {
-        super(new Account(buberUser.getId().orElse(null),
-                          buberUser.getPhone(), buberUser.getPasswordHash(),
-                          buberUser.getRole()
-              ), buberUser.getFirstName(), buberUser.getLastName(),
-              buberUser.getEmail().orElse(null), buberUser.getCash(),
-              buberUser.getStatus());
+    Driver(BuberUser buberUser, String driverLicense, Taxi taxi, DriverStatus driverStatus) {
+        super(
+                new Account(
+                        buberUser.getId().orElse(null),
+                        buberUser.getPhone(),
+                        buberUser.getPasswordHash(),
+                        buberUser.getRole()
+                ), buberUser.getFirstName(), buberUser.getLastName(),
+                buberUser.getEmail().orElse(null), buberUser.getCash(),
+                buberUser.getStatus()
+        );
         this.driverLicense = driverLicense;
         this.taxi = taxi;
         this.driverStatus = driverStatus;

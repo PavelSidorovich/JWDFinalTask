@@ -2,9 +2,9 @@ package com.sidorovich.pavel.buber.model;
 
 import java.util.Optional;
 
-public interface User {
+public interface User<R> {
 
-    void setId(Long id);
+    R withId(Long id);
 
     Optional<Long> getId();
 

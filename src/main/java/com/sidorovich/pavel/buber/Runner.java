@@ -1,18 +1,9 @@
 package com.sidorovich.pavel.buber;
 
-import com.sidorovich.pavel.buber.dao.BuberUserDao;
-import com.sidorovich.pavel.buber.dao.CoordinatesDao;
-import com.sidorovich.pavel.buber.dao.DriverDao;
-import com.sidorovich.pavel.buber.dao.UserOrderDao;
+import com.sidorovich.pavel.buber.dao.impl.CoordinatesDao;
 import com.sidorovich.pavel.buber.db.ConnectionPool;
-import com.sidorovich.pavel.buber.exception.NoSuchOrderStatusException;
-import com.sidorovich.pavel.buber.model.OrderStatus;
-import com.sidorovich.pavel.buber.model.impl.UserOrder;
-import com.sidorovich.pavel.buber.model.impl.UserOrderBuilder;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class Runner {
 
@@ -20,21 +11,63 @@ public class Runner {
 
     public static void main(String[] args) throws InterruptedException, SQLException {
 
-        DriverDao dao = new DriverDao();
-        BuberUserDao userDao = new BuberUserDao();
-        CoordinatesDao coordinatesDao = new CoordinatesDao();
+        CONNECTION_POOL.init();
 
-        UserOrderBuilder orderBuilder = UserOrderBuilder.getInstance();
-        Optional<UserOrder> result = orderBuilder.setPrice(BigDecimal.valueOf(1000))
-                                                 .setStatus(OrderStatus.IN_PROCESS)
-                                                 .setClient(userDao.read(5L).get())
-                                                 .setDriver(dao.read(8L).get())
-                                                 .setInitialCoordinates(coordinatesDao.read(3L).get())
-                                                 .setEndCoordinates(coordinatesDao.read(4L).get())
-                                                 .getResult();
 
-        UserOrderDao userOrderDao = new UserOrderDao();
-        userOrderDao.create(result.get());
+        CoordinatesDao coordinatesDao = new CoordinatesDao(CONNECTION_POOL);
+        coordinatesDao.delete(5L);
+//        coordinatesDao.create(new Coordinates(BigDecimal.valueOf(24), BigDecimal.valueOf(65)));
+        coordinatesDao.readAll().forEach(System.out::println);
+//        Coordinates coordinates = coordinatesDao.read(5L).orElse(null);
+//        coordinatesDao.update(new Coordinates(BigDecimal.valueOf(7), BigDecimal.valueOf(1466)).withId(5L));
+
+//        Account account = new Account("+375", "mypass", Role.CLIENT);
+//
+//        AccountDao accountDao = new AccountDao(CONNECTION_POOL);
+////        Account account = accountDao.read(1L).orElse(null);
+////        account = account.withPasswordHash("new2");
+//
+//        accountDao.create(account);
+//        accountDao.readAll().forEach(System.out::println);
+
+
+//        SQLGenerator sqlGenerator = new SQLGeneratorImpl(CONNECTION_POOL);
+//        sqlGenerator.select("id")
+//                    .from("buber.user")
+//                    .where("id", "5")
+//                    .orderBy("id")
+//                    .desc();
+//
+//        sqlGenerator.update("buber.user")
+//                    .set("id", "4", "role", "name")
+//                    .innerJoin("buber.account")
+//                    .on("user.id", "account.id")
+//                    .where("id", "1");
+//
+//        sqlGenerator.delete()
+//                    .from("buber.user")
+//                    .where("id", "3")
+//                    .or("role", "admin")
+//                    .and("client_id", "2");
+//
+//        sqlGenerator.insertInto("buber.user", "id", "role")
+//                    .values("5", "admin");
+
+//        DriverDao dao = new DriverDao();
+//        BuberUserDao userDao = new BuberUserDao();
+//        CoordinatesDao coordinatesDao = new CoordinatesDao();
+//
+//        UserOrderBuilder orderBuilder = UserOrderBuilder.getInstance();
+//        Optional<UserOrder> result = orderBuilder.setPrice(BigDecimal.valueOf(1000))
+//                                                 .setStatus(OrderStatus.IN_PROCESS)
+//                                                 .setClient(userDao.read(5L).get())
+//                                                 .setDriver(dao.read(8L).get())
+//                                                 .setInitialCoordinates(coordinatesDao.read(3L).get())
+//                                                 .setEndCoordinates(coordinatesDao.read(4L).get())
+//                                                 .getResult();
+//
+//        UserOrderDao userOrderDao = new UserOrderDao();
+//        userOrderDao.create(result.get());
 
 //        TaxiDao taxiDao = new TaxiDao();
 //
@@ -132,4 +165,6 @@ public class Runner {
 //            System.out.println(account.getPhone());
 //        }
     }
+
+
 }

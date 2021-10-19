@@ -1,10 +1,10 @@
 package com.sidorovich.pavel.buber.model.impl;
 
+import com.sidorovich.pavel.buber.exception.BuilderNullFieldsException;
 import com.sidorovich.pavel.buber.model.Builder;
 import com.sidorovich.pavel.buber.model.OrderStatus;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 public class UserOrderBuilder implements Builder<UserOrderBuilder, UserOrder> {
 
@@ -15,17 +15,6 @@ public class UserOrderBuilder implements Builder<UserOrderBuilder, UserOrder> {
     private Coordinates initialCoordinates;
     private Coordinates endCoordinates;
     private OrderStatus status;
-
-    private UserOrderBuilder() {
-    }
-
-    private static class InstanceCreator {
-        static UserOrderBuilder INSTANCE = new UserOrderBuilder();
-    }
-
-    public static UserOrderBuilder getInstance() {
-        return UserOrderBuilder.InstanceCreator.INSTANCE;
-    }
 
     public UserOrderBuilder setId(Long id) {
         this.id = id;
@@ -77,22 +66,20 @@ public class UserOrderBuilder implements Builder<UserOrderBuilder, UserOrder> {
     /**
      * Automatically calls reset() method
      *
-     * @return optional value of UserOrder
+     * @return UserOrder entity
      */
     @Override
-    public Optional<UserOrder> getResult() {
+    public UserOrder getResult() {
         if (client == null || driver == null ||
             price == null || initialCoordinates == null ||
             endCoordinates == null || status == null) {
             reset();
-            return Optional.empty();
+            throw new BuilderNullFieldsException();
         }
-        Optional<UserOrder> order = Optional.of(
-                new UserOrder(
-                        id, client, driver,
-                        price, initialCoordinates,
-                        endCoordinates, status
-                )
+        UserOrder order = new UserOrder(
+                id, client, driver,
+                price, initialCoordinates,
+                endCoordinates, status
         );
         reset();
         return order;

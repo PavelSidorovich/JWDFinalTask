@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public class Taxi {
 
-    private Long id; // can be null
+    private final Long id; // can be null
     private final String carBrand;
     private final String carModel;
     private final String licensePlate;
@@ -25,8 +25,8 @@ public class Taxi {
         this(null, carBrand, carModel, licensePlate, lastCoordinates);
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Taxi withID(Long id) {
+        return new Taxi(id, carBrand, carModel, licensePlate, lastCoordinates);
     }
 
     public void setLastCoordinates(Coordinates lastCoordinates) {

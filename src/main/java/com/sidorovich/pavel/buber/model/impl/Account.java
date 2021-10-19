@@ -6,9 +6,9 @@ import com.sidorovich.pavel.buber.model.User;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Account implements User {
+public class Account implements User<Account> {
 
-    private Long id; // can be null
+    private final Long id; // can be null
     private final String phone;
     private final String passwordHash;
     private final Role role;
@@ -25,8 +25,12 @@ public class Account implements User {
     }
 
     @Override
-    public void setId(Long id) {
-        this.id = id;
+    public Account withId(Long id) {
+        return new Account(id, phone, passwordHash, role);
+    }
+
+    public Account withPasswordHash(String passwordHash) {
+        return new Account(id, phone, passwordHash, role);
     }
 
     @Override
@@ -63,4 +67,15 @@ public class Account implements User {
     public int hashCode() {
         return Objects.hash(id, phone, passwordHash, role);
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+               "id=" + id +
+               ", phone='" + phone + '\'' +
+               ", passwordHash='" + passwordHash + '\'' +
+               ", role=" + role +
+               '}';
+    }
+
 }
