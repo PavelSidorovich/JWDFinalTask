@@ -1,16 +1,18 @@
 package com.sidorovich.pavel.buber.dao.impl;
 
 import com.sidorovich.pavel.buber.db.ConnectionPool;
-import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
 import com.sidorovich.pavel.buber.model.impl.Bonus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class BonusDao extends CommonDao<Bonus> {
+public final class BonusDao extends CommonDao<Bonus> {
 
     private static final Logger LOG = LogManager.getLogger(BonusDao.class);
 
@@ -26,57 +28,29 @@ public class BonusDao extends CommonDao<Bonus> {
     }
 
     @Override
-    public boolean create(Bonus bonus) {
-        String[] columnsToBeInserted = Arrays.copyOfRange(getColumnNames(), 1, getColumnNames().length);
-        try {
-            return sqlGenerator.insertInto(TABLE_NAME_WITH_DB, columnsToBeInserted)
-                               .values(
-                                       bonus.getClientId().toString(),
-                                       bonus.getDiscount().toString(),
-                                       bonus.getExpires().toString()
-                               )
-                               .executeUpdate() == 1;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Bonus bonus) {
-        try {
-            return sqlGenerator.update(TABLE_NAME_WITH_DB)
-                               .set(CLIENT_ID_COLUMN_NAME, bonus.getClientId().toString(),
-                                    DISCOUNT_COLUMN_NAME, bonus.getDiscount().toString(),
-                                    EXPIRES_ID_COLUMN_NAME, bonus.getExpires().toString()
-                               )
-                               .where(ID_COLUMN_NAME, bonus.getId()
-                                                           .orElseThrow(IdIsNotDefinedException::new).toString())
-                               .executeUpdate() == 1;
-        } catch (IdIsNotDefinedException e) {
-            LOG.warn("Account id is not defined", e);
-            return false;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
     protected String getTableName() {
         return TABLE_NAME_WITH_DB;
     }
 
     @Override
-    protected String[] getColumnNames() {
-        return new String[] {
-                ID_COLUMN_NAME,
-                CLIENT_ID_COLUMN_NAME,
-                DISCOUNT_COLUMN_NAME,
-                EXPIRES_ID_COLUMN_NAME
-        };
+    protected Set<String> getColumnNames() {
+        LinkedHashSet<String> columns = new LinkedHashSet<>();
+
+        columns.add(ID_COLUMN_NAME);
+        columns.add(CLIENT_ID_COLUMN_NAME);
+        columns.add(DISCOUNT_COLUMN_NAME);
+        columns.add(EXPIRES_ID_COLUMN_NAME);
+        return columns;
+    }
+
+    @Override
+    protected Map<String, Object> getColumnsAndValuesToBeInserted(Bonus bonus) {
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+
+        map.put(CLIENT_ID_COLUMN_NAME, bonus.getClientId());
+        map.put(DISCOUNT_COLUMN_NAME, bonus.getDiscount());
+        map.put(EXPIRES_ID_COLUMN_NAME, bonus.getExpireDate());
+        return map;
     }
 
     @Override

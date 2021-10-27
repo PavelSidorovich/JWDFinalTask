@@ -9,12 +9,13 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -28,12 +29,12 @@ public class LockingConnectionPool implements ConnectionPool {
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "123456";
 
-    private final Queue<ProxyConnection> availableConnections = new ArrayDeque<>();
-    private final List<ProxyConnection> givenAwayConnections = new ArrayList<>();
+    private final Queue<ProxyConnection> availableConnections = new ConcurrentLinkedDeque<>();
+    private final List<ProxyConnection> givenAwayConnections = new CopyOnWriteArrayList<>();
     private final ReentrantLock lock = new ReentrantLock();
     private final Condition freeConnections = lock.newCondition();
 
-    private boolean initialized = false;
+    private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     private LockingConnectionPool() {
     }
@@ -48,21 +49,16 @@ public class LockingConnectionPool implements ConnectionPool {
 
     @Override
     public boolean isInitialized() {
-        try {
-            lock.lock();
-            return initialized;
-        } finally {
-            lock.unlock();
-        }
+        return initialized.get();
     }
 
     @Override
     public boolean init() {
+        lock.lock();
         try {
-            lock.lock();
-            if (!initialized) {
+            if (!initialized.get()) {
                 initializeConnections(INITIAL_CONNECTIONS_AMOUNT, true);
-                initialized = true;
+                initialized.set(true);
                 return true;
             }
             return false;
@@ -75,10 +71,10 @@ public class LockingConnectionPool implements ConnectionPool {
     public boolean shutDown() {
         try {
             lock.lock();
-            if (initialized) {
+            if (initialized.get()) {
                 closeConnections();
                 deregisterDrivers();
-                initialized = false;
+                initialized.set(false);
                 return true;
             }
             return false;

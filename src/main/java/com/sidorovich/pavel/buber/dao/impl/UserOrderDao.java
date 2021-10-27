@@ -13,9 +13,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class UserOrderDao extends CommonDao<UserOrder> {
+public final class UserOrderDao extends CommonDao<UserOrder> {
 
     private static final Logger LOG = LogManager.getLogger(UserOrderDao.class);
 
@@ -41,79 +44,39 @@ public class UserOrderDao extends CommonDao<UserOrder> {
     }
 
     @Override
-    public boolean create(UserOrder order) {
-        String[] columnsToBeInserted = Arrays.copyOfRange(getColumnNames(), 1, getColumnNames().length);
-        try {
-            return sqlGenerator.insertInto(TABLE_NAME_WITH_DB, columnsToBeInserted)
-                               .values(order.getClient()
-                                            .getId()
-                                            .orElseThrow(IdIsNotDefinedException::new).toString(),
-                                       order.getDriver()
-                                            .getId()
-                                            .orElseThrow(IdIsNotDefinedException::new).toString(),
-                                       order.getPrice().toString(),
-                                       order.getInitialCoordinates()
-                                            .getId().orElseThrow(IdIsNotDefinedException::new).toString(),
-                                       order.getEndCoordinates()
-                                            .getId().orElseThrow(IdIsNotDefinedException::new).toString(),
-                                       order.getStatus().getId().toString())
-                               .executeUpdate() == 1;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(UserOrder order) {
-        try {
-            return sqlGenerator.update(TABLE_NAME_WITH_DB)
-                               .set(CLIENT_ID_COLUMN_NAME, order.getClient().getId()
-                                                                .orElseThrow(IdIsNotDefinedException::new)
-                                                                .toString(),
-                                    DRIVER_ID_COLUMN_NAME, order.getDriver().getId()
-                                                                .orElseThrow(IdIsNotDefinedException::new)
-                                                                .toString(),
-                                    PRICE_COLUMN_NAME, order.getPrice().toString(),
-                                    INITIAL_COORDINATES_ID_COLUMN_NAME, order.getInitialCoordinates()
-                                                                             .getId()
-                                                                             .orElseThrow(IdIsNotDefinedException::new)
-                                                                             .toString(),
-                                    END_COORDINATES_ID_COLUMN_NAME, order.getEndCoordinates()
-                                                                         .getId()
-                                                                         .orElseThrow(IdIsNotDefinedException::new)
-                                                                         .toString(),
-                                    STATUS_ID_COLUMN_NAME, order.getStatus().getId().toString())
-                               .where(ID_COLUMN_NAME, order.getId()
-                                                           .orElseThrow(IdIsNotDefinedException::new).toString())
-                               .executeUpdate() == 1;
-        } catch (IdIsNotDefinedException e) {
-            LOG.warn("Order id is not defined", e);
-            return false;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
     protected String getTableName() {
         return TABLE_NAME_WITH_DB;
     }
 
     @Override
-    protected String[] getColumnNames() {
-        return new String[] {
-                ID_COLUMN_NAME,
-                CLIENT_ID_COLUMN_NAME,
-                DRIVER_ID_COLUMN_NAME,
-                PRICE_COLUMN_NAME,
-                INITIAL_COORDINATES_ID_COLUMN_NAME,
-                END_COORDINATES_ID_COLUMN_NAME,
-                STATUS_ID_COLUMN_NAME
-        };
+    protected Set<String> getColumnNames() {
+        LinkedHashSet<String> columns = new LinkedHashSet<>();
+
+        columns.add(ID_COLUMN_NAME);
+        columns.add(CLIENT_ID_COLUMN_NAME);
+        columns.add(DRIVER_ID_COLUMN_NAME);
+        columns.add(PRICE_COLUMN_NAME);
+        columns.add(INITIAL_COORDINATES_ID_COLUMN_NAME);
+        columns.add(END_COORDINATES_ID_COLUMN_NAME);
+        columns.add(STATUS_ID_COLUMN_NAME);
+        return columns;
+    }
+
+    @Override
+    protected Map<String, Object> getColumnsAndValuesToBeInserted(UserOrder order) {
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+
+        map.put(CLIENT_ID_COLUMN_NAME, order.getClient().getId()
+                                            .orElseThrow(IdIsNotDefinedException::new));
+        map.put(DRIVER_ID_COLUMN_NAME, order.getDriver().getId()
+                                            .orElseThrow(IdIsNotDefinedException::new));
+        map.put(PRICE_COLUMN_NAME, order.getPrice());
+        map.put(INITIAL_COORDINATES_ID_COLUMN_NAME, order.getInitialCoordinates().getId()
+                                                         .orElseThrow(IdIsNotDefinedException::new));
+        map.put(END_COORDINATES_ID_COLUMN_NAME, order.getEndCoordinates().getId()
+                                                     .orElseThrow(IdIsNotDefinedException::new));
+        map.put(STATUS_ID_COLUMN_NAME, order.getStatus().getId());
+        return map;
     }
 
     @Override

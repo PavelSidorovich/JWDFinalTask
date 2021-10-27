@@ -12,8 +12,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class DriverDao extends CommonDao<Driver> {
+public final class DriverDao extends CommonDao<Driver> {
 
     private static final Logger LOG = LogManager.getLogger(DriverDao.class);
 
@@ -34,61 +38,30 @@ public class DriverDao extends CommonDao<Driver> {
     }
 
     @Override
-    public boolean create(Driver driver) {
-        try {
-            return sqlGenerator.insertInto(TABLE_NAME_WITH_DB, getColumnNames())
-                               .values(
-                                       driver.getId()
-                                             .orElseThrow(IdIsNotDefinedException::new).toString(),
-                                       driver.getDriverLicense(),
-                                       driver.getTaxi().getId()
-                                             .orElseThrow(IdIsNotDefinedException::new).toString(),
-                                       driver.getDriverStatus().getId().toString()
-                               )
-                               .executeUpdate() == 1;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Driver driver) {
-        try {
-            return sqlGenerator.update(TABLE_NAME_WITH_DB)
-                               .set(DRIVER_LICENSE_COLUMN_NAME, driver.getDriverLicense(),
-                                    TAXI_ID_COLUMN_NAME, driver.getTaxi().getId()
-                                                               .orElseThrow(IdIsNotDefinedException::new)
-                                                               .toString(),
-                                    DRIVER_STATUS_ID_COLUMN_NAME, driver.getStatus().getId().toString()
-                               )
-                               .where(ID_COLUMN_NAME, driver.getId()
-                                                            .orElseThrow(IdIsNotDefinedException::new).toString())
-                               .executeUpdate() == 1;
-        } catch (IdIsNotDefinedException e) {
-            LOG.warn("Driver id is not defined", e);
-            return false;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
     protected String getTableName() {
         return TABLE_NAME_WITH_DB;
     }
 
     @Override
-    protected String[] getColumnNames() {
-        return new String[] {
-                ID_COLUMN_NAME,
-                DRIVER_LICENSE_COLUMN_NAME,
-                TAXI_ID_COLUMN_NAME,
-                DRIVER_STATUS_ID_COLUMN_NAME
-        };
+    protected Set<String> getColumnNames() {
+        LinkedHashSet<String> columns = new LinkedHashSet<>();
+
+        columns.add(ID_COLUMN_NAME);
+        columns.add(DRIVER_LICENSE_COLUMN_NAME);
+        columns.add(TAXI_ID_COLUMN_NAME);
+        columns.add(DRIVER_STATUS_ID_COLUMN_NAME);
+        return columns;
+    }
+
+    @Override
+    protected Map<String, Object> getColumnsAndValuesToBeInserted(Driver driver) {
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+
+        map.put(DRIVER_LICENSE_COLUMN_NAME, driver.getDriverLicense());
+        map.put(TAXI_ID_COLUMN_NAME, driver.getTaxi().getId()
+                                           .orElseThrow(IdIsNotDefinedException::new));
+        map.put(DRIVER_STATUS_ID_COLUMN_NAME, driver.getDriverStatus().getId());
+        return map;
     }
 
     @Override

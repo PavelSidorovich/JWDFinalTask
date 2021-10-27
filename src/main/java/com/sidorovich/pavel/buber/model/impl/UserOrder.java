@@ -5,11 +5,9 @@ import com.sidorovich.pavel.buber.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.Optional;
 
-public class UserOrder implements Order {
+public class UserOrder extends CommonEntity<UserOrder> implements Order {
 
-    private final Long id; // can be null
     private final BuberUser client;
     private final Driver driver;
     private final BigDecimal price;
@@ -17,11 +15,11 @@ public class UserOrder implements Order {
     private final Coordinates endCoordinates;
     private final OrderStatus status;
 
-    // can be instantiated only using builder
+    /* can be instantiated only using builder */
     UserOrder(Long id, BuberUser client, Driver driver, BigDecimal price,
               Coordinates initialCoordinates, Coordinates endCoordinates,
               OrderStatus status) {
-        this.id = id;
+        super(id);
         this.client = client;
         this.driver = driver;
         this.price = price;
@@ -30,12 +28,9 @@ public class UserOrder implements Order {
         this.status = status;
     }
 
+    @Override
     public UserOrder withId(Long id) {
         return new UserOrder(id, client, driver, price, initialCoordinates, endCoordinates, status);
-    }
-
-    public Optional<Long> getId() {
-        return Optional.ofNullable(this.id);
     }
 
     public BuberUser getClient() {

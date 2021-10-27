@@ -2,16 +2,14 @@ package com.sidorovich.pavel.buber.model.impl;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.Optional;
 
-public class Coordinates {
+public class Coordinates extends CommonEntity<Coordinates> {
 
-    private final Long id;
     private final BigDecimal latitude;
     private final BigDecimal longitude;
 
     public Coordinates(Long id, BigDecimal latitude, BigDecimal longitude) {
-        this.id = id;
+        super(id);
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -20,6 +18,7 @@ public class Coordinates {
         this(null, latitude, longitude);
     }
 
+    @Override
     public Coordinates withId(Long id) {
         return new Coordinates(id, latitude, longitude);
     }
@@ -30,10 +29,6 @@ public class Coordinates {
 
     public BigDecimal getLongitude() {
         return longitude;
-    }
-
-    public Optional<Long> getId() {
-        return Optional.ofNullable(id);
     }
 
     @Override

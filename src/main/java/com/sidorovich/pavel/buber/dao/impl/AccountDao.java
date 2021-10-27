@@ -1,7 +1,6 @@
 package com.sidorovich.pavel.buber.dao.impl;
 
 import com.sidorovich.pavel.buber.db.ConnectionPool;
-import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
 import com.sidorovich.pavel.buber.model.Role;
 import com.sidorovich.pavel.buber.model.impl.Account;
 import org.apache.logging.log4j.LogManager;
@@ -9,7 +8,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 public final class AccountDao extends CommonDao<Account> {
 
@@ -27,56 +29,29 @@ public final class AccountDao extends CommonDao<Account> {
     }
 
     @Override
-    public boolean create(Account account) {
-        String[] columnsToBeInserted = Arrays.copyOfRange(getColumnNames(), 1, getColumnNames().length);
-        try {
-            return sqlGenerator.insertInto(TABLE_NAME_WITH_DB, columnsToBeInserted)
-                               .values(account.getPhone(),
-                                       account.getPasswordHash(),
-                                       account.getRole().getId().toString())
-                               .executeUpdate() == 1;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Account account) {
-        try {
-            return sqlGenerator.update(TABLE_NAME_WITH_DB)
-                               .set(
-                                       PHONE_COLUMN_NAME, account.getPhone(),
-                                       PASSWORD_HASH_COLUMN_NAME, account.getPasswordHash(),
-                                       ROLE_ID_COLUMN_NAME, account.getRole().getId().toString()
-                               )
-                               .where(ID_COLUMN_NAME,
-                                      account.getId().orElseThrow(IdIsNotDefinedException::new).toString())
-                               .executeUpdate() == 1;
-        } catch (IdIsNotDefinedException e) {
-            LOG.warn("Account id is not defined", e);
-            return false;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
     protected String getTableName() {
         return TABLE_NAME_WITH_DB;
     }
 
     @Override
-    protected String[] getColumnNames() {
-        return new String[] {
-                ID_COLUMN_NAME,
-                PHONE_COLUMN_NAME,
-                PASSWORD_HASH_COLUMN_NAME,
-                ROLE_ID_COLUMN_NAME
-        };
+    protected Set<String> getColumnNames() {
+        LinkedHashSet<String> columns = new LinkedHashSet<>();
+
+        columns.add(ID_COLUMN_NAME);
+        columns.add(PHONE_COLUMN_NAME);
+        columns.add(PASSWORD_HASH_COLUMN_NAME);
+        columns.add(ROLE_ID_COLUMN_NAME);
+        return columns;
+    }
+
+    @Override
+    protected Map<String, Object> getColumnsAndValuesToBeInserted(Account account) {
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+
+        map.put(PHONE_COLUMN_NAME, account.getPhone());
+        map.put(PASSWORD_HASH_COLUMN_NAME, account.getPasswordHash());
+        map.put(ROLE_ID_COLUMN_NAME, account.getRole().getId());
+        return map;
     }
 
     @Override

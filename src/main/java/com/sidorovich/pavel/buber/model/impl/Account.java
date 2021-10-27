@@ -1,20 +1,17 @@
 package com.sidorovich.pavel.buber.model.impl;
 
 import com.sidorovich.pavel.buber.model.Role;
-import com.sidorovich.pavel.buber.model.User;
 
 import java.util.Objects;
-import java.util.Optional;
 
-public class Account implements User<Account> {
+public class Account extends CommonEntity<Account> {
 
-    private final Long id; // can be null
     private final String phone;
     private final String passwordHash;
     private final Role role;
 
     public Account(Long id, String phone, String passwordHash, Role role) {
-        this.id = id;
+        super(id);
         this.phone = phone;
         this.passwordHash = passwordHash;
         this.role = role;
@@ -31,11 +28,6 @@ public class Account implements User<Account> {
 
     public Account withPasswordHash(String passwordHash) {
         return new Account(id, phone, passwordHash, role);
-    }
-
-    @Override
-    public Optional<Long> getId() {
-        return Optional.ofNullable(this.id);
     }
 
     public String getPhone() {

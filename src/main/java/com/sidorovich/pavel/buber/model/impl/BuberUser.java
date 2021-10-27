@@ -1,5 +1,6 @@
 package com.sidorovich.pavel.buber.model.impl;
 
+import com.sidorovich.pavel.buber.model.Entity;
 import com.sidorovich.pavel.buber.model.Role;
 import com.sidorovich.pavel.buber.model.UserStatus;
 
@@ -7,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
 
-public class BuberUser {
+public class BuberUser implements Entity<BuberUser> {
 
     private final Account account;
     private final String firstName;
@@ -16,7 +17,7 @@ public class BuberUser {
     private final UserStatus status;
     private BigDecimal cash;
 
-    // can be created only using builder
+    /* can be created only using builder */
     BuberUser(Account account, String firstName, String lastName,
               String email, BigDecimal cash, UserStatus status) {
         this.account = account;
@@ -66,8 +67,16 @@ public class BuberUser {
                            account.getRole());
     }
 
+    @Override
     public Optional<Long> getId() {
         return account.getId();
+    }
+
+    @Override
+    public BuberUser withId(Long id) {
+        return new BuberUser(account.withId(id),
+                             firstName, lastName,
+                             email, cash, status);
     }
 
     public String getPhone() {
@@ -118,6 +127,5 @@ public class BuberUser {
                ", status=" + status +
                '}';
     }
-
 
 }

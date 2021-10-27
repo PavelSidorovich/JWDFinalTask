@@ -2,17 +2,15 @@ package com.sidorovich.pavel.buber.model.impl;
 
 import java.sql.Date;
 import java.util.Objects;
-import java.util.Optional;
 
-public class Bonus {
+public class Bonus extends CommonEntity<Bonus> {
 
-    private final Long id; // can be null
     private final Long clientId;
     private final Double discount;
     private final Date expires;
 
     public Bonus(Long id, Long clientId, Double discount, Date expires) {
-        this.id = id;
+        super(id);
         this.clientId = clientId;
         this.discount = discount;
         this.expires = expires;
@@ -22,19 +20,16 @@ public class Bonus {
         this(null, clientId, discount, expires);
     }
 
-    public Bonus bonusWithId(Long id) {
+    @Override
+    public Bonus withId(Long id) {
         return new Bonus(id, clientId, discount, expires);
-    }
-
-    public Optional<Long> getId() {
-        return Optional.ofNullable(this.id);
     }
 
     public Double getDiscount() {
         return discount;
     }
 
-    public Date getExpires() {
+    public Date getExpireDate() {
         return expires;
     }
 

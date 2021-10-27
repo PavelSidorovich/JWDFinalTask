@@ -9,9 +9,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class TaxiDao extends CommonDao<Taxi> {
+public final class TaxiDao extends CommonDao<Taxi> {
 
     private static final Logger LOG = LogManager.getLogger(TaxiDao.class);
 
@@ -31,63 +34,32 @@ public class TaxiDao extends CommonDao<Taxi> {
     }
 
     @Override
-    public boolean create(Taxi taxi) {
-        String[] columnsToBeInserted = Arrays.copyOfRange(getColumnNames(), 1, getColumnNames().length);
-        try {
-            return sqlGenerator.insertInto(TABLE_NAME_WITH_DB, columnsToBeInserted)
-                               .values(
-                                       taxi.getCarBrand(),
-                                       taxi.getCarModel(),
-                                       taxi.getLicensePlate(),
-                                       taxi.getLastCoordinates().getId()
-                                           .orElseThrow(IdIsNotDefinedException::new).toString()
-                               )
-                               .executeUpdate() == 1;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Taxi taxi) {
-        try {
-            return sqlGenerator.update(TABLE_NAME_WITH_DB)
-                               .set(CAR_BRAND_COLUMN_NAME, taxi.getCarBrand(),
-                                    CAR_MODEL_COLUMN_NAME, taxi.getCarModel(),
-                                    LICENSE_PLATE_COLUMN_NAME, taxi.getLicensePlate(),
-                                    LAST_COORDINATES_ID_COLUMN_NAME,
-                                    taxi.getLastCoordinates().getId()
-                                        .orElseThrow(IdIsNotDefinedException::new).toString()
-                               )
-                               .where(ID_COLUMN_NAME, taxi.getId()
-                                                          .orElseThrow(IdIsNotDefinedException::new).toString())
-                               .executeUpdate() == 1;
-        } catch (IdIsNotDefinedException e) {
-            LOG.warn("Taxi id is not defined", e);
-            return false;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
     protected String getTableName() {
         return TABLE_NAME_WITH_DB;
     }
 
     @Override
-    protected String[] getColumnNames() {
-        return new String[] {
-                ID_COLUMN_NAME,
-                CAR_BRAND_COLUMN_NAME,
-                CAR_MODEL_COLUMN_NAME,
-                LICENSE_PLATE_COLUMN_NAME,
-                LAST_COORDINATES_ID_COLUMN_NAME
-        };
+    protected Set<String> getColumnNames() {
+        LinkedHashSet<String> columns = new LinkedHashSet<>();
+
+        columns.add(ID_COLUMN_NAME);
+        columns.add(CAR_BRAND_COLUMN_NAME);
+        columns.add(CAR_MODEL_COLUMN_NAME);
+        columns.add(LICENSE_PLATE_COLUMN_NAME);
+        columns.add(LAST_COORDINATES_ID_COLUMN_NAME);
+        return columns;
+    }
+
+    @Override
+    protected Map<String, Object> getColumnsAndValuesToBeInserted(Taxi taxi) {
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+
+        map.put(CAR_BRAND_COLUMN_NAME, taxi.getCarBrand());
+        map.put(CAR_MODEL_COLUMN_NAME, taxi.getCarModel());
+        map.put(LICENSE_PLATE_COLUMN_NAME, taxi.getLicensePlate());
+        map.put(LAST_COORDINATES_ID_COLUMN_NAME, taxi.getLastCoordinates().getId()
+                                                     .orElseThrow(IdIsNotDefinedException::new));
+        return map;
     }
 
     @Override

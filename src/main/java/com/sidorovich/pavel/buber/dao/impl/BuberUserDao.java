@@ -11,9 +11,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
-public class BuberUserDao extends CommonDao<BuberUser> {
+public final class BuberUserDao extends CommonDao<BuberUser> {
 
     private static final Logger LOG = LogManager.getLogger(BuberUserDao.class);
 
@@ -34,64 +38,33 @@ public class BuberUserDao extends CommonDao<BuberUser> {
     }
 
     @Override
-    public boolean create(BuberUser user) {
-        try {
-            return sqlGenerator.insertInto(TABLE_NAME_WITH_DB, getColumnNames())
-                               .values(
-                                       user.getId()
-                                           .orElseThrow(IdIsNotDefinedException::new).toString(),
-                                       user.getFirstName(),
-                                       user.getLastName(),
-                                       user.getEmail().orElse(""),
-                                       user.getCash().toString(),
-                                       user.getStatus().getId().toString()
-                               )
-                               .executeUpdate() == 1;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(BuberUser user) {
-        try {
-            return sqlGenerator.update(TABLE_NAME_WITH_DB)
-                               .set(FIRST_NAME_COLUMN_NAME, user.getFirstName(),
-                                    LAST_NAME_COLUMN_NAME, user.getLastName(),
-                                    EMAIL_COLUMN_NAME, user.getEmail().orElse(""),
-                                    MONEY_COLUMN_NAME, user.getCash().toString(),
-                                    STATUS_ID_COLUMN_NAME, user.getStatus().getId().toString()
-                               )
-                               .where(ID_COLUMN_NAME, user.getId()
-                                                          .orElseThrow(IdIsNotDefinedException::new).toString())
-                               .executeUpdate() == 1;
-        } catch (IdIsNotDefinedException e) {
-            LOG.warn("BuberUser id is not defined", e);
-            return false;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
     protected String getTableName() {
         return TABLE_NAME_WITH_DB;
     }
 
     @Override
-    protected String[] getColumnNames() {
-        return new String[] {
-                ID_COLUMN_NAME,
-                FIRST_NAME_COLUMN_NAME,
-                LAST_NAME_COLUMN_NAME,
-                EMAIL_COLUMN_NAME,
-                MONEY_COLUMN_NAME,
-                STATUS_ID_COLUMN_NAME
-        };
+    protected Set<String> getColumnNames() {
+        LinkedHashSet<String> columns = new LinkedHashSet<>();
+
+        columns.add(ID_COLUMN_NAME);
+        columns.add(FIRST_NAME_COLUMN_NAME);
+        columns.add(LAST_NAME_COLUMN_NAME);
+        columns.add(EMAIL_COLUMN_NAME);
+        columns.add(MONEY_COLUMN_NAME);
+        columns.add(STATUS_ID_COLUMN_NAME);
+        return columns;
+    }
+
+    @Override
+    protected Map<String, Object> getColumnsAndValuesToBeInserted(BuberUser user) {
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+
+        map.put(FIRST_NAME_COLUMN_NAME, user.getFirstName());
+        map.put(LAST_NAME_COLUMN_NAME, user.getLastName());
+        map.put(EMAIL_COLUMN_NAME, user.getEmail());
+        map.put(MONEY_COLUMN_NAME, user.getCash());
+        map.put(STATUS_ID_COLUMN_NAME, user.getStatus().getId());
+        return map;
     }
 
     @Override

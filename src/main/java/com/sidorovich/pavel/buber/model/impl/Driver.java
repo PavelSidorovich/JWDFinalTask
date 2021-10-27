@@ -1,27 +1,21 @@
 package com.sidorovich.pavel.buber.model.impl;
 
 import com.sidorovich.pavel.buber.model.DriverStatus;
+import com.sidorovich.pavel.buber.model.Entity;
 
 import java.util.Objects;
+import java.util.Optional;
 
-public class Driver extends BuberUser {
+public class Driver implements Entity<Driver> {
 
+    private final BuberUser user;
     private final String driverLicense;
     private final Taxi taxi;
     private DriverStatus driverStatus;
 
     // can be created only using builder
     Driver(BuberUser buberUser, String driverLicense, Taxi taxi, DriverStatus driverStatus) {
-        super(
-                new Account(
-                        buberUser.getId().orElse(null),
-                        buberUser.getPhone(),
-                        buberUser.getPasswordHash(),
-                        buberUser.getRole()
-                ), buberUser.getFirstName(), buberUser.getLastName(),
-                buberUser.getEmail().orElse(null), buberUser.getCash(),
-                buberUser.getStatus()
-        );
+        this.user = buberUser;
         this.driverLicense = driverLicense;
         this.taxi = taxi;
         this.driverStatus = driverStatus;
@@ -62,5 +56,15 @@ public class Driver extends BuberUser {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), driverLicense, taxi, driverStatus);
+    }
+
+    @Override
+    public Optional<Long> getId() {
+        return user.getId();
+    }
+
+    @Override
+    public Driver withId(Long id) {
+        return new Driver(user.withId(id), driverLicense, taxi, driverStatus);
     }
 }

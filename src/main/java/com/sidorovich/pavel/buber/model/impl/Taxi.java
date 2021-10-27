@@ -1,11 +1,9 @@
 package com.sidorovich.pavel.buber.model.impl;
 
 import java.util.Objects;
-import java.util.Optional;
 
-public class Taxi {
+public class Taxi extends CommonEntity<Taxi> {
 
-    private final Long id; // can be null
     private final String carBrand;
     private final String carModel;
     private final String licensePlate;
@@ -13,7 +11,7 @@ public class Taxi {
 
     public Taxi(Long id, String carBrand, String carModel, String licensePlate,
                 Coordinates lastCoordinates) {
-        this.id = id;
+        super(id);
         this.carBrand = carBrand;
         this.carModel = carModel;
         this.licensePlate = licensePlate;
@@ -25,7 +23,8 @@ public class Taxi {
         this(null, carBrand, carModel, licensePlate, lastCoordinates);
     }
 
-    public Taxi withID(Long id) {
+    @Override
+    public Taxi withId(Long id) {
         return new Taxi(id, carBrand, carModel, licensePlate, lastCoordinates);
     }
 
@@ -35,10 +34,6 @@ public class Taxi {
 
     public Coordinates getLastCoordinates() {
         return lastCoordinates;
-    }
-
-    public Optional<Long> getId() {
-        return Optional.ofNullable(this.id);
     }
 
     public String getCarBrand() {

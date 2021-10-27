@@ -1,16 +1,18 @@
 package com.sidorovich.pavel.buber.dao.impl;
 
 import com.sidorovich.pavel.buber.db.ConnectionPool;
-import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
 import com.sidorovich.pavel.buber.model.impl.Coordinates;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class CoordinatesDao extends CommonDao<Coordinates> {
+public final class CoordinatesDao extends CommonDao<Coordinates> {
 
     private static final Logger LOG = LogManager.getLogger(CoordinatesDao.class);
 
@@ -25,54 +27,27 @@ public class CoordinatesDao extends CommonDao<Coordinates> {
     }
 
     @Override
-    public boolean create(Coordinates coordinates) {
-        String[] columnsToBeInserted = Arrays.copyOfRange(getColumnNames(), 1, getColumnNames().length);
-        try {
-            return sqlGenerator.insertInto(TABLE_NAME_WITH_DB, columnsToBeInserted)
-                               .values(
-                                       coordinates.getLatitude().toString(),
-                                       coordinates.getLongitude().toString()
-                               )
-                               .executeUpdate() == 1;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Coordinates coordinates) {
-        try {
-            return sqlGenerator.update(TABLE_NAME_WITH_DB)
-                               .set(LATITUDE_COLUMN_NAME, coordinates.getLatitude().toString(),
-                                    LONGITUDE_COLUMN_NAME, coordinates.getLongitude().toString()
-                               )
-                               .where(ID_COLUMN_NAME,
-                                      coordinates.getId().orElseThrow(IdIsNotDefinedException::new).toString())
-                               .executeUpdate() == 1;
-        } catch (IdIsNotDefinedException e) {
-            LOG.warn("Coordinates id is not defined", e);
-            return false;
-        } catch (InterruptedException e) {
-            LOG.warn("takeConnection interrupted", e);
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    @Override
     protected String getTableName() {
         return TABLE_NAME_WITH_DB;
     }
 
     @Override
-    protected String[] getColumnNames() {
-        return new String[] {
-                ID_COLUMN_NAME,
-                LATITUDE_COLUMN_NAME,
-                LONGITUDE_COLUMN_NAME
-        };
+    protected Set<String> getColumnNames() {
+        LinkedHashSet<String> columns = new LinkedHashSet<>();
+
+        columns.add(ID_COLUMN_NAME);
+        columns.add(LATITUDE_COLUMN_NAME);
+        columns.add(LONGITUDE_COLUMN_NAME);
+        return columns;
+    }
+
+    @Override
+    protected Map<String, Object> getColumnsAndValuesToBeInserted(Coordinates coordinates) {
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+
+        map.put(LATITUDE_COLUMN_NAME, coordinates.getLatitude());
+        map.put(LONGITUDE_COLUMN_NAME, coordinates.getLongitude());
+        return map;
     }
 
     @Override
