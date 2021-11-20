@@ -1,9 +1,9 @@
 package com.sidorovich.pavel.buber.api.model;
 
-public interface Builder<T, R> {
+public interface Builder<R> {
 
-    T reset();
+    void reset();
 
-    R getResult();
+    R build();
 
 }
