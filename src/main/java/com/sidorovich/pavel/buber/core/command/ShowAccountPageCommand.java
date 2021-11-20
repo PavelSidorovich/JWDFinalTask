@@ -1,8 +1,8 @@
 package com.sidorovich.pavel.buber.core.command;
 
 import com.sidorovich.pavel.buber.api.command.Command;
-import com.sidorovich.pavel.buber.api.command.CommandRequest;
-import com.sidorovich.pavel.buber.api.command.CommandResponse;
+import com.sidorovich.pavel.buber.api.controller.CommandRequest;
+import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.core.dao.AccountDao;
 import com.sidorovich.pavel.buber.api.model.Account;
 

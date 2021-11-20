@@ -1,4 +1,4 @@
-package com.sidorovich.pavel.buber.api.command;
+package com.sidorovich.pavel.buber.api.controller;
 
 public interface CommandResponse {
 
