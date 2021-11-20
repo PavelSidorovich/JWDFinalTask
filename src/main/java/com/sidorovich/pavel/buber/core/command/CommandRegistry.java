@@ -1,24 +1,35 @@
 package com.sidorovich.pavel.buber.core.command;
 
 import com.sidorovich.pavel.buber.api.command.Command;
+import com.sidorovich.pavel.buber.api.model.Role;
 
-// TODO: 10/20/2021 learn how to inject pool 
+import java.util.Arrays;
+import java.util.List;
+
 public enum CommandRegistry {
     MAIN_PAGE(ShowMainPageCommand.getInstance(), "main_page"),
-//    SHOW_ACCOUNTS(new ShowAccountPageCommand(new AccountDao(ConnectionPool.locking())), "show_accounts"),
+    //    SHOW_ACCOUNTS(new ShowAccountPageCommand(new AccountDao(ConnectionPool.locking())), "show_accounts"),
     DEFAULT(ShowMainPageCommand.getInstance(), ""),
     ;
 
     private final Command command;
     private final String path;
+    private final List<Role> allowedRoles;
 
-    CommandRegistry(Command command, String path) {
+    CommandRegistry(Command command, String path, Role... roles) {
         this.command = command;
         this.path = path;
+        this.allowedRoles = roles != null && roles.length > 0
+                ? Arrays.asList(roles)
+                : Role.valuesAsList();
     }
 
     public Command getCommand() {
         return command;
+    }
+
+    public List<Role> getAllowedRoles() {
+        return allowedRoles;
     }
 
     public static Command of(String name) {
