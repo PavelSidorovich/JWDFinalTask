@@ -58,5 +58,4 @@ public class Coordinates extends CommonEntity<Coordinates> {
                '}';
     }
 
-
 }

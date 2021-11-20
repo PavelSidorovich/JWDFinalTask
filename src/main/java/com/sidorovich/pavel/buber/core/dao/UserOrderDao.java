@@ -1,13 +1,12 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
-import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
-import com.sidorovich.pavel.buber.api.model.OrderStatus;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Driver;
+import com.sidorovich.pavel.buber.api.model.OrderStatus;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
-import com.sidorovich.pavel.buber.api.model.UserOrderBuilder;
+import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,25 +85,21 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
 
     @Override
     protected UserOrder extractResult(ResultSet rs) throws SQLException {
-        UserOrderBuilder orderBuilder = new UserOrderBuilder();
-        return getUserOrder(rs, orderBuilder);
-    }
+        Coordinates initial = getInitialCoordinates(rs);
+        Coordinates end = getEndCoordinates(rs);
+        Driver driver = getDriver(rs);
+        BuberUser client = getClient(rs);
 
-    private UserOrder getUserOrder(ResultSet resultSet, UserOrderBuilder orderBuilder)
-            throws SQLException {
-        Coordinates initial = getInitialCoordinates(resultSet);
-        Coordinates end = getEndCoordinates(resultSet);
-        Driver driver = getDriver(resultSet);
-        BuberUser client = getClient(resultSet);
-        return orderBuilder.setId(resultSet.getLong(ID_COLUMN_NAME))
-                           .setPrice(resultSet.getBigDecimal(PRICE_COLUMN_NAME))
-                           .setStatus(OrderStatus.getStatusById(resultSet.getLong(STATUS_ID_COLUMN_NAME))
-                                                 .orElseThrow(IdIsNotDefinedException::new))
-                           .setClient(client)
-                           .setDriver(driver)
-                           .setInitialCoordinates(initial)
-                           .setEndCoordinates(end)
-                           .getResult();
+        return UserOrder.with()
+                        .id(rs.getLong(ID_COLUMN_NAME))
+                        .price(rs.getBigDecimal(PRICE_COLUMN_NAME))
+                        .status(OrderStatus.getStatusById(rs.getLong(STATUS_ID_COLUMN_NAME))
+                                              .orElseThrow(IdIsNotDefinedException::new))
+                        .client(client)
+                        .driver(driver)
+                        .initialCoordinates(initial)
+                        .endCoordinates(end)
+                        .build();
     }
 
     private BuberUser getClient(ResultSet resultSet) throws SQLException {

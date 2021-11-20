@@ -7,7 +7,7 @@ public class Taxi extends CommonEntity<Taxi> {
     private final String carBrand;
     private final String carModel;
     private final String licensePlate;
-    private Coordinates lastCoordinates;
+    private final Coordinates lastCoordinates;
 
     public Taxi(Long id, String carBrand, String carModel, String licensePlate,
                 Coordinates lastCoordinates) {
@@ -28,12 +28,8 @@ public class Taxi extends CommonEntity<Taxi> {
         return new Taxi(id, carBrand, carModel, licensePlate, lastCoordinates);
     }
 
-    public void setLastCoordinates(Coordinates lastCoordinates) {
-        this.lastCoordinates = lastCoordinates;
-    }
-
-    public Coordinates getLastCoordinates() {
-        return lastCoordinates;
+    public Taxi withLastCoordinates(Coordinates lastCoordinates) {
+        return new Taxi(id, carBrand, carModel, licensePlate, lastCoordinates);
     }
 
     public String getCarBrand() {
@@ -46,6 +42,10 @@ public class Taxi extends CommonEntity<Taxi> {
 
     public String getLicensePlate() {
         return licensePlate;
+    }
+
+    public Coordinates getLastCoordinates() {
+        return lastCoordinates;
     }
 
     @Override
@@ -78,6 +78,5 @@ public class Taxi extends CommonEntity<Taxi> {
                ", lastCoordinates=" + lastCoordinates +
                '}';
     }
-
 
 }

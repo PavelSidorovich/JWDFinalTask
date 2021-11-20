@@ -1,12 +1,11 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
-import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
-import com.sidorovich.pavel.buber.api.model.DriverStatus;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Driver;
-import com.sidorovich.pavel.buber.api.model.DriverBuilder;
+import com.sidorovich.pavel.buber.api.model.DriverStatus;
 import com.sidorovich.pavel.buber.api.model.Taxi;
+import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,6 +49,7 @@ public final class DriverDao extends CommonDao<Driver> {
         columns.add(DRIVER_LICENSE_COLUMN_NAME);
         columns.add(TAXI_ID_COLUMN_NAME);
         columns.add(DRIVER_STATUS_ID_COLUMN_NAME);
+
         return columns;
     }
 
@@ -61,6 +61,7 @@ public final class DriverDao extends CommonDao<Driver> {
         map.put(TAXI_ID_COLUMN_NAME, driver.getTaxi().getId()
                                            .orElseThrow(IdIsNotDefinedException::new));
         map.put(DRIVER_STATUS_ID_COLUMN_NAME, driver.getDriverStatus().getId());
+
         return map;
     }
 
@@ -73,8 +74,10 @@ public final class DriverDao extends CommonDao<Driver> {
     protected Driver extractResult(ResultSet rs) throws SQLException {
         BuberUser user = getBuberUser(rs);
         Taxi taxi = getTaxi(rs);
-        DriverBuilder builder = new DriverBuilder();
-        return buildDriver(rs, user, taxi, builder);
+
+        return new Driver(user, rs.getString(DRIVER_LICENSE_COLUMN_NAME),
+                          taxi, DriverStatus.getStatusById(rs.getInt(DRIVER_STATUS_ID_COLUMN_NAME))
+                                            .orElse(DriverStatus.FREE));
     }
 
     private BuberUser getBuberUser(ResultSet resultSet) throws SQLException {
@@ -87,14 +90,4 @@ public final class DriverDao extends CommonDao<Driver> {
                       .orElseThrow(IdIsNotDefinedException::new);
     }
 
-    private Driver buildDriver(ResultSet resultSet, BuberUser user, Taxi taxi, DriverBuilder builder)
-            throws SQLException {
-        return builder
-                .setDriverLicense(resultSet.getString(DRIVER_LICENSE_COLUMN_NAME))
-                .setDriverStatus(DriverStatus.getStatusById(resultSet.getInt(DRIVER_STATUS_ID_COLUMN_NAME))
-                                             .orElse(DriverStatus.FREE))
-                .setBuberUser(user)
-                .setTaxi(taxi)
-                .getResult();
-    }
 }

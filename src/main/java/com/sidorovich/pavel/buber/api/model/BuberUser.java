@@ -11,29 +11,48 @@ public class BuberUser implements Entity<BuberUser> {
     private final String lastName;
     private final String email; // can be null
     private final UserStatus status;
-    private BigDecimal cash;
+    private final BigDecimal cash;
 
     /* can be created only using builder */
-    BuberUser(Account account, String firstName, String lastName,
-              String email, BigDecimal cash, UserStatus status) {
+    private BuberUser(Account account, String firstName, String lastName,
+                      String email, BigDecimal cash, UserStatus status) {
         this.account = account;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        if (cash == null) {
-            this.cash = BigDecimal.valueOf(0);
-        } else {
-            this.cash = cash;
-        }
+        this.cash = cash;
         this.status = status;
+    }
+
+    @Override
+    public Optional<Long> getId() {
+        return account.getId();
+    }
+
+    @Override
+    public BuberUser withId(Long id) {
+        return new BuberUser(
+                account.withId(id), firstName,
+                lastName, email, cash, status
+        );
     }
 
     public BuberUser withEmail(String email) {
         return new BuberUser(account, firstName, lastName, email, cash, status);
     }
 
-    public void setCash(BigDecimal cash) {
-        this.cash = cash;
+    public BuberUser withCash(BigDecimal cash) {
+        return new BuberUser(
+                account, firstName,
+                lastName, email, cash, status
+        );
+    }
+
+    public Account getAccount() {
+        return new Account(account.getId().orElse(null),
+                           account.getPhone(),
+                           account.getPasswordHash(),
+                           account.getRole());
     }
 
     public String getFirstName() {
@@ -48,31 +67,12 @@ public class BuberUser implements Entity<BuberUser> {
         return Optional.ofNullable(this.email);
     }
 
-    public BigDecimal getCash() {
-        return cash;
-    }
-
     public UserStatus getStatus() {
         return status;
     }
 
-    public Account getAccount() {
-        return new Account(account.getId().orElse(null),
-                           account.getPhone(),
-                           account.getPasswordHash(),
-                           account.getRole());
-    }
-
-    @Override
-    public Optional<Long> getId() {
-        return account.getId();
-    }
-
-    @Override
-    public BuberUser withId(Long id) {
-        return new BuberUser(account.withId(id),
-                             firstName, lastName,
-                             email, cash, status);
+    public BigDecimal getCash() {
+        return cash;
     }
 
     public String getPhone() {
@@ -122,6 +122,71 @@ public class BuberUser implements Entity<BuberUser> {
                ", cash=" + cash +
                ", status=" + status +
                '}';
+    }
+
+    public static UserBuilder with() {
+        return new UserBuilder();
+    }
+
+    public static class UserBuilder implements Builder<BuberUser> {
+
+        private Account account;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private UserStatus status;
+        private BigDecimal cash;
+
+        private UserBuilder() {
+        }
+
+        public UserBuilder account(Account account) {
+            this.account = account;
+            return this;
+        }
+
+        public UserBuilder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserBuilder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public UserBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder status(UserStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public UserBuilder cash(BigDecimal cash) {
+            this.cash = cash;
+            return this;
+        }
+
+        @Override
+        public void reset() {
+            account = null;
+            firstName = null;
+            lastName = null;
+            email = null;
+            status = null;
+            cash = null;
+        }
+
+        @Override
+        public BuberUser build() {
+            return new BuberUser(
+                    account, firstName, lastName,
+                    email, cash, status
+            );
+        }
     }
 
 }

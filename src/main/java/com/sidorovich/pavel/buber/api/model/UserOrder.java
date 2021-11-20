@@ -13,9 +13,9 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
     private final OrderStatus status;
 
     /* can be instantiated only using builder */
-    UserOrder(Long id, BuberUser client, Driver driver, BigDecimal price,
-              Coordinates initialCoordinates, Coordinates endCoordinates,
-              OrderStatus status) {
+    private UserOrder(Long id, BuberUser client, Driver driver, BigDecimal price,
+                      Coordinates initialCoordinates, Coordinates endCoordinates,
+                      OrderStatus status) {
         super(id);
         this.client = client;
         this.driver = driver;
@@ -75,4 +75,77 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
     public int hashCode() {
         return Objects.hash(id, client, driver, price, initialCoordinates, endCoordinates, status);
     }
+
+    public static OrderBuilder with() {
+        return new OrderBuilder();
+    }
+
+    public static class OrderBuilder implements Builder<UserOrder> {
+
+        private Long id;
+        private BuberUser client;
+        private Driver driver;
+        private BigDecimal price;
+        private Coordinates initialCoordinates;
+        private Coordinates endCoordinates;
+        private OrderStatus status;
+
+        private OrderBuilder() {
+        }
+
+        public OrderBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public OrderBuilder client(BuberUser client) {
+            this.client = client;
+            return this;
+        }
+
+        public OrderBuilder driver(Driver driver) {
+            this.driver = driver;
+            return this;
+        }
+
+        public OrderBuilder price(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public OrderBuilder initialCoordinates(Coordinates initialCoordinates) {
+            this.initialCoordinates = initialCoordinates;
+            return this;
+        }
+
+        public OrderBuilder endCoordinates(Coordinates endCoordinates) {
+            this.endCoordinates = endCoordinates;
+            return this;
+        }
+
+        public OrderBuilder status(OrderStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        @Override
+        public void reset() {
+            id = null;
+            client = null;
+            driver = null;
+            price = null;
+            initialCoordinates = null;
+            endCoordinates = null;
+            status = null;
+        }
+
+        @Override
+        public UserOrder build() {
+            return new UserOrder(
+                    id, client, driver, price,
+                    initialCoordinates, endCoordinates, status
+            );
+        }
+    }
+
 }

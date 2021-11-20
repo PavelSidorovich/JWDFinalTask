@@ -1,11 +1,10 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
-import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
-import com.sidorovich.pavel.buber.api.model.UserStatus;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
-import com.sidorovich.pavel.buber.api.model.BuberUserBuilder;
+import com.sidorovich.pavel.buber.api.model.UserStatus;
+import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -80,14 +79,14 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
     }
 
     private BuberUser buildBuberUser(ResultSet resultSet, Account account) throws SQLException {
-        return new BuberUserBuilder()
-                .setAccount(account)
-                .setFirstName(resultSet.getString(FIRST_NAME_COLUMN_NAME))
-                .setLastName(resultSet.getString(LAST_NAME_COLUMN_NAME))
-                .setEmail(resultSet.getString(EMAIL_COLUMN_NAME))
-                .setCash(resultSet.getBigDecimal(MONEY_COLUMN_NAME))
-                .setStatus(UserStatus.getStatusById(resultSet.getInt(STATUS_ID_COLUMN_NAME))
+        return BuberUser.with()
+                .account(account)
+                .firstName(resultSet.getString(FIRST_NAME_COLUMN_NAME))
+                .lastName(resultSet.getString(LAST_NAME_COLUMN_NAME))
+                .email(resultSet.getString(EMAIL_COLUMN_NAME))
+                .cash(resultSet.getBigDecimal(MONEY_COLUMN_NAME))
+                .status(UserStatus.getStatusById(resultSet.getInt(STATUS_ID_COLUMN_NAME))
                                      .orElse(UserStatus.ACTIVE))
-                .getResult();
+                .build();
     }
 }

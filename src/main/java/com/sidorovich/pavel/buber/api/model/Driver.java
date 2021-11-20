@@ -8,14 +8,31 @@ public class Driver implements Entity<Driver> {
     private final BuberUser user;
     private final String driverLicense;
     private final Taxi taxi;
-    private DriverStatus driverStatus;
+    private final DriverStatus driverStatus;
 
-    // can be created only using builder
-    Driver(BuberUser buberUser, String driverLicense, Taxi taxi, DriverStatus driverStatus) {
+    public Driver(BuberUser buberUser, String driverLicense, Taxi taxi, DriverStatus driverStatus) {
         this.user = buberUser;
         this.driverLicense = driverLicense;
         this.taxi = taxi;
         this.driverStatus = driverStatus;
+    }
+
+    @Override
+    public Optional<Long> getId() {
+        return user.getId();
+    }
+
+    @Override
+    public Driver withId(Long id) {
+        return new Driver(user.withId(id), driverLicense, taxi, driverStatus);
+    }
+
+    public Driver withDriverStatus(DriverStatus driverStatus) {
+        return new Driver(user, driverLicense, taxi, driverStatus);
+    }
+
+    public BuberUser getUser() {
+        return user;
     }
 
     public String getDriverLicense() {
@@ -28,10 +45,6 @@ public class Driver implements Entity<Driver> {
 
     public DriverStatus getDriverStatus() {
         return driverStatus;
-    }
-
-    public void setDriverStatus(DriverStatus driverStatus) {
-        this.driverStatus = driverStatus;
     }
 
     @Override
@@ -56,12 +69,13 @@ public class Driver implements Entity<Driver> {
     }
 
     @Override
-    public Optional<Long> getId() {
-        return user.getId();
+    public String toString() {
+        return "Driver{" +
+               "user=" + user +
+               ", driverLicense='" + driverLicense + '\'' +
+               ", taxi=" + taxi +
+               ", driverStatus=" + driverStatus +
+               '}';
     }
 
-    @Override
-    public Driver withId(Long id) {
-        return new Driver(user.withId(id), driverLicense, taxi, driverStatus);
-    }
 }
