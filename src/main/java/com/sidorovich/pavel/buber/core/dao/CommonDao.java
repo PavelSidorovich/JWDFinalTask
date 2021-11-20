@@ -22,7 +22,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
     private final Logger logger;
     private final ConnectionPool connectionPool;
 
-    public CommonDao(Logger logger, ConnectionPool connectionPool) {
+    CommonDao(Logger logger, ConnectionPool connectionPool) {
         this.logger = logger;
         this.connectionPool = connectionPool;
     }
@@ -56,7 +56,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
     }
 
     @Override
-    public Optional<T> read(Long id) {
+    public Optional<T> findById(Long id) {
         QueryGenerator queryGenerator = QueryGenerator.getInstance(connectionPool);
 
         List<T> list = queryGenerator.select(getColumnNames())
@@ -67,7 +67,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
     }
 
     @Override
-    public List<T> readAll() {
+    public List<T> findAll() {
         QueryGenerator queryGenerator = QueryGenerator.getInstance(connectionPool);
 
         return queryGenerator.select(getColumnNames())

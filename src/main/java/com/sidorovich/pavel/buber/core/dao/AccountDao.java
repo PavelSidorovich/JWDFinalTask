@@ -24,7 +24,7 @@ public final class AccountDao extends CommonDao<Account> {
     private static final String PASSWORD_HASH_COLUMN_NAME = TABLE_NAME + ".password_hash";
     private static final String ROLE_ID_COLUMN_NAME = TABLE_NAME + ".role_id";
 
-    private AccountDao(ConnectionPool connectionPool) {
+    AccountDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
     }
 

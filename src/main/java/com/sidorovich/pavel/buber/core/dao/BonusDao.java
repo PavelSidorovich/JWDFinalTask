@@ -23,7 +23,7 @@ public final class BonusDao extends CommonDao<Bonus> {
     private static final String DISCOUNT_COLUMN_NAME = TABLE_NAME + ".discount";
     private static final String EXPIRES_ID_COLUMN_NAME = TABLE_NAME + ".expires";
 
-    public BonusDao(ConnectionPool connectionPool) {
+    BonusDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
     }
 

@@ -9,9 +9,9 @@ public interface EntityDao<T extends Entity<T>> {
 
     T create(T entity);
 
-    Optional<T> read(Long id);
+    Optional<T> findById(Long id);
 
-    List<T> readAll();
+    List<T> findAll();
 
     T update(T entity);
 

@@ -31,7 +31,7 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
 
     private final AccountDao accountDao;
 
-    public BuberUserDao(ConnectionPool connectionPool) {
+    BuberUserDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
         accountDao = new AccountDao(connectionPool);
     }
@@ -73,7 +73,7 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
 
     @Override
     protected BuberUser extractResult(ResultSet rs) throws SQLException {
-        Optional<Account> optionalAccount = accountDao.read(rs.getLong(ID_COLUMN_NAME));
+        Optional<Account> optionalAccount = accountDao.findById(rs.getLong(ID_COLUMN_NAME));
         Account account = optionalAccount.orElseThrow(IdIsNotDefinedException::new);
         return buildBuberUser(rs, account);
     }

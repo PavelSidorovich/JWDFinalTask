@@ -30,7 +30,7 @@ public final class DriverDao extends CommonDao<Driver> {
     private final BuberUserDao buberUserDao;
     private final TaxiDao taxiDao;
 
-    public DriverDao(ConnectionPool connectionPool) {
+    DriverDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
         buberUserDao = new BuberUserDao(connectionPool);
         taxiDao = new TaxiDao(connectionPool);
@@ -81,12 +81,12 @@ public final class DriverDao extends CommonDao<Driver> {
     }
 
     private BuberUser getBuberUser(ResultSet resultSet) throws SQLException {
-        return buberUserDao.read(resultSet.getLong(ID_COLUMN_NAME))
+        return buberUserDao.findById(resultSet.getLong(ID_COLUMN_NAME))
                            .orElseThrow(IdIsNotDefinedException::new);
     }
 
     private Taxi getTaxi(ResultSet resultSet) throws SQLException {
-        return taxiDao.read(resultSet.getLong(TAXI_ID_COLUMN_NAME))
+        return taxiDao.findById(resultSet.getLong(TAXI_ID_COLUMN_NAME))
                       .orElseThrow(IdIsNotDefinedException::new);
     }
 

@@ -28,7 +28,7 @@ public final class TaxiDao extends CommonDao<Taxi> {
 
     private final CoordinatesDao coordinatesDao;
 
-    public TaxiDao(ConnectionPool connectionPool) {
+    TaxiDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
         coordinatesDao = new CoordinatesDao(connectionPool);
     }
@@ -69,7 +69,7 @@ public final class TaxiDao extends CommonDao<Taxi> {
 
     @Override
     protected Taxi extractResult(ResultSet rs) throws SQLException {
-        Coordinates coordinates = coordinatesDao.read(rs.getLong(LAST_COORDINATES_ID_COLUMN_NAME))
+        Coordinates coordinates = coordinatesDao.findById(rs.getLong(LAST_COORDINATES_ID_COLUMN_NAME))
                                                 .orElseThrow(IdIsNotDefinedException::new);
         return new Taxi(
                 rs.getLong(ID_COLUMN_NAME),

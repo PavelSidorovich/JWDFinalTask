@@ -22,7 +22,7 @@ public final class CoordinatesDao extends CommonDao<Coordinates> {
     private static final String LATITUDE_COLUMN_NAME = TABLE_NAME + ".latitude";
     private static final String LONGITUDE_COLUMN_NAME = TABLE_NAME + ".longitude";
 
-    public CoordinatesDao(ConnectionPool connectionPool) {
+    CoordinatesDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
     }
 

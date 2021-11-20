@@ -35,7 +35,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
     private final BuberUserDao buberUserDao;
     private final CoordinatesDao coordinatesDao;
 
-    public UserOrderDao(ConnectionPool connectionPool) {
+    UserOrderDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
         driverDao = new DriverDao(connectionPool);
         buberUserDao = new BuberUserDao(connectionPool);
@@ -103,22 +103,22 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
     }
 
     private BuberUser getClient(ResultSet resultSet) throws SQLException {
-        return buberUserDao.read(resultSet.getLong(CLIENT_ID_COLUMN_NAME))
+        return buberUserDao.findById(resultSet.getLong(CLIENT_ID_COLUMN_NAME))
                            .orElseThrow(IdIsNotDefinedException::new);
     }
 
     private Driver getDriver(ResultSet resultSet) throws SQLException {
-        return driverDao.read(resultSet.getLong(DRIVER_ID_COLUMN_NAME))
+        return driverDao.findById(resultSet.getLong(DRIVER_ID_COLUMN_NAME))
                         .orElseThrow(IdIsNotDefinedException::new);
     }
 
     private Coordinates getEndCoordinates(ResultSet resultSet) throws SQLException {
-        return coordinatesDao.read(resultSet.getLong(END_COORDINATES_ID_COLUMN_NAME))
+        return coordinatesDao.findById(resultSet.getLong(END_COORDINATES_ID_COLUMN_NAME))
                              .orElseThrow(IdIsNotDefinedException::new);
     }
 
     private Coordinates getInitialCoordinates(ResultSet resultSet) throws SQLException {
-        return coordinatesDao.read(resultSet.getLong(INITIAL_COORDINATES_ID_COLUMN_NAME))
+        return coordinatesDao.findById(resultSet.getLong(INITIAL_COORDINATES_ID_COLUMN_NAME))
                              .orElseThrow(IdIsNotDefinedException::new);
     }
 }

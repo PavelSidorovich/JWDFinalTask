@@ -32,7 +32,7 @@ public class ShowAccountPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final List<Account> accounts = accountDao.readAll();
+        final List<Account> accounts = accountDao.findAll();
         request.addAttributeToJsp(ACCOUNTS_ATTRIBUTE_NAME, accounts);
         return FORWARD_TO_ACCOUNTS_PAGE;
     }
