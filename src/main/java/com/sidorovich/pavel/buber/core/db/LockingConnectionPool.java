@@ -33,18 +33,17 @@ public class LockingConnectionPool implements ConnectionPool {
     private final List<ProxyConnection> givenAwayConnections = new CopyOnWriteArrayList<>();
     private final ReentrantLock lock = new ReentrantLock();
     private final Condition freeConnections = lock.newCondition();
-
     private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     private LockingConnectionPool() {
     }
 
-    private static class InstanceCreator {
+    private static class Holder {
         static LockingConnectionPool INSTANCE = new LockingConnectionPool();
     }
 
     public static LockingConnectionPool getInstance() {
-        return InstanceCreator.INSTANCE;
+        return Holder.INSTANCE;
     }
 
     @Override
@@ -69,8 +68,8 @@ public class LockingConnectionPool implements ConnectionPool {
 
     @Override
     public boolean shutDown() {
+        lock.lock();
         try {
-            lock.lock();
             if (initialized.get()) {
                 closeConnections();
                 deregisterDrivers();
@@ -85,8 +84,8 @@ public class LockingConnectionPool implements ConnectionPool {
 
     @Override
     public Connection takeConnection() throws InterruptedException {
+        lock.lock();
         try {
-            lock.lock();
             while (availableConnections.isEmpty()) {
                 freeConnections.await();
             }
@@ -101,8 +100,8 @@ public class LockingConnectionPool implements ConnectionPool {
     @Override
     @SuppressWarnings("SuspiciousMethodCalls")
     public void returnConnection(Connection connection) {
+        lock.lock();
         try {
-            lock.lock();
             if (givenAwayConnections.remove(connection)) {
                 availableConnections.add((ProxyConnection) connection);
                 freeConnections.signalAll();
