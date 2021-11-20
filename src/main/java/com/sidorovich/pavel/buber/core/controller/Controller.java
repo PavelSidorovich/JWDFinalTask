@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/controller")
-public class MainServlet extends HttpServlet {
+public class Controller extends HttpServlet {
 
-    private static final Logger LOG = LogManager.getLogger(MainServlet.class);
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     @Override
     public void init() {
