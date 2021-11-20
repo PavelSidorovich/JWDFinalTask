@@ -1,14 +1,13 @@
 package com.sidorovich.pavel.buber.core.command;
 
 import com.sidorovich.pavel.buber.api.command.Command;
-import com.sidorovich.pavel.buber.core.dao.AccountDao;
-import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 
 // TODO: 10/20/2021 learn how to inject pool 
 public enum CommandRegistry {
     MAIN_PAGE(ShowMainPageCommand.getInstance(), "main_page"),
-    SHOW_ACCOUNTS(new ShowAccountPageCommand(new AccountDao(ConnectionPool.locking())), "show_accounts"),
-    DEFAULT(ShowMainPageCommand.getInstance(), "");
+//    SHOW_ACCOUNTS(new ShowAccountPageCommand(new AccountDao(ConnectionPool.locking())), "show_accounts"),
+    DEFAULT(ShowMainPageCommand.getInstance(), ""),
+    ;
 
     private final Command command;
     private final String path;
@@ -22,7 +21,7 @@ public enum CommandRegistry {
         return command;
     }
 
-    static Command of(String name) {
+    public static Command of(String name) {
         for (CommandRegistry constant : values()) {
             if (constant.path.equalsIgnoreCase(name)) {
                 return constant.command;
