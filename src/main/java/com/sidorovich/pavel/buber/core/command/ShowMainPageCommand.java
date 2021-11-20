@@ -21,13 +21,12 @@ public class ShowMainPageCommand implements Command {
     private ShowMainPageCommand() {
     }
 
-    private static class InstanceCreator {
+    private static class Holder {
         private static final ShowMainPageCommand INSTANCE = new ShowMainPageCommand();
-
     }
 
     public static ShowMainPageCommand getInstance() {
-        return InstanceCreator.INSTANCE;
+        return Holder.INSTANCE;
     }
 
     @Override
