@@ -3,6 +3,7 @@ package com.sidorovich.pavel.buber.core.controller;
 import com.sidorovich.pavel.buber.api.command.Command;
 import com.sidorovich.pavel.buber.api.command.CommandResponse;
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.core.command.CommandRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,8 +29,9 @@ public class MainServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         LOG.trace("caught request and response");
         final String commandName = request.getParameter("command");
-        final Command command = Command.of(commandName);
+        final Command command = CommandRegistry.of(commandName);
         final CommandResponse commandResponse = command.execute(request::setAttribute);
+
         proceedWithResponse(request, response, commandResponse);
     }
 
