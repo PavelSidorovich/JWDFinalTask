@@ -29,7 +29,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
     private static final String PRICE_COLUMN_NAME = TABLE_NAME + ".price";
     private static final String INITIAL_COORDINATES_ID_COLUMN_NAME = TABLE_NAME + ".initial_coordinates_id";
     private static final String END_COORDINATES_ID_COLUMN_NAME = TABLE_NAME + ".end_coordinates_id";
-    private static final String STATUS_ID_COLUMN_NAME = TABLE_NAME + ".status_id";
+    private static final String STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
 
     private final DriverDao driverDao;
     private final BuberUserDao buberUserDao;
@@ -58,7 +58,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
         columns.add(PRICE_COLUMN_NAME);
         columns.add(INITIAL_COORDINATES_ID_COLUMN_NAME);
         columns.add(END_COORDINATES_ID_COLUMN_NAME);
-        columns.add(STATUS_ID_COLUMN_NAME);
+        columns.add(STATUS_NAME_COLUMN_NAME);
         return columns;
     }
 
@@ -75,7 +75,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
                                                          .orElseThrow(IdIsNotDefinedException::new));
         map.put(END_COORDINATES_ID_COLUMN_NAME, order.getEndCoordinates().getId()
                                                      .orElseThrow(IdIsNotDefinedException::new));
-        map.put(STATUS_ID_COLUMN_NAME, order.getStatus().getId());
+        map.put(STATUS_NAME_COLUMN_NAME, order.getStatus().name());
         return map;
     }
 
@@ -94,8 +94,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
         return UserOrder.with()
                         .id(rs.getLong(ID_COLUMN_NAME))
                         .price(rs.getBigDecimal(PRICE_COLUMN_NAME))
-                        .status(OrderStatus.getStatusById(rs.getLong(STATUS_ID_COLUMN_NAME))
-                                              .orElseThrow(IdIsNotDefinedException::new))
+                        .status(OrderStatus.getStatusByName(rs.getString(STATUS_NAME_COLUMN_NAME)))
                         .client(client)
                         .driver(driver)
                         .initialCoordinates(initial)

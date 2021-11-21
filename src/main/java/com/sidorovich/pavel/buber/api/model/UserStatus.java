@@ -1,31 +1,21 @@
 package com.sidorovich.pavel.buber.api.model;
 
-import java.util.Arrays;
-import java.util.Optional;
-
 public enum UserStatus {
-    ACTIVE("active", 1),
-    BLOCKED("blocked", 2);
+    ACTIVE("active"),
+    BLOCKED("blocked");
 
-    private final String name;
-    private final int id;
+    private final String statusName;
 
-    UserStatus(String name, int id) {
-        this.name = name;
-        this.id = id;
+    UserStatus(String statusName) {
+        this.statusName = statusName;
     }
 
-    public static Optional<UserStatus> getStatusById(int id) {
-        return Arrays.stream(values())
-                     .filter(role -> role.id == id)
-                     .findAny();
+    public static UserStatus getStatusByName(String statusName) {
+        return valueOf(statusName.toUpperCase());
     }
 
-    public String getName() {
-        return name;
+    public String getStatusName() {
+        return statusName;
     }
 
-    public Integer getId() {
-        return id;
-    }
 }

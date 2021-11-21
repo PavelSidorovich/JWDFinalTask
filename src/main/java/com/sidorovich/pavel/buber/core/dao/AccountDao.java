@@ -22,7 +22,7 @@ public final class AccountDao extends CommonDao<Account> {
     private static final String ID_COLUMN_NAME = TABLE_NAME + ".id";
     private static final String PHONE_COLUMN_NAME = TABLE_NAME + ".phone";
     private static final String PASSWORD_HASH_COLUMN_NAME = TABLE_NAME + ".password_hash";
-    private static final String ROLE_ID_COLUMN_NAME = TABLE_NAME + ".role_id";
+    private static final String ROLE_NAME_COLUMN_NAME = TABLE_NAME + ".role_name";
 
     AccountDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
@@ -40,7 +40,7 @@ public final class AccountDao extends CommonDao<Account> {
         columns.add(ID_COLUMN_NAME);
         columns.add(PHONE_COLUMN_NAME);
         columns.add(PASSWORD_HASH_COLUMN_NAME);
-        columns.add(ROLE_ID_COLUMN_NAME);
+        columns.add(ROLE_NAME_COLUMN_NAME);
         return columns;
     }
 
@@ -50,7 +50,8 @@ public final class AccountDao extends CommonDao<Account> {
 
         map.put(PHONE_COLUMN_NAME, account.getPhone());
         map.put(PASSWORD_HASH_COLUMN_NAME, account.getPasswordHash());
-        map.put(ROLE_ID_COLUMN_NAME, account.getRole().getId());
+        map.put(ROLE_NAME_COLUMN_NAME, account.getRole().name());
+
         return map;
     }
 
@@ -65,8 +66,8 @@ public final class AccountDao extends CommonDao<Account> {
                 rs.getLong(ID_COLUMN_NAME),
                 rs.getString(PHONE_COLUMN_NAME),
                 rs.getString(PASSWORD_HASH_COLUMN_NAME),
-                Role.getRoleById(rs.getInt(ROLE_ID_COLUMN_NAME))
-                    .orElse(Role.CLIENT)
+                Role.getRoleByName(rs.getString(ROLE_NAME_COLUMN_NAME))
         );
     }
+
 }

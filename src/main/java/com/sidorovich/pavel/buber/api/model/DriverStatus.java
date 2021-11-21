@@ -1,31 +1,21 @@
 package com.sidorovich.pavel.buber.api.model;
 
-import java.util.Arrays;
-import java.util.Optional;
-
 public enum DriverStatus {
-    BUSY("busy", 1),
-    FREE("free", 2);
+    BUSY("busy"),
+    FREE("free");
 
-    private final String name;
-    private final int id;
+    private final String statusName;
 
-    DriverStatus(String name, int id) {
-        this.name = name;
-        this.id = id;
+    DriverStatus(String statusName) {
+        this.statusName = statusName;
     }
 
-    public static Optional<DriverStatus> getStatusById(int id) {
-        return Arrays.stream(values())
-                     .filter(status -> status.id == id)
-                     .findAny();
+    public static DriverStatus getStatusByName(String statusName) {
+        return valueOf(statusName.toUpperCase());
     }
 
-    public String getName() {
-        return name;
+    public String getStatusName() {
+        return statusName;
     }
 
-    public Integer getId() {
-        return id;
-    }
 }

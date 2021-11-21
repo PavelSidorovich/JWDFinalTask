@@ -27,7 +27,7 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
     private static final String LAST_NAME_COLUMN_NAME = TABLE_NAME + ".last_name";
     private static final String EMAIL_COLUMN_NAME = TABLE_NAME + ".email";
     private static final String MONEY_COLUMN_NAME = TABLE_NAME + ".money";
-    private static final String STATUS_ID_COLUMN_NAME = TABLE_NAME + ".status_id";
+    private static final String STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
 
     private final AccountDao accountDao;
 
@@ -50,7 +50,7 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
         columns.add(LAST_NAME_COLUMN_NAME);
         columns.add(EMAIL_COLUMN_NAME);
         columns.add(MONEY_COLUMN_NAME);
-        columns.add(STATUS_ID_COLUMN_NAME);
+        columns.add(STATUS_NAME_COLUMN_NAME);
         return columns;
     }
 
@@ -62,7 +62,8 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
         map.put(LAST_NAME_COLUMN_NAME, user.getLastName());
         map.put(EMAIL_COLUMN_NAME, user.getEmail());
         map.put(MONEY_COLUMN_NAME, user.getCash());
-        map.put(STATUS_ID_COLUMN_NAME, user.getStatus().getId());
+        map.put(STATUS_NAME_COLUMN_NAME, user.getStatus().name());
+
         return map;
     }
 
@@ -85,8 +86,7 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
                 .lastName(resultSet.getString(LAST_NAME_COLUMN_NAME))
                 .email(resultSet.getString(EMAIL_COLUMN_NAME))
                 .cash(resultSet.getBigDecimal(MONEY_COLUMN_NAME))
-                .status(UserStatus.getStatusById(resultSet.getInt(STATUS_ID_COLUMN_NAME))
-                                     .orElse(UserStatus.ACTIVE))
+                .status(UserStatus.getStatusByName(resultSet.getString(STATUS_NAME_COLUMN_NAME)))
                 .build();
     }
 }

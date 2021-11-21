@@ -1,32 +1,22 @@
 package com.sidorovich.pavel.buber.api.model;
 
-import java.util.Arrays;
-import java.util.Optional;
-
 public enum OrderStatus {
-    IN_PROCESS("inProgress", 1),
-    COMPLETED("completed", 2),
-    CANCELLED("cancelled", 3);
+    IN_PROCESS("in progress"),
+    COMPLETED("completed"),
+    CANCELLED("cancelled");
 
-    private final String name;
-    private final int id;
+    private final String statusName;
 
-    OrderStatus(String name, int id) {
-        this.name = name;
-        this.id = id;
+    OrderStatus(String statusName) {
+        this.statusName = statusName;
     }
 
-    public static Optional<OrderStatus> getStatusById(Long id) {
-        return Arrays.stream(values())
-                     .filter(role -> role.id == id)
-                     .findAny();
+    public static OrderStatus getStatusByName(String statusName) {
+        return valueOf(statusName);
     }
 
-    public String getName() {
-        return name;
+    public String getStatusName() {
+        return statusName;
     }
 
-    public Integer getId() {
-        return id;
-    }
 }

@@ -25,7 +25,7 @@ public final class DriverDao extends CommonDao<Driver> {
     private static final String ID_COLUMN_NAME = TABLE_NAME + ".id";
     private static final String DRIVER_LICENSE_COLUMN_NAME = TABLE_NAME + ".driver_license";
     private static final String TAXI_ID_COLUMN_NAME = TABLE_NAME + ".taxi_id";
-    private static final String DRIVER_STATUS_ID_COLUMN_NAME = TABLE_NAME + ".status_id";
+    private static final String DRIVER_STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
 
     private final BuberUserDao buberUserDao;
     private final TaxiDao taxiDao;
@@ -48,7 +48,7 @@ public final class DriverDao extends CommonDao<Driver> {
         columns.add(ID_COLUMN_NAME);
         columns.add(DRIVER_LICENSE_COLUMN_NAME);
         columns.add(TAXI_ID_COLUMN_NAME);
-        columns.add(DRIVER_STATUS_ID_COLUMN_NAME);
+        columns.add(DRIVER_STATUS_NAME_COLUMN_NAME);
 
         return columns;
     }
@@ -60,7 +60,7 @@ public final class DriverDao extends CommonDao<Driver> {
         map.put(DRIVER_LICENSE_COLUMN_NAME, driver.getDriverLicense());
         map.put(TAXI_ID_COLUMN_NAME, driver.getTaxi().getId()
                                            .orElseThrow(IdIsNotDefinedException::new));
-        map.put(DRIVER_STATUS_ID_COLUMN_NAME, driver.getDriverStatus().getId());
+        map.put(DRIVER_STATUS_NAME_COLUMN_NAME, driver.getDriverStatus().name());
 
         return map;
     }
@@ -75,9 +75,10 @@ public final class DriverDao extends CommonDao<Driver> {
         BuberUser user = getBuberUser(rs);
         Taxi taxi = getTaxi(rs);
 
-        return new Driver(user, rs.getString(DRIVER_LICENSE_COLUMN_NAME),
-                          taxi, DriverStatus.getStatusById(rs.getInt(DRIVER_STATUS_ID_COLUMN_NAME))
-                                            .orElse(DriverStatus.FREE));
+        return new Driver(
+                user, rs.getString(DRIVER_LICENSE_COLUMN_NAME),
+                taxi, DriverStatus.getStatusByName(rs.getString(DRIVER_STATUS_NAME_COLUMN_NAME))
+        );
     }
 
     private BuberUser getBuberUser(ResultSet resultSet) throws SQLException {
