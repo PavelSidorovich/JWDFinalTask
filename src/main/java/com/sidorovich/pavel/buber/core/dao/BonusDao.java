@@ -37,7 +37,6 @@ public final class BonusDao extends CommonDao<Bonus> {
         LinkedHashSet<String> columns = new LinkedHashSet<>();
 
         columns.add(ID_COLUMN_NAME);
-        columns.add(CLIENT_ID_COLUMN_NAME);
         columns.add(DISCOUNT_COLUMN_NAME);
         columns.add(EXPIRES_ID_COLUMN_NAME);
         return columns;
@@ -47,7 +46,6 @@ public final class BonusDao extends CommonDao<Bonus> {
     protected Map<String, Object> getColumnsAndValuesToBeInserted(Bonus bonus) {
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
-        map.put(CLIENT_ID_COLUMN_NAME, bonus.getClientId());
         map.put(DISCOUNT_COLUMN_NAME, bonus.getDiscount());
         map.put(EXPIRES_ID_COLUMN_NAME, bonus.getExpireDate());
         return map;
@@ -62,7 +60,6 @@ public final class BonusDao extends CommonDao<Bonus> {
     protected Bonus extractResult(ResultSet rs) throws SQLException {
         return new Bonus(
                 rs.getLong(ID_COLUMN_NAME),
-                rs.getLong(CLIENT_ID_COLUMN_NAME),
                 rs.getDouble(DISCOUNT_COLUMN_NAME),
                 rs.getDate(EXPIRES_ID_COLUMN_NAME)
         );
