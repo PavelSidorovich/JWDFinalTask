@@ -33,7 +33,7 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
 
     BuberUserDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
-        accountDao = new AccountDao(connectionPool);
+        accountDao = DaoFactory.getInstance().serviceFor(AccountDao.class);
     }
 
     @Override

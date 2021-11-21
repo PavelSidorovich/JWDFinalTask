@@ -37,9 +37,10 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
 
     UserOrderDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
-        driverDao = new DriverDao(connectionPool);
-        buberUserDao = new BuberUserDao(connectionPool);
-        coordinatesDao = new CoordinatesDao(connectionPool);
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        driverDao = daoFactory.serviceFor(DriverDao.class);
+        buberUserDao = daoFactory.serviceFor(BuberUserDao.class);
+        coordinatesDao = daoFactory.serviceFor(CoordinatesDao.class);
     }
 
     @Override

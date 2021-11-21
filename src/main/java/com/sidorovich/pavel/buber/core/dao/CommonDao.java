@@ -3,9 +3,11 @@ package com.sidorovich.pavel.buber.core.dao;
 import com.sidorovich.pavel.buber.api.dao.EntityDao;
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
+import com.sidorovich.pavel.buber.api.model.Entity;
+import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
+import com.sidorovich.pavel.buber.exception.CannotFindEntityByIdException;
 import com.sidorovich.pavel.buber.exception.EntityExtractionFailedException;
 import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
-import com.sidorovich.pavel.buber.api.model.Entity;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
@@ -28,8 +30,8 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
     }
 
     @Override
-    public T create(T entity) {
-        QueryGenerator queryGenerator = QueryGenerator.getInstance(connectionPool);
+    public T save(T entity) throws SQLException {
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
 
         long id = queryGenerator.insertInto(getTableName(), getColumnsAndValuesToBeInserted(entity).keySet())
                                 .values(getColumnsAndValuesToBeInserted(entity).values())
@@ -38,15 +40,16 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
     }
 
     public T update(T entity) {
-        QueryGenerator queryGenerator = QueryGenerator.getInstance(connectionPool);
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
 
         try {
-            long id = queryGenerator.update(getTableName())
-                                    .set(getColumnsAndValuesToBeInserted(entity))
-                                    .where(getPrimaryColumnName(),
-                                           entity.getId().orElseThrow(IdIsNotDefinedException::new))
-                                    .executeUpdate();
-            return entity.withId(id);
+            queryGenerator.update(getTableName())
+                          .set(getColumnsAndValuesToBeInserted(entity))
+                          .where(getPrimaryColumnName(),
+                                 entity.getId().orElseThrow(IdIsNotDefinedException::new))
+                          .executeUpdate();
+            return findById(entity.getId().orElseThrow(IdIsNotDefinedException::new))
+                    .orElseThrow(CannotFindEntityByIdException::new);
         } catch (IdIsNotDefinedException e) {
             logger.warn("Entity id is not defined", e);
         } catch (Throwable throwable) {
@@ -57,7 +60,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
 
     @Override
     public Optional<T> findById(Long id) {
-        QueryGenerator queryGenerator = QueryGenerator.getInstance(connectionPool);
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
 
         List<T> list = queryGenerator.select(getColumnNames())
                                      .from(getTableName())
@@ -68,7 +71,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
 
     @Override
     public List<T> findAll() {
-        QueryGenerator queryGenerator = QueryGenerator.getInstance(connectionPool);
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
 
         return queryGenerator.select(getColumnNames())
                              .from(getTableName())
@@ -76,8 +79,8 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
     }
 
     @Override
-    public boolean delete(Long id) {
-        QueryGenerator queryGenerator = QueryGenerator.getInstance(connectionPool);
+    public boolean delete(Long id) throws SQLException {
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
 
         return queryGenerator.delete()
                              .from(getTableName())

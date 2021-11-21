@@ -9,12 +9,15 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class QueryGeneratorImpl implements QueryGenerator {
@@ -42,12 +45,11 @@ public class QueryGeneratorImpl implements QueryGenerator {
     private static final String CONDITION = "= ?";
     private static final String PARAMETER_TO_BE_INSERTED = "?";
     private static final String WHITE_SPACE = " ";
-    private static final String NEW_LINE = ";\n";
-    private static final String LAST_INSERT_ID = "LAST_INSERT_ID()";
     private static final String COUNT = "COUNT(%s) ";
 
     private final ConnectionPool connectionPool;
     private final List<Object> preparedStatementValues = new ArrayList<>();
+
     private String sqlQuery = "";
 
     public QueryGeneratorImpl(ConnectionPool connectionPool) {
@@ -162,22 +164,31 @@ public class QueryGeneratorImpl implements QueryGenerator {
     }
 
     @Override
-    public Long executeUpdate() {
+    public Long executeUpdate() throws SQLException {
         try (final Connection connection = connectionPool.takeConnection();
-             final PreparedStatement statement = connection.prepareStatement(sqlQuery.trim())) {
-            for (int i = 0; i < preparedStatementValues.size(); i++) {
-                statement.setObject(i + 1, preparedStatementValues.get(i));
-            }
-            sqlQuery += NEW_LINE + SELECT + LAST_INSERT_ID;
-            return (long) statement.executeUpdate();
+             final PreparedStatement statement = connection.prepareStatement(sqlQuery.trim(), Statement.RETURN_GENERATED_KEYS)) {
+            return getIndex(statement);
         } catch (SQLException e) {
             LOG.error("Sql exception occurred", e);
             LOG.debug("Sql: {}", sqlQuery);
+            throw e;
         } catch (InterruptedException e) {
             LOG.warn("takeConnection was interrupted");
             Thread.currentThread().interrupt();
         }
         return -1L;
+    }
+
+    private Long getIndex(PreparedStatement statement) throws SQLException {
+        for (int i = 0; i < preparedStatementValues.size(); i++) {
+            statement.setObject(i + 1, preparedStatementValues.get(i));
+        }
+        statement.executeUpdate();
+        ResultSet rs = statement.getGeneratedKeys();
+        if (rs.next()) {
+            return rs.getLong(1);
+        }
+        return 0L;
     }
 
     @Override

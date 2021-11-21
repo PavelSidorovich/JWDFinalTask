@@ -30,7 +30,7 @@ public final class TaxiDao extends CommonDao<Taxi> {
 
     TaxiDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
-        coordinatesDao = new CoordinatesDao(connectionPool);
+        coordinatesDao = DaoFactory.getInstance().serviceFor(CoordinatesDao.class);
     }
 
     @Override

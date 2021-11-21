@@ -32,8 +32,8 @@ public final class DriverDao extends CommonDao<Driver> {
 
     DriverDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
-        buberUserDao = new BuberUserDao(connectionPool);
-        taxiDao = new TaxiDao(connectionPool);
+        buberUserDao = DaoFactory.getInstance().serviceFor(BuberUserDao.class);
+        taxiDao = DaoFactory.getInstance().serviceFor(TaxiDao.class);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.sidorovich.pavel.buber.api.db;
 
 import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ public interface QueryGenerator {
 
     QueryGenerator set(Map<String, Object> columnsAndValues);
 
-    Long executeUpdate();
+    Long executeUpdate() throws SQLException;
 
     <T> List<T> fetch(ResultSetExtractor<T> extractor);
 
@@ -46,9 +47,5 @@ public interface QueryGenerator {
     QueryGenerator count(String column);
 
     void reset();
-
-    static QueryGenerator getInstance(ConnectionPool pool){
-        return new QueryGeneratorImpl(pool);
-    }
 
 }
