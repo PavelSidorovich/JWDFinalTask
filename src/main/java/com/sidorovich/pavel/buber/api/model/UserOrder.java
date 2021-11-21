@@ -30,6 +30,27 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
         return new UserOrder(id, client, driver, price, initialCoordinates, endCoordinates, status);
     }
 
+    public UserOrder withDriver(Driver driver){
+        return new UserOrder(
+                id, client, driver, price,
+                initialCoordinates, endCoordinates, status
+        );
+    }
+
+    public UserOrder withStatus(OrderStatus status){
+        return new UserOrder(
+                id, client, driver, price,
+                initialCoordinates, endCoordinates, status
+        );
+    }
+
+    public UserOrder withPrice(BigDecimal price){
+        return new UserOrder(
+                id, client, driver, price,
+                initialCoordinates, endCoordinates, status
+        );
+    }
+
     public BuberUser getClient() {
         return client;
     }
@@ -74,6 +95,19 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
     @Override
     public int hashCode() {
         return Objects.hash(id, client, driver, price, initialCoordinates, endCoordinates, status);
+    }
+
+    @Override
+    public String toString() {
+        return "UserOrder{" +
+               "id=" + id +
+               ", client=" + client +
+               ", driver=" + driver +
+               ", price=" + price +
+               ", initialCoordinates=" + initialCoordinates +
+               ", endCoordinates=" + endCoordinates +
+               ", status=" + status +
+               '}';
     }
 
     public static OrderBuilder with() {

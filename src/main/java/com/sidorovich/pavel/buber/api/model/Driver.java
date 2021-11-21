@@ -27,6 +27,14 @@ public class Driver implements Entity<Driver> {
         return new Driver(user.withId(id), driverLicense, taxi, driverStatus);
     }
 
+    public Driver withBuberUser(BuberUser user) {
+        return new Driver(user, driverLicense, taxi, driverStatus);
+    }
+
+    public Driver withTaxi(Taxi taxi) {
+        return new Driver(user, driverLicense, taxi, driverStatus);
+    }
+
     public Driver withDriverStatus(DriverStatus driverStatus) {
         return new Driver(user, driverLicense, taxi, driverStatus);
     }
@@ -45,6 +53,18 @@ public class Driver implements Entity<Driver> {
 
     public DriverStatus getDriverStatus() {
         return driverStatus;
+    }
+
+    public static Driver empty() {
+        return new Driver(
+                BuberUser.with()
+                         .account(new Account(null, null,
+                                              null, null
+                                  )
+                         )
+                         .build(),
+                null, null, null
+        );
     }
 
     @Override

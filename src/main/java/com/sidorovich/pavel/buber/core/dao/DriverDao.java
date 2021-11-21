@@ -1,6 +1,7 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.DriverStatus;
@@ -27,13 +28,8 @@ public final class DriverDao extends CommonDao<Driver> {
     private static final String TAXI_ID_COLUMN_NAME = TABLE_NAME + ".taxi_id";
     private static final String DRIVER_STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
 
-    private final BuberUserDao buberUserDao;
-    private final TaxiDao taxiDao;
-
     DriverDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
-        buberUserDao = DaoFactory.getInstance().serviceFor(BuberUserDao.class);
-        taxiDao = DaoFactory.getInstance().serviceFor(TaxiDao.class);
     }
 
     @Override
@@ -57,6 +53,7 @@ public final class DriverDao extends CommonDao<Driver> {
     protected Map<String, Object> getColumnsAndValuesToBeInserted(Driver driver) {
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
+        map.put(ID_COLUMN_NAME, driver.getUser().getId().orElseThrow(IdIsNotDefinedException::new));
         map.put(DRIVER_LICENSE_COLUMN_NAME, driver.getDriverLicense());
         map.put(TAXI_ID_COLUMN_NAME, driver.getTaxi().getId()
                                            .orElseThrow(IdIsNotDefinedException::new));
@@ -82,13 +79,21 @@ public final class DriverDao extends CommonDao<Driver> {
     }
 
     private BuberUser getBuberUser(ResultSet resultSet) throws SQLException {
-        return buberUserDao.findById(resultSet.getLong(ID_COLUMN_NAME))
-                           .orElseThrow(IdIsNotDefinedException::new);
+        return BuberUser.with()
+                        .account(
+                                new Account(
+                                        resultSet.getLong(ID_COLUMN_NAME),
+                                        null, null, null
+                                )
+                        )
+                        .build();
     }
 
     private Taxi getTaxi(ResultSet resultSet) throws SQLException {
-        return taxiDao.findById(resultSet.getLong(TAXI_ID_COLUMN_NAME))
-                      .orElseThrow(IdIsNotDefinedException::new);
+        return new Taxi(
+                resultSet.getLong(TAXI_ID_COLUMN_NAME), null,
+                null, null, null
+        );
     }
 
 }

@@ -79,13 +79,18 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
     }
 
     @Override
-    public boolean delete(Long id) throws SQLException {
+    public boolean delete(Long id) {
         QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
 
-        return queryGenerator.delete()
-                             .from(getTableName())
-                             .where(getPrimaryColumnName(), String.valueOf(id))
-                             .executeUpdate() == 1;
+        try {
+            return queryGenerator.delete()
+                                 .from(getTableName())
+                                 .where(getPrimaryColumnName(), String.valueOf(id))
+                                 .executeUpdate() == 1;
+        } catch (SQLException e) {
+            logger.error(e);
+            return false;
+        }
     }
 
     protected T extractResultCatchingException(ResultSet rs) throws EntityExtractionFailedException {

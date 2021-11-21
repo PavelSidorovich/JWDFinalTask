@@ -37,6 +37,13 @@ public class BuberUser implements Entity<BuberUser> {
         );
     }
 
+    public BuberUser withAccount(Account account) {
+        return new BuberUser(
+                account, firstName,
+                lastName, email, cash, status
+        );
+    }
+
     public BuberUser withEmail(String email) {
         return new BuberUser(account, firstName, lastName, email, cash, status);
     }

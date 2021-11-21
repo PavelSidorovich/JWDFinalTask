@@ -1,6 +1,7 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Driver;
@@ -31,16 +32,8 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
     private static final String END_COORDINATES_ID_COLUMN_NAME = TABLE_NAME + ".end_coordinates_id";
     private static final String STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
 
-    private final DriverDao driverDao;
-    private final BuberUserDao buberUserDao;
-    private final CoordinatesDao coordinatesDao;
-
     UserOrderDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        driverDao = daoFactory.serviceFor(DriverDao.class);
-        buberUserDao = daoFactory.serviceFor(BuberUserDao.class);
-        coordinatesDao = daoFactory.serviceFor(CoordinatesDao.class);
     }
 
     @Override
@@ -59,6 +52,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
         columns.add(INITIAL_COORDINATES_ID_COLUMN_NAME);
         columns.add(END_COORDINATES_ID_COLUMN_NAME);
         columns.add(STATUS_NAME_COLUMN_NAME);
+
         return columns;
     }
 
@@ -69,7 +63,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
         map.put(CLIENT_ID_COLUMN_NAME, order.getClient().getId()
                                             .orElseThrow(IdIsNotDefinedException::new));
         map.put(DRIVER_ID_COLUMN_NAME, order.getDriver().getId()
-                                            .orElseThrow(IdIsNotDefinedException::new));
+                                            .orElse(null));
         map.put(PRICE_COLUMN_NAME, order.getPrice());
         map.put(INITIAL_COORDINATES_ID_COLUMN_NAME, order.getInitialCoordinates().getId()
                                                          .orElseThrow(IdIsNotDefinedException::new));
@@ -103,22 +97,33 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
     }
 
     private BuberUser getClient(ResultSet resultSet) throws SQLException {
-        return buberUserDao.findById(resultSet.getLong(CLIENT_ID_COLUMN_NAME))
-                           .orElseThrow(IdIsNotDefinedException::new);
+        return BuberUser.with()
+                        .account(new Account(resultSet.getLong(CLIENT_ID_COLUMN_NAME),
+                                             null, null, null))
+                        .build();
     }
 
     private Driver getDriver(ResultSet resultSet) throws SQLException {
-        return driverDao.findById(resultSet.getLong(DRIVER_ID_COLUMN_NAME))
-                        .orElseThrow(IdIsNotDefinedException::new);
+        return new Driver(
+                BuberUser.with()
+                         .account(new Account(resultSet.getLong(DRIVER_ID_COLUMN_NAME),
+                                              null, null, null))
+                         .build(),
+                null, null, null
+        );
     }
 
     private Coordinates getEndCoordinates(ResultSet resultSet) throws SQLException {
-        return coordinatesDao.findById(resultSet.getLong(END_COORDINATES_ID_COLUMN_NAME))
-                             .orElseThrow(IdIsNotDefinedException::new);
+        return new Coordinates(
+                resultSet.getLong(END_COORDINATES_ID_COLUMN_NAME),
+                null, null
+        );
     }
 
     private Coordinates getInitialCoordinates(ResultSet resultSet) throws SQLException {
-        return coordinatesDao.findById(resultSet.getLong(INITIAL_COORDINATES_ID_COLUMN_NAME))
-                             .orElseThrow(IdIsNotDefinedException::new);
+        return new Coordinates(
+                resultSet.getLong(INITIAL_COORDINATES_ID_COLUMN_NAME),
+                null, null
+        );
     }
 }

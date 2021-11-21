@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public final class BuberUserDao extends CommonDao<BuberUser> {
@@ -29,11 +28,8 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
     private static final String MONEY_COLUMN_NAME = TABLE_NAME + ".money";
     private static final String STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
 
-    private final AccountDao accountDao;
-
     BuberUserDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
-        accountDao = DaoFactory.getInstance().serviceFor(AccountDao.class);
     }
 
     @Override
@@ -58,9 +54,10 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
     protected Map<String, Object> getColumnsAndValuesToBeInserted(BuberUser user) {
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
+        map.put(ID_COLUMN_NAME, user.getAccount().getId().orElseThrow(IdIsNotDefinedException::new));
         map.put(FIRST_NAME_COLUMN_NAME, user.getFirstName());
         map.put(LAST_NAME_COLUMN_NAME, user.getLastName());
-        map.put(EMAIL_COLUMN_NAME, user.getEmail());
+        map.put(EMAIL_COLUMN_NAME, user.getEmail().orElse(null));
         map.put(MONEY_COLUMN_NAME, user.getCash());
         map.put(STATUS_NAME_COLUMN_NAME, user.getStatus().name());
 
@@ -74,8 +71,8 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
 
     @Override
     protected BuberUser extractResult(ResultSet rs) throws SQLException {
-        Optional<Account> optionalAccount = accountDao.findById(rs.getLong(ID_COLUMN_NAME));
-        Account account = optionalAccount.orElseThrow(IdIsNotDefinedException::new);
+        Account account = new Account(rs.getLong(ID_COLUMN_NAME), null, null, null);
+
         return buildBuberUser(rs, account);
     }
 
