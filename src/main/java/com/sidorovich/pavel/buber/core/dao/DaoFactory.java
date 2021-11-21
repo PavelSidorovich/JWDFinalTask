@@ -48,7 +48,7 @@ public class DaoFactory implements ServiceFactory {
                 return new DriverDao(connectionPool);
             case "TaxiDao":
                 return new TaxiDao(connectionPool);
-            case "UserOrder":
+            case "UserOrderDao":
                 return new UserOrderDao(connectionPool);
             default:
                 throw new IllegalArgumentException(String.format(SERVICE_NOT_FOUND, className));
