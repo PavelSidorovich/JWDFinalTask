@@ -17,8 +17,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class QueryGeneratorImpl implements QueryGenerator {
 
@@ -59,42 +59,34 @@ public class QueryGeneratorImpl implements QueryGenerator {
     @Override
     public QueryGenerator select(Set<String> columns) {
         reset();
-        StringBuilder sb = new StringBuilder(sqlQuery);
+        sqlQuery += SELECT
+                    + String.join(COMMA, columns)
+                    + WHITE_SPACE;
 
-        sb.append(SELECT);
-        columns.forEach(column -> {
-            sb.append(column);
-            sb.append(COMMA);
-        });
-        sb.deleteCharAt(sb.length() - 2); // delete ","
-        sqlQuery = sb.toString();
         return this;
     }
 
     @Override
     public QueryGenerator insertInto(String table, Set<String> columns) {
         reset();
-        StringBuilder sb = new StringBuilder(sqlQuery);
-        sb.append(INSERT)
-          .append(table)
-          .append(WHITE_SPACE)
-          .append(OPEN_BRACE);
-        for (String column : columns) {
-            sb.append(column)
-              .append(COMMA);
-        }
-        sb.deleteCharAt(sb.length() - 1)
-          .deleteCharAt(sb.length() - 1)
-          .append(CLOSE_BRACE)
-          .append(WHITE_SPACE);
-        sqlQuery = sb.toString();
+        sqlQuery += INSERT
+                    + table
+                    + WHITE_SPACE
+                    + OPEN_BRACE
+                    + String.join(COMMA, columns)
+                    + CLOSE_BRACE
+                    + WHITE_SPACE;
+
         return this;
     }
 
     @Override
     public QueryGenerator update(String table) {
         reset();
-        sqlQuery += UPDATE + table + WHITE_SPACE;
+        sqlQuery += UPDATE
+                    + table
+                    + WHITE_SPACE;
+
         return this;
     }
 
@@ -102,71 +94,81 @@ public class QueryGeneratorImpl implements QueryGenerator {
     public QueryGenerator delete() {
         reset();
         sqlQuery += DELETE;
+
         return this;
     }
 
     @Override
     public QueryGenerator values(Collection<Object> values) {
-        StringBuilder sb = new StringBuilder(sqlQuery);
-        sb.append(VALUES)
-          .append(OPEN_BRACE);
-        for (Object value : values) {
-            preparedStatementValues.add(value);
-            sb.append(PARAMETER_TO_BE_INSERTED)
-              .append(COMMA);
-        }
-        sb.deleteCharAt(sb.length() - 1)
-          .deleteCharAt(sb.length() - 1);
-        sb.append(CLOSE_BRACE);
-        sqlQuery = sb.toString();
+        sqlQuery += VALUES
+                    + OPEN_BRACE
+                    + values.stream()
+                            .map(val -> PARAMETER_TO_BE_INSERTED)
+                            .collect(Collectors.joining(COMMA))
+                    + CLOSE_BRACE;
+        preparedStatementValues.addAll(values);
+
         return this;
     }
 
     @Override
     public QueryGenerator where(String column, Object value) {
         preparedStatementValues.add(value);
-        sqlQuery += WHERE + column + CONDITION + WHITE_SPACE;
+        sqlQuery += WHERE
+                    + column
+                    + CONDITION
+                    + WHITE_SPACE;
+
         return this;
     }
 
     @Override
     public QueryGenerator and(String column, Object value) {
         preparedStatementValues.add(value);
-        sqlQuery += AND + column + CONDITION + WHITE_SPACE;
+        sqlQuery += AND
+                    + column
+                    + CONDITION
+                    + WHITE_SPACE;
+
         return this;
     }
 
     @Override
     public QueryGenerator or(String column, Object value) {
         preparedStatementValues.add(value);
-        sqlQuery += OR + column + CONDITION + WHITE_SPACE;
+        sqlQuery += OR
+                    + column
+                    + CONDITION
+                    + WHITE_SPACE;
+
         return this;
     }
 
     @Override
     public QueryGenerator from(String table) {
-        sqlQuery += FROM;
-        sqlQuery += table;
-        sqlQuery += WHITE_SPACE;
+        sqlQuery += FROM
+                    + table
+                    + WHITE_SPACE;
+
         return this;
     }
 
     @Override
     public QueryGenerator set(Map<String, Object> columnsAndValues) {
-        StringBuilder sb = new StringBuilder(sqlQuery);
-        fillParameters(sb, SET, COMMA, columnsAndValues);
-        if (columnsAndValues.size() > 1) {
-            sb.deleteCharAt(sb.length() - 2); // delete ","
-        }
-        sb.append(WHITE_SPACE);
-        sqlQuery = sb.toString();
+        sqlQuery += SET
+                    + String.join(CONDITION + COMMA, columnsAndValues.keySet())
+                    + CONDITION
+                    + WHITE_SPACE;
+        preparedStatementValues.addAll(columnsAndValues.values());
+
         return this;
     }
 
     @Override
     public Long executeUpdate() throws SQLException {
         try (final Connection connection = connectionPool.takeConnection();
-             final PreparedStatement statement = connection.prepareStatement(sqlQuery.trim(), Statement.RETURN_GENERATED_KEYS)) {
+             final PreparedStatement statement = connection.prepareStatement(sqlQuery.trim(),
+                                                                             Statement.RETURN_GENERATED_KEYS)) {
             return getIndex(statement);
         } catch (SQLException e) {
             LOG.error("Sql exception occurred", e);
@@ -214,18 +216,21 @@ public class QueryGeneratorImpl implements QueryGenerator {
     @Override
     public QueryGenerator orderBy(String column) {
         sqlQuery += ORDER_BY + column + WHITE_SPACE;
+
         return this;
     }
 
     @Override
     public QueryGenerator desc() {
         sqlQuery += DESC + WHITE_SPACE;
+
         return this;
     }
 
     @Override
     public QueryGenerator innerJoin(String trgTable) {
         sqlQuery += INNER_JOIN + trgTable + WHITE_SPACE;
+
         return this;
     }
 
@@ -233,6 +238,7 @@ public class QueryGeneratorImpl implements QueryGenerator {
     public QueryGenerator on(String srcColumn, String trgColumn) {
         sqlQuery += ON + srcColumn + WHITE_SPACE
                     + EQUALS + trgColumn + WHITE_SPACE;
+
         return this;
     }
 
@@ -240,6 +246,7 @@ public class QueryGeneratorImpl implements QueryGenerator {
     public QueryGenerator count(String column) {
         reset();
         sqlQuery += SELECT + String.format(COUNT, column);
+
         return this;
     }
 
@@ -247,19 +254,6 @@ public class QueryGeneratorImpl implements QueryGenerator {
     public void reset() {
         sqlQuery = "";
         preparedStatementValues.clear();
-    }
-
-    private void fillParameters(StringBuilder sb, String sqlCommand,
-                                String sqlSign, Map<String, Object> columnsAndValues) {
-        sb.append(sqlCommand);
-        for (String key : columnsAndValues.keySet()) {
-            sb.append(key);
-            sb.append(CONDITION);
-            if (columnsAndValues.size() > 1) {
-                sb.append(sqlSign);
-            }
-            preparedStatementValues.add(columnsAndValues.get(key));
-        }
     }
 
 }
