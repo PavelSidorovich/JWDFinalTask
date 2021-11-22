@@ -1,8 +1,10 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.api.db.QueryGenerator;
 import com.sidorovich.pavel.buber.api.model.Role;
 import com.sidorovich.pavel.buber.api.model.Account;
+import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public final class AccountDao extends CommonDao<Account> {
@@ -26,6 +30,16 @@ public final class AccountDao extends CommonDao<Account> {
 
     AccountDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
+    }
+
+    public Optional<Account> readAccountByPhone(String phone) {
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+
+        List<Account> list = queryGenerator.select(getColumnNames())
+                                           .from(getTableName())
+                                           .where(PHONE_COLUMN_NAME, phone)
+                                           .fetch(this::extractResultCatchingException);
+        return list.isEmpty()? Optional.empty() : Optional.of(list.get(0));
     }
 
     @Override

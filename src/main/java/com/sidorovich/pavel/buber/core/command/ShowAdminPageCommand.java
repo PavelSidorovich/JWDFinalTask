@@ -7,20 +7,20 @@ import com.sidorovich.pavel.buber.api.controller.RequestFactory;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 
-public class ShowLoginPageCommand implements Command {
+public class ShowAdminPageCommand implements Command {
 
     private final RequestFactory requestFactory;
 
-    private ShowLoginPageCommand(RequestFactory requestFactory) {
+    private ShowAdminPageCommand(RequestFactory requestFactory) {
         this.requestFactory = requestFactory;
     }
 
     private static class Holder {
-        private static final ShowLoginPageCommand INSTANCE =
-                new ShowLoginPageCommand(RequestFactoryImpl.getInstance());
+        private static final ShowAdminPageCommand INSTANCE =
+                new ShowAdminPageCommand(RequestFactoryImpl.getInstance());
     }
 
-    public static ShowLoginPageCommand getInstance() {
+    public static ShowAdminPageCommand getInstance() {
         return Holder.INSTANCE;
     }
 

@@ -7,8 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum CommandRegistry {
-    MAIN_PAGE(ShowMainPageCommand.getInstance(), "main_page"),
-    //    SHOW_ACCOUNTS(new ShowAccountPageCommand(new AccountDao(ConnectionPool.locking())), "show_accounts"),
+    MAIN_PAGE(ShowMainPageCommand.getInstance(), "main"),
+    SHOW_LOGIN_PAGE(ShowLoginPageCommand.getInstance(), "show_login"),
+    SHOW_ADMIN_PAGE(ShowAdminPageCommand.getInstance(), "show_admin"),
+    LOGIN(LoginCommand.getInstance(), "login"),
+    LOGOUT(LogoutCommand.getInstance(), "logout"),
     DEFAULT(ShowMainPageCommand.getInstance(), ""),
     ;
 

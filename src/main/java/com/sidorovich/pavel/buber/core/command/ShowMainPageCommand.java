@@ -3,26 +3,20 @@ package com.sidorovich.pavel.buber.core.command;
 import com.sidorovich.pavel.buber.api.command.Command;
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
+import com.sidorovich.pavel.buber.api.controller.RequestFactory;
+import com.sidorovich.pavel.buber.core.controller.PagePaths;
+import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 
 public class ShowMainPageCommand implements Command {
 
-    private static final CommandResponse FORWARD_TO_MAIN_PAGE_RESPONSE = new CommandResponse() {
-        @Override
-        public boolean isRedirect() {
-            return false;
-        }
+    private final RequestFactory requestFactory;
 
-        @Override
-        public String getPath() {
-            return "/WEB-INF/jsp/main.jsp";
-        }
-    };
-
-    private ShowMainPageCommand() {
+    private ShowMainPageCommand(RequestFactory requestFactory) {
+        this.requestFactory = requestFactory;
     }
 
     private static class Holder {
-        private static final ShowMainPageCommand INSTANCE = new ShowMainPageCommand();
+        private static final ShowMainPageCommand INSTANCE = new ShowMainPageCommand(RequestFactoryImpl.getInstance());
     }
 
     public static ShowMainPageCommand getInstance() {
@@ -31,6 +25,7 @@ public class ShowMainPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        return FORWARD_TO_MAIN_PAGE_RESPONSE;
+        return requestFactory.createForwardResponse(PagePaths.MAIN.getPath());
     }
+
 }

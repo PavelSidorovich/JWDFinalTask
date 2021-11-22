@@ -22,7 +22,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
     protected static final String DATABASE_NAME = "buber";
 
     private final Logger logger;
-    private final ConnectionPool connectionPool;
+    protected final ConnectionPool connectionPool;
 
     CommonDao(Logger logger, ConnectionPool connectionPool) {
         this.logger = logger;
