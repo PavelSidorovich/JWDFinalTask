@@ -92,7 +92,7 @@ public final class DriverDao extends CommonDao<Driver> {
     private Taxi getTaxi(ResultSet resultSet) throws SQLException {
         return new Taxi(
                 resultSet.getLong(TAXI_ID_COLUMN_NAME), null,
-                null, null, null
+                null, null, null, null
         );
     }
 
