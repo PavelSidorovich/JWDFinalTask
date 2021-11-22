@@ -40,8 +40,8 @@ public class DaoFactory implements ServiceFactory {
                 return new AccountDao(connectionPool);
             case "BonusDao":
                 return new BonusDao(connectionPool);
-            case "BuberUserDao":
-                return new BuberUserDao(connectionPool);
+            case "UserDao":
+                return new UserDao(connectionPool);
             case "CoordinatesDao":
                 return new CoordinatesDao(connectionPool);
             case "DriverDao":

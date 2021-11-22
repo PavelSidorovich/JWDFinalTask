@@ -14,25 +14,25 @@ import java.util.stream.Collectors;
 public class DriverService implements EntityService<Driver> {
 
     private final DriverDao driverDao;
-    private final BuberUserService buberUserService;
+    private final UserService userService;
     private final TaxiDao taxiDao;
 
-    DriverService(DriverDao driverDao, BuberUserService buberUserService,
+    DriverService(DriverDao driverDao, UserService userService,
                          TaxiDao taxiDao) {
         this.driverDao = driverDao;
-        this.buberUserService = buberUserService;
+        this.userService = userService;
         this.taxiDao = taxiDao;
     }
 
     @Override
     public Driver save(Driver driver) throws SQLException {
-        BuberUser user = buberUserService.save(driver.getUser());
+        BuberUser user = userService.save(driver.getUser());
 
         try {
             return driverDao.save(driver.withBuberUser(user))
                             .withBuberUser(user);
         } catch (SQLException e) {
-            buberUserService.delete(user.getId().orElse(-1L));
+            userService.delete(user.getId().orElse(-1L));
             throw e;
         }
     }
@@ -52,15 +52,15 @@ public class DriverService implements EntityService<Driver> {
 
     private Driver buildDriver(Driver driver) {
         return driver
-                .withBuberUser(buberUserService.findById(driver.getId().orElse(-1L))
-                                               .orElse(driver.getUser()))
+                .withBuberUser(userService.findById(driver.getId().orElse(-1L))
+                                          .orElse(driver.getUser()))
                 .withTaxi(taxiDao.findById(driver.getTaxi().getId().orElse(-1L))
                                  .orElse(null));
     }
 
     @Override
     public Driver update(Driver driver) {
-        BuberUser user = buberUserService.update(driver.getUser());
+        BuberUser user = userService.update(driver.getUser());
         Driver update = driverDao.update(driver);
 
         return update.withBuberUser(user);
@@ -68,7 +68,7 @@ public class DriverService implements EntityService<Driver> {
 
     @Override
     public boolean delete(Long id) {
-        return buberUserService.delete(id);
+        return userService.delete(id);
     }
 
 }

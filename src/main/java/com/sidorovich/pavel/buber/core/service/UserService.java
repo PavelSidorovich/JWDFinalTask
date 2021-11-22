@@ -4,20 +4,20 @@ import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.AccountDao;
-import com.sidorovich.pavel.buber.core.dao.BuberUserDao;
+import com.sidorovich.pavel.buber.core.dao.UserDao;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BuberUserService implements EntityService<BuberUser> {
+public class UserService implements EntityService<BuberUser> {
 
-    private final BuberUserDao buberUserDao;
+    private final UserDao userDao;
     private final AccountDao accountDao;
 
-    BuberUserService(BuberUserDao buberUserDao, AccountDao accountDao) {
-        this.buberUserDao = buberUserDao;
+    UserService(UserDao userDao, AccountDao accountDao) {
+        this.userDao = userDao;
         this.accountDao = accountDao;
     }
 
@@ -28,7 +28,7 @@ public class BuberUserService implements EntityService<BuberUser> {
         BuberUser buberUserWithId = user.withAccount(account);
 
         try {
-            return buberUserDao.save(buberUserWithId).withAccount(account);
+            return userDao.save(buberUserWithId).withAccount(account);
         } catch (SQLException e) {
             accountDao.delete(account.getId().orElse(-1L));
             throw e;
@@ -37,15 +37,15 @@ public class BuberUserService implements EntityService<BuberUser> {
 
     @Override
     public Optional<BuberUser> findById(Long id) {
-        return buberUserDao.findById(id)
-                           .map(this::buildUser);
+        return userDao.findById(id)
+                      .map(this::buildUser);
     }
 
     @Override
     public List<BuberUser> findAll() {
-        return buberUserDao.findAll().stream()
-                           .map(this::buildUser)
-                           .collect(Collectors.toList());
+        return userDao.findAll().stream()
+                      .map(this::buildUser)
+                      .collect(Collectors.toList());
     }
 
     private BuberUser buildUser(BuberUser user) {
@@ -59,7 +59,7 @@ public class BuberUserService implements EntityService<BuberUser> {
     @Override
     public BuberUser update(BuberUser user) {
         Account updatedAccount = accountDao.update(user.getAccount());
-        BuberUser updatedUser = buberUserDao.update(user);
+        BuberUser updatedUser = userDao.update(user);
 
         return updatedUser.withAccount(updatedAccount);
     }
@@ -68,5 +68,7 @@ public class BuberUserService implements EntityService<BuberUser> {
     public boolean delete(Long id) {
         return accountDao.delete(id);
     }
+
+
 
 }

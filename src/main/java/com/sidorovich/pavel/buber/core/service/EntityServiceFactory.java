@@ -1,9 +1,10 @@
 package com.sidorovich.pavel.buber.core.service;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.api.service.ServiceFactory;
 import com.sidorovich.pavel.buber.core.dao.AccountDao;
-import com.sidorovich.pavel.buber.core.dao.BuberUserDao;
+import com.sidorovich.pavel.buber.core.dao.UserDao;
 import com.sidorovich.pavel.buber.core.dao.CoordinatesDao;
 import com.sidorovich.pavel.buber.core.dao.DaoFactory;
 import com.sidorovich.pavel.buber.core.dao.DriverDao;
@@ -42,25 +43,26 @@ public class EntityServiceFactory implements ServiceFactory {
         return clazz -> {
             final String className = clazz.getSimpleName();
             switch (className) {
-//            case "AccountDao":
-//                return new AccountDao(connectionPool);
+            case "AccountService":
+                return new AccountService(daoFactory.serviceFor(AccountDao.class),
+                                          BCrypt.withDefaults(), BCrypt.verifyer());
 //            case "BonusDao":
 //                return new BonusDao(connectionPool);
-            case "BuberUserService":
-                return new BuberUserService(daoFactory.serviceFor(BuberUserDao.class),
-                                            daoFactory.serviceFor(AccountDao.class));
+            case "UserService":
+                return new UserService(daoFactory.serviceFor(UserDao.class),
+                                       daoFactory.serviceFor(AccountDao.class));
 //            case "CoordinatesDao":
 //                return new CoordinatesDao(connectionPool);
             case "DriverService":
                 return new DriverService(daoFactory.serviceFor(DriverDao.class),
-                                         serviceFor(BuberUserService.class),
+                                         serviceFor(UserService.class),
                                          daoFactory.serviceFor(TaxiDao.class));
 //            case "TaxiDao":
 //                return new TaxiDao(connectionPool);
             case "UserOrderService":
                 return new UserOrderService(daoFactory.serviceFor(UserOrderDao.class),
                                             serviceFor(DriverService.class),
-                                            serviceFor(BuberUserService.class),
+                                            serviceFor(UserService.class),
                                             daoFactory.serviceFor(CoordinatesDao.class));
             default:
                 throw new IllegalArgumentException(String.format(SERVICE_NOT_FOUND, className));

@@ -16,15 +16,15 @@ public class UserOrderService implements EntityService<UserOrder> {
 
     private final UserOrderDao orderDao;
     private final DriverService driverService;
-    private final BuberUserService buberUserService;
+    private final UserService userService;
     private final CoordinatesDao coordinatesDao;
 
     UserOrderService(UserOrderDao orderDao, DriverService driverService,
-                            BuberUserService buberUserService,
+                            UserService userService,
                             CoordinatesDao coordinatesDao) {
         this.orderDao = orderDao;
         this.driverService = driverService;
-        this.buberUserService = buberUserService;
+        this.userService = userService;
         this.coordinatesDao = coordinatesDao;
     }
 
@@ -59,8 +59,8 @@ public class UserOrderService implements EntityService<UserOrder> {
     private UserOrder buildOrder(UserOrder order) {
         return UserOrder.with()
                         .id(order.getId().orElse(-1L))
-                        .client(buberUserService.findById(order.getClient().getId().orElse(-1L))
-                                            .orElse(null))
+                        .client(userService.findById(order.getClient().getId().orElse(-1L))
+                                           .orElse(null))
                         .driver(driverService.findById(order.getDriver().getId().orElse(-1L))
                                          .orElse(Driver.empty()))
                         .price(order.getPrice())

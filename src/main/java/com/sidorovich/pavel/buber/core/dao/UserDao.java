@@ -15,9 +15,9 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-public final class BuberUserDao extends CommonDao<BuberUser> {
+public final class UserDao extends CommonDao<BuberUser> {
 
-    private static final Logger LOG = LogManager.getLogger(BuberUserDao.class);
+    private static final Logger LOG = LogManager.getLogger(UserDao.class);
 
     private static final String TABLE_NAME = "buber_user";
     private static final String TABLE_NAME_WITH_DB = DATABASE_NAME + "." + TABLE_NAME;
@@ -28,7 +28,7 @@ public final class BuberUserDao extends CommonDao<BuberUser> {
     private static final String MONEY_COLUMN_NAME = TABLE_NAME + ".money";
     private static final String STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
 
-    BuberUserDao(ConnectionPool connectionPool) {
+    UserDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
     }
 
