@@ -17,7 +17,7 @@ public class DriverService implements EntityService<Driver> {
     private final BuberUserService buberUserService;
     private final TaxiDao taxiDao;
 
-    public DriverService(DriverDao driverDao, BuberUserService buberUserService,
+    DriverService(DriverDao driverDao, BuberUserService buberUserService,
                          TaxiDao taxiDao) {
         this.driverDao = driverDao;
         this.buberUserService = buberUserService;

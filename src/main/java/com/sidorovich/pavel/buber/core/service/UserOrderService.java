@@ -19,7 +19,7 @@ public class UserOrderService implements EntityService<UserOrder> {
     private final BuberUserService buberUserService;
     private final CoordinatesDao coordinatesDao;
 
-    public UserOrderService(UserOrderDao orderDao, DriverService driverService,
+    UserOrderService(UserOrderDao orderDao, DriverService driverService,
                             BuberUserService buberUserService,
                             CoordinatesDao coordinatesDao) {
         this.orderDao = orderDao;

@@ -16,7 +16,7 @@ public class BuberUserService implements EntityService<BuberUser> {
     private final BuberUserDao buberUserDao;
     private final AccountDao accountDao;
 
-    public BuberUserService(BuberUserDao buberUserDao, AccountDao accountDao) {
+    BuberUserService(BuberUserDao buberUserDao, AccountDao accountDao) {
         this.buberUserDao = buberUserDao;
         this.accountDao = accountDao;
     }
