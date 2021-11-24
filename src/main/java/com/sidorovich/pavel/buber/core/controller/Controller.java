@@ -27,11 +27,6 @@ public class Controller extends HttpServlet {
     private final RequestFactory requestFactory = RequestFactoryImpl.getInstance();
 
     @Override
-    public void init() {
-        ConnectionPool.locking().init();
-    }
-
-    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         LOG.trace("caught req and resp in doGet method");
         processRequest(request, response);
@@ -76,8 +71,4 @@ public class Controller extends HttpServlet {
         }
     }
 
-    @Override
-    public void destroy() {
-        ConnectionPool.locking().shutDown();
-    }
 }
