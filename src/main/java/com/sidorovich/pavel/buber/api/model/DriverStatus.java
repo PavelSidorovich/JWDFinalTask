@@ -2,7 +2,8 @@ package com.sidorovich.pavel.buber.api.model;
 
 public enum DriverStatus {
     BUSY("busy"),
-    FREE("free");
+    FREE("free"),
+    PENDING("pending");
 
     private final String statusName;
 
