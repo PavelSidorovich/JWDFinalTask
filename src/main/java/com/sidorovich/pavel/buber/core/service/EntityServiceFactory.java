@@ -50,7 +50,7 @@ public class EntityServiceFactory implements ServiceFactory {
 //                return new BonusDao(connectionPool);
             case "UserService":
                 return new UserService(daoFactory.serviceFor(UserDao.class),
-                                       daoFactory.serviceFor(AccountDao.class));
+                                       serviceFor(AccountService.class));
 //            case "CoordinatesDao":
 //                return new CoordinatesDao(connectionPool);
             case "DriverService":

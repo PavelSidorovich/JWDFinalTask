@@ -2,17 +2,22 @@ package com.sidorovich.pavel.buber.core.command;
 
 import com.sidorovich.pavel.buber.api.command.Command;
 import com.sidorovich.pavel.buber.api.model.Role;
+import com.sidorovich.pavel.buber.core.controller.PagePaths;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum CommandRegistry {
-    MAIN_PAGE(ShowMainPageCommand.getInstance(), "main"),
-    SHOW_LOGIN_PAGE(ShowLoginPageCommand.getInstance(), "show_login"),
-    SHOW_ADMIN_PAGE(ShowAdminPageCommand.getInstance(), "show_admin"),
+
+    MAIN_PAGE(ShowPageCommand.getInstance(PagePaths.MAIN, false), "main"),
+    SHOW_LOGIN_PAGE(ShowPageCommand.getInstance(PagePaths.LOGIN, false), "show_login"),
     LOGIN(LoginCommand.getInstance(), "login"),
     LOGOUT(LogoutCommand.getInstance(), "logout"),
-    DEFAULT(ShowMainPageCommand.getInstance(), ""),
+    USER_REGISTER_PAGE(ShowPageCommand.getInstance(PagePaths.REGISTER, false), "show_user_register"),
+    USER_REGISTER(UserRegisterCommand.getInstance(), "user_register"),
+    SHOW_ADMIN_PAGE(ShowPageCommand.getInstance(PagePaths.ADMIN_PAGE, false), "show_admin", Role.ADMIN),
+    ERROR(ShowPageCommand.getInstance(PagePaths.ERROR, false), "show_error"),
+    DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN, false), ""),
     ;
 
     private final Command command;
@@ -43,4 +48,5 @@ public enum CommandRegistry {
         }
         return DEFAULT.command;
     }
+
 }

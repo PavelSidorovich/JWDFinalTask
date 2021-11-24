@@ -1,6 +1,5 @@
 package com.sidorovich.pavel.buber.core.command;
 
-import com.sidorovich.pavel.buber.api.command.Command;
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
@@ -12,7 +11,7 @@ import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 
 import java.util.Optional;
 
-public class LoginCommand implements Command {
+public class LoginCommand extends CommonCommand {
 
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String LOGIN_REQUEST_PARAM_NAME = "phone";
@@ -20,12 +19,11 @@ public class LoginCommand implements Command {
     private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "errorLoginPassMessage";
     private static final String ERROR_LOGIN_PASS_MESSAGE = "Invalid login or password";
 
-    private final RequestFactory requestFactory;
     private final AccountService accountService;
 
     private LoginCommand(RequestFactory requestFactory,
                         AccountService accountService) {
-        this.requestFactory = requestFactory;
+        super(requestFactory);
         this.accountService = accountService;
     }
 
@@ -43,8 +41,7 @@ public class LoginCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         if (request.sessionExists() && request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME).isPresent()) {
-            //todo: error - user already logged in
-            return null;
+            request.clearSession(); // terminate current session
         }
         final Optional<Account> account = findAccount(request);
 
@@ -56,7 +53,7 @@ public class LoginCommand implements Command {
         request.createSession();
         request.addToSession(USER_SESSION_ATTRIBUTE_NAME, account.get());
 
-        return requestFactory.createRedirectResponse(PagePaths.MAIN.getCommand()); // TODO: 11/22/2021 send to users pages
+        return requestFactory.createRedirectResponse(PagePaths.ADMIN_PAGE.getCommand()); // TODO: 11/22/2021 send to users pages
     }
 
     private Optional<Account> findAccount(CommandRequest request) {

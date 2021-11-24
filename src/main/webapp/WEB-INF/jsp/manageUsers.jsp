@@ -10,8 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
 <jsp:include page="commonNav.jsp"/>
+
 <jsp:include page="commonFooter.jsp"/>
 </body>
 </html>

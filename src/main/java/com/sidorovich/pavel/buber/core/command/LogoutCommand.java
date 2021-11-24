@@ -1,20 +1,17 @@
 package com.sidorovich.pavel.buber.core.command;
 
-import com.sidorovich.pavel.buber.api.command.Command;
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 
-public class LogoutCommand implements Command {
+public class LogoutCommand extends CommonCommand {
 
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
 
-    private final RequestFactory requestFactory;
-
     private LogoutCommand(RequestFactory requestFactory) {
-        this.requestFactory = requestFactory;
+        super(requestFactory);
     }
 
     private static class Holder {
@@ -28,8 +25,7 @@ public class LogoutCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         if (noLoggedInUserPresent(request)) {
-            //todo: error - no user found cannot logout
-            return null;
+            return requestFactory.createRedirectResponse(PagePaths.ERROR.getCommand());
         }
         request.clearSession();
         return requestFactory.createRedirectResponse(PagePaths.MAIN.getCommand());

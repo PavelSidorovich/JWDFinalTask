@@ -4,8 +4,10 @@ public enum PagePaths {
 
     INDEX("/", "?command=main"),
     MAIN("/WEB-INF/jsp/main.jsp", "?command=main"),
-    LOGIN("/WEB-INF/jsp/login.jsp", "?command=login"),
-    ERROR("/WEB-INF/jsp/error.jsp", "?command=error");
+    LOGIN("/WEB-INF/jsp/login.jsp", "?command=show_login"),
+    REGISTER("/WEB-INF/jsp/register.jsp", "?command=show_user_register"),
+    ADMIN_PAGE("/WEB-INF/jsp/admin.jsp", "?command=show_admin"),
+    ERROR("/WEB-INF/jsp/error.jsp", "?command=show_error");
 
     private final String path;
     private final String command;

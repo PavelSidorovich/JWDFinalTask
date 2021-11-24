@@ -6,21 +6,21 @@ import java.util.Objects;
 
 public class PlainCommandResponse implements CommandResponse {
 
-    private final boolean redirect;
+    private final boolean isRedirect;
     private final String path;
 
     public PlainCommandResponse(String path) {
         this(false, path);
     }
 
-    public PlainCommandResponse(boolean redirect, String path) {
-        this.redirect = redirect;
+    public PlainCommandResponse(boolean isRedirect, String path) {
+        this.isRedirect = isRedirect;
         this.path = path;
     }
 
     @Override
     public boolean isRedirect() {
-        return redirect;
+        return isRedirect;
     }
 
     @Override
@@ -33,18 +33,18 @@ public class PlainCommandResponse implements CommandResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PlainCommandResponse that = (PlainCommandResponse) o;
-        return redirect == that.redirect && Objects.equals(path, that.path);
+        return isRedirect == that.isRedirect && Objects.equals(path, that.path);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(redirect, path);
+        return Objects.hash(isRedirect, path);
     }
 
     @Override
     public String toString() {
         return "PlainCommandResponse{" +
-               "redirect=" + redirect +
+               "redirect=" + isRedirect +
                ", path='" + path + '\'' +
                '}';
     }

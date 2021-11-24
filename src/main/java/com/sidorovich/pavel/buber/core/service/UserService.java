@@ -14,23 +14,23 @@ import java.util.stream.Collectors;
 public class UserService implements EntityService<BuberUser> {
 
     private final UserDao userDao;
-    private final AccountDao accountDao;
+    private final AccountService accountService;
 
-    UserService(UserDao userDao, AccountDao accountDao) {
+    UserService(UserDao userDao, AccountService accountService) {
         this.userDao = userDao;
-        this.accountDao = accountDao;
+        this.accountService = accountService;
     }
 
     // TODO: 11/21/2021 make transactional
     @Override
     public BuberUser save(BuberUser user) throws SQLException {
-        Account account = accountDao.save(user.getAccount());
+        Account account = accountService.save(user.getAccount());
         BuberUser buberUserWithId = user.withAccount(account);
 
         try {
             return userDao.save(buberUserWithId).withAccount(account);
         } catch (SQLException e) {
-            accountDao.delete(account.getId().orElse(-1L));
+            accountService.delete(account.getId().orElse(-1L));
             throw e;
         }
     }
@@ -50,7 +50,7 @@ public class UserService implements EntityService<BuberUser> {
 
     private BuberUser buildUser(BuberUser user) {
         return user.withAccount(
-                accountDao.findById(user.getId().orElse(-1L))
+                accountService.findById(user.getId().orElse(-1L))
                           .orElse(user.getAccount())
         );
     }
@@ -58,7 +58,7 @@ public class UserService implements EntityService<BuberUser> {
     // TODO: 11/21/2021 make transactional
     @Override
     public BuberUser update(BuberUser user) {
-        Account updatedAccount = accountDao.update(user.getAccount());
+        Account updatedAccount = accountService.update(user.getAccount());
         BuberUser updatedUser = userDao.update(user);
 
         return updatedUser.withAccount(updatedAccount);
@@ -66,7 +66,7 @@ public class UserService implements EntityService<BuberUser> {
 
     @Override
     public boolean delete(Long id) {
-        return accountDao.delete(id);
+        return accountService.delete(id);
     }
 
 
