@@ -10,4 +10,8 @@ public interface RequestFactory {
 
     CommandResponse createRedirectResponse(String path);
 
+    <T> CommandResponse createJsonResponse(String command, boolean isRedirect, T object);
+
+    <T> CommandResponse createJsonResponse(String command, boolean isRedirect);
+
 }

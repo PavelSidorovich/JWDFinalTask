@@ -1,10 +1,10 @@
 package com.sidorovich.pavel.buber.core.controller;
 
+import com.google.gson.Gson;
 import com.sidorovich.pavel.buber.api.command.Command;
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
-import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.core.command.CommandRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
@@ -23,6 +24,7 @@ public class Controller extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     private static final String COMMAND_NAME_PARAM = "command";
+    private static final String JSON_TYPE = "application/json";
 
     private final RequestFactory requestFactory = RequestFactoryImpl.getInstance();
 
@@ -61,7 +63,13 @@ public class Controller extends HttpServlet {
     private void forwardOrRedirectToResponseLocation(HttpServletRequest req, HttpServletResponse resp,
                                                      CommandResponse commandResponse)
             throws IOException, ServletException {
-        if (commandResponse.isRedirect()) {
+        if (commandResponse instanceof JsonResponse) {
+            try (final PrintWriter writer = resp.getWriter()) {
+                resp.setContentType(JSON_TYPE);
+                writer.write(new Gson().toJson(commandResponse));
+            }
+        }
+        else if (commandResponse.isRedirect()) {
             resp.sendRedirect(commandResponse.getPath());
         } else {
             final String desiredPath = commandResponse.getPath();
