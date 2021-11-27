@@ -34,7 +34,7 @@
     <p>Don't have an account?</p>
     <a class="btn btn-outline-dark btn-primary btn-block" href="${contextPath}/controller?command=show_user_register">Sign
         up</a>
-    <p class="mt-5 mb-3 text-muted">&copy; 2021-2021</p>
+    <p class="mt-5 mb-3 text-muted">© Copyright 2021-2021 by BuberTaxi.</p>
 </form>
 <script>
   $("#loginForm").submit(function (event) {

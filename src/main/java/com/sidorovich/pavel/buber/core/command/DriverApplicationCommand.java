@@ -13,6 +13,7 @@ import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.model.UserStatus;
 import com.sidorovich.pavel.buber.api.service.ImageUploader;
 import com.sidorovich.pavel.buber.api.validator.BiValidator;
+import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
@@ -95,7 +96,8 @@ public class DriverApplicationCommand extends CommonCommand {
         if (errorsByMessages.isEmpty()) {
             try {
                 driverService.save(driver);
-//  todo              return requestFactory.createRedirectJsonResponse()//todo redirect to
+
+                return requestFactory.createRedirectJsonResponse(PagePaths.DRIVER_APPLICATION_SUCCESS.getCommand());
             } catch (DuplicateKeyException e) {
                 errorsByMessages.put(e.getAttribute(), e.getMessage());
             }

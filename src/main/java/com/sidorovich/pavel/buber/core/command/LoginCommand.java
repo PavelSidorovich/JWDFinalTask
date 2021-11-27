@@ -4,12 +4,14 @@ import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
 import com.sidorovich.pavel.buber.api.model.Account;
-import com.sidorovich.pavel.buber.api.model.Role;
+import com.sidorovich.pavel.buber.api.model.BuberUser;
+import com.sidorovich.pavel.buber.api.model.UserStatus;
 import com.sidorovich.pavel.buber.core.controller.JsonResponseStatus;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.AccountService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
+import com.sidorovich.pavel.buber.core.service.UserService;
 
 import java.util.Optional;
 
@@ -18,22 +20,26 @@ public class LoginCommand extends CommonCommand {
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String LOGIN_REQUEST_PARAM_NAME = "phone";
     private static final String PASSWORD_REQUEST_PARAM_NAME = "password";
-    private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "errorLoginPassMessage";
     private static final String ERROR_LOGIN_PASS_MESSAGE = "Invalid login or password";
+    private static final String USER_BLOCKED_MSG = "User was blocked";
 
     private final AccountService accountService;
+    private final UserService userService;
 
     private LoginCommand(RequestFactory requestFactory,
-                         AccountService accountService) {
+                         AccountService accountService, UserService userService) {
         super(requestFactory);
         this.accountService = accountService;
+        this.userService = userService;
     }
 
     private static class Holder {
         private static final LoginCommand INSTANCE =
-                new LoginCommand(RequestFactoryImpl.getInstance(),
-                                 EntityServiceFactory.getInstance().serviceFor(AccountService.class));
-
+                new LoginCommand(
+                        RequestFactoryImpl.getInstance(),
+                        EntityServiceFactory.getInstance().serviceFor(AccountService.class),
+                        EntityServiceFactory.getInstance().serviceFor(UserService.class)
+                );
     }
 
     public static LoginCommand getInstance() {
@@ -50,17 +56,41 @@ public class LoginCommand extends CommonCommand {
         if (!account.isPresent()) {
             return requestFactory.createJsonResponse(null, JsonResponseStatus.ERROR, ERROR_LOGIN_PASS_MESSAGE);
         }
-        Account acc = account.get();
+
+        final Account acc = account.get();
+        final Optional<BuberUser> user = userService.findById(acc.getId().orElse(-1L));
+
+        if (user.isPresent() && user.get().getStatus() == UserStatus.BLOCKED) {
+            return requestFactory.createJsonResponse(null, JsonResponseStatus.ERROR, USER_BLOCKED_MSG);
+        }
+
+        return createUserSession(request, acc);
+    }
+
+    private CommandResponse createUserSession(CommandRequest request, Account acc) {
+        String userPageCommand;
 
         request.clearSession();
         request.createSession();
         request.addToSession(USER_SESSION_ATTRIBUTE_NAME, acc);
-        if (account.get().getRole() == Role.ADMIN) {
-            return requestFactory.createRedirectJsonResponse(PagePaths.USER_CONTROL_PAGE.getCommand());
+
+        switch (acc.getRole()) {
+        case ADMIN:
+            userPageCommand = PagePaths.USER_CONTROL_PAGE.getCommand();
+            break;
+        case DRIVER:
+            userPageCommand = "";
+            // TODO: 11/27/2021
+            break;
+        case CLIENT:
+            userPageCommand = "";
+            // TODO: 11/27/2021 show order page
+            break;
+        default:
+            userPageCommand = PagePaths.ERROR.getCommand();
         }
 
-        return null;
-//        return null requestFactory.createRedirectResponse(PagePaths.ADMIN_PAGE.getCommand()); // TODO: 11/22/2021 send to users pages
+        return requestFactory.createRedirectJsonResponse(userPageCommand);
     }
 
     private Optional<Account> findAccount(CommandRequest request) {

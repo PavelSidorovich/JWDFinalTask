@@ -10,7 +10,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Becoming a driver</title>
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
     <link href="${contextPath}/css/register.css?v=1.0" rel="stylesheet" type="text/css"/>
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -76,7 +75,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                    <label for="email">Email</label>
                     <input type="email" class="form-control" name="email" id="email" placeholder="you@example.com">
                     <div class="invalid-feedback"></div>
                 </div>
@@ -196,7 +195,7 @@
     if (errorsByMessages.phone) {
       showErrorMessage($("#phone"), errorsByMessages.phone);
     }
-    if (errorsByMessages.phone) {
+    if (errorsByMessages.password) {
       showErrorMessage($("#password"), errorsByMessages.password);
     }
     if (errorsByMessages.passwordRepeat) {
@@ -216,6 +215,9 @@
     }
     if (errorsByMessages.carPhoto) {
       showErrorMessage($("#browseButton"), errorsByMessages.carPhoto);
+    }
+    if (errorsByMessages.email) {
+      showErrorMessage($("#email"), errorsByMessages.email);
     }
     console.log(errorsByMessages);
   }

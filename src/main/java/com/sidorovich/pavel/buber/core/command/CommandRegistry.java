@@ -20,6 +20,8 @@ public enum CommandRegistry {
     BLOCK_USER(BlockUserCommand.getInstance(), "block_user", Role.ADMIN),
     DRIVER_REGISTER_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_REGISTER), "show_driver_register"),
     DRIVER_APPLICATION(DriverApplicationCommand.getInstance(), "driver_application"),
+    DRIVER_APPLICATION_SUCCESS_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_APPLICATION_SUCCESS),
+                                    "successful_application"),
     ERROR(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
     DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN), ""),
     ;

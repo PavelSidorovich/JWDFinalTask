@@ -8,6 +8,7 @@ public enum PagePaths {
     REGISTER("/WEB-INF/jsp/register.jsp", "?command=show_user_register"),
     USER_CONTROL_PAGE("/WEB-INF/jsp/userControl.jsp", "?command=show_user_control"),
     DRIVER_REGISTER("/WEB-INF/jsp/driverRegister.jsp", "?command=show_driver_register"),
+    DRIVER_APPLICATION_SUCCESS("/WEB-INF/jsp/sendingApplicationSuccess.jsp", "?command=successful_application"),
     ERROR("/WEB-INF/jsp/error.jsp", "?command=show_error");
 
     private final String path;
