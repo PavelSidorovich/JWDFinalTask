@@ -4,6 +4,8 @@ import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
 import com.sidorovich.pavel.buber.api.model.Account;
+import com.sidorovich.pavel.buber.api.model.Role;
+import com.sidorovich.pavel.buber.core.controller.JsonResponseStatus;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.AccountService;
@@ -46,14 +48,19 @@ public class LoginCommand extends CommonCommand {
         final Optional<Account> account = findAccount(request);
 
         if (!account.isPresent()) {
-            request.addAttributeToJsp(ERROR_LOGIN_PASS_ATTRIBUTE, ERROR_LOGIN_PASS_MESSAGE);
-            return requestFactory.createForwardResponse(PagePaths.LOGIN.getPath());
+            return requestFactory.createJsonResponse(null, JsonResponseStatus.ERROR, ERROR_LOGIN_PASS_MESSAGE);
         }
+        Account acc = account.get();
+
         request.clearSession();
         request.createSession();
-        request.addToSession(USER_SESSION_ATTRIBUTE_NAME, account.get());
+        request.addToSession(USER_SESSION_ATTRIBUTE_NAME, acc);
+        if (account.get().getRole() == Role.ADMIN) {
+            return requestFactory.createRedirectJsonResponse(PagePaths.USER_CONTROL_PAGE.getCommand());
+        }
 
-        return requestFactory.createRedirectResponse(PagePaths.ADMIN_PAGE.getCommand()); // TODO: 11/22/2021 send to users pages
+        return null;
+//        return null requestFactory.createRedirectResponse(PagePaths.ADMIN_PAGE.getCommand()); // TODO: 11/22/2021 send to users pages
     }
 
     private Optional<Account> findAccount(CommandRequest request) {

@@ -54,7 +54,7 @@ public final class DriverDao extends CommonDao<Driver> {
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
         map.put(ID_COLUMN_NAME, driver.getUser().getId().orElseThrow(IdIsNotDefinedException::new));
-        map.put(DRIVER_LICENSE_COLUMN_NAME, driver.getDriverLicense());
+        map.put(DRIVER_LICENSE_COLUMN_NAME, driver.getDrivingLicence());
         map.put(TAXI_ID_COLUMN_NAME, driver.getTaxi().getId()
                                            .orElseThrow(IdIsNotDefinedException::new));
         map.put(DRIVER_STATUS_NAME_COLUMN_NAME, driver.getDriverStatus().name());

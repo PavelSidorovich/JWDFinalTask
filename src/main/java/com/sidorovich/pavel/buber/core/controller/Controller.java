@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/controller")
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1 MB
+        maxFileSize = 1024 * 1024 * 10,      // 10 MB
+        maxRequestSize = 1024 * 1024 * 100   // 100 MB
+)
 public class Controller extends HttpServlet {
 
     private static final Logger LOG = LogManager.getLogger(Controller.class);
@@ -68,8 +74,7 @@ public class Controller extends HttpServlet {
                 resp.setContentType(JSON_TYPE);
                 writer.write(new Gson().toJson(commandResponse));
             }
-        }
-        else if (commandResponse.isRedirect()) {
+        } else if (commandResponse.isRedirect()) {
             resp.sendRedirect(commandResponse.getPath());
         } else {
             final String desiredPath = commandResponse.getPath();

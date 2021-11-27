@@ -10,9 +10,7 @@
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
     <title>Error</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
-    <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
     <link href="${pageContext.request.contextPath}/css/error.css" rel="stylesheet">
 </head>
 

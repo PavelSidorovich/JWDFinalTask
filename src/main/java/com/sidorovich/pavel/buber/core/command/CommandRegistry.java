@@ -9,15 +9,19 @@ import java.util.List;
 
 public enum CommandRegistry {
 
-    MAIN_PAGE(ShowPageCommand.getInstance(PagePaths.MAIN, false), "main"),
-    SHOW_LOGIN_PAGE(ShowPageCommand.getInstance(PagePaths.LOGIN, false), "show_login"),
+    MAIN_PAGE(ShowPageCommand.getInstance(PagePaths.MAIN), "main"),
+    SHOW_LOGIN_PAGE(ShowPageCommand.getInstance(PagePaths.LOGIN), "show_login"),
     LOGIN(LoginCommand.getInstance(), "login"),
     LOGOUT(LogoutCommand.getInstance(), "logout"),
-    USER_REGISTER_PAGE(ShowPageCommand.getInstance(PagePaths.REGISTER, false), "show_user_register"),
+    USER_REGISTER_PAGE(ShowPageCommand.getInstance(PagePaths.REGISTER), "show_user_register"),
     USER_REGISTER(UserRegisterCommand.getInstance(), "user_register"),
-    SHOW_ADMIN_PAGE(ShowPageCommand.getInstance(PagePaths.ADMIN_PAGE, false), "show_admin", Role.ADMIN),
-    ERROR(ShowPageCommand.getInstance(PagePaths.ERROR, false), "show_error"),
-    DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN, false), ""),
+    USER_CONTROL_PAGE(ShowPageCommand.getInstance(PagePaths.USER_CONTROL_PAGE), "show_user_control", Role.ADMIN),
+    GET_USERS(GetUsersCommand.getInstance(), "get_users", Role.ADMIN),
+    BLOCK_USER(BlockUserCommand.getInstance(), "block_user", Role.ADMIN),
+    DRIVER_REGISTER_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_REGISTER), "show_driver_register"),
+    DRIVER_APPLICATION(DriverApplicationCommand.getInstance(), "driver_application"),
+    ERROR(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
+    DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN), ""),
     ;
 
     private final Command command;

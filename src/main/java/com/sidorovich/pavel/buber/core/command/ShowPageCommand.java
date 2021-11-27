@@ -9,24 +9,20 @@ import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 public class ShowPageCommand extends CommonCommand {
 
     private final PagePaths pagePath;
-    private final boolean isRedirect;
 
     private ShowPageCommand(RequestFactory requestFactory,
-                            PagePaths pagePath, boolean isRedirect) {
+                            PagePaths pagePath) {
         super(requestFactory);
         this.pagePath = pagePath;
-        this.isRedirect = isRedirect;
     }
 
-    public static ShowPageCommand getInstance(PagePaths pagePath, boolean isRedirect) {
-        return new ShowPageCommand(RequestFactoryImpl.getInstance(), pagePath, isRedirect);
+    public static ShowPageCommand getInstance(PagePaths pagePath) {
+        return new ShowPageCommand(RequestFactoryImpl.getInstance(), pagePath);
     }
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        return isRedirect
-                ? requestFactory.createRedirectResponse(pagePath.getCommand())
-                : requestFactory.createForwardResponse(pagePath.getPath());
+        return requestFactory.createForwardResponse(pagePath.getPath());
     }
 
 }

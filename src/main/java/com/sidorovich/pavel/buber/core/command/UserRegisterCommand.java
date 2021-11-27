@@ -7,12 +7,17 @@ import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Role;
 import com.sidorovich.pavel.buber.api.model.UserStatus;
-import com.sidorovich.pavel.buber.api.validator.Validator;
+import com.sidorovich.pavel.buber.api.validator.BiValidator;
+import com.sidorovich.pavel.buber.core.controller.JsonResponseStatus;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
+import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
+import com.sidorovich.pavel.buber.core.service.UserService;
 import com.sidorovich.pavel.buber.core.validator.UserRegisterValidator;
+import com.sidorovich.pavel.buber.exception.DuplicateKeyException;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public class UserRegisterCommand extends CommonCommand {
 
@@ -22,14 +27,15 @@ public class UserRegisterCommand extends CommonCommand {
     private static final String PASSWORD_REQUEST_PARAM_NAME = "password";
     private static final String PASSWORD_REPEAT_REQUEST_PARAM_NAME = "passwordRepeat";
     private static final String EMAIL_REQUEST_PARAM_NAME = "email";
-    private static final String PASSWORDS_ARE_NOT_EQUAL_MSG = "Passwords are not equal";
-    private static final String TOO_FEW_CHARACTERS_MSG = "Password should contain at least 8 characters";
-    
-    private final Validator<BuberUser, String> validator;
+
+    private final UserService userService;
+    private final BiValidator<BuberUser, String, Map<String, String>> validator;
 
     private UserRegisterCommand(RequestFactory requestFactory,
-                                Validator<BuberUser, String> validator) {
+                                UserService userService,
+                                BiValidator<BuberUser, String, Map<String, String>> validator) {
         super(requestFactory);
+        this.userService = userService;
         this.validator = validator;
     }
 
@@ -37,6 +43,7 @@ public class UserRegisterCommand extends CommonCommand {
         private static final UserRegisterCommand INSTANCE =
                 new UserRegisterCommand(
                         RequestFactoryImpl.getInstance(),
+                        EntityServiceFactory.getInstance().serviceFor(UserService.class),
                         UserRegisterValidator.getInstance()
                 );
     }
@@ -54,27 +61,26 @@ public class UserRegisterCommand extends CommonCommand {
         String passwordRepeat = request.getParameter(PASSWORD_REPEAT_REQUEST_PARAM_NAME);
         String email = request.getParameter(EMAIL_REQUEST_PARAM_NAME);
 
-        if (password != null && !password.equals(passwordRepeat)) {
-            return requestFactory.createJsonResponse(
-                    PagePaths.REGISTER.getCommand(), false, PASSWORDS_ARE_NOT_EQUAL_MSG
-            );
-        } else if (password != null && password.length() < 8) {
-            return requestFactory.createJsonResponse(
-                    PagePaths.REGISTER.getCommand(), false, TOO_FEW_CHARACTERS_MSG
-            );
-        }
+        BuberUser buberUser = buildUser(fName, lName, phone, password, email);
 
-        return processRegisterRequest(fName, lName, phone, password, email);
+        return processRegisterRequest(buberUser, passwordRepeat);
     }
 
-    private CommandResponse processRegisterRequest(String fName, String lName, String phone, String password,
-                                                   String email) {
-        BuberUser userToRegister = buildUser(fName, lName, phone, password, email);
-        String registerMsg = validator.validate(userToRegister);
+    private CommandResponse processRegisterRequest(BuberUser user, String passwordRepeat) {
+        Map<String, String> errorsByMessages = validator.validate(user, passwordRepeat);
 
-        return registerMsg == null
-                ? requestFactory.createJsonResponse(PagePaths.LOGIN.getCommand(), true)
-                : requestFactory.createJsonResponse(PagePaths.REGISTER.getCommand(), false, registerMsg);
+        if (errorsByMessages.isEmpty()) {
+            try {
+                userService.save(user);
+
+                return requestFactory.createRedirectJsonResponse(PagePaths.LOGIN.getCommand());
+            } catch (DuplicateKeyException e) {
+                errorsByMessages.put(e.getAttribute(), e.getMessage());
+                return requestFactory.createJsonResponse(errorsByMessages, JsonResponseStatus.ERROR, null);
+            }
+        }
+
+        return requestFactory.createJsonResponse(errorsByMessages, JsonResponseStatus.ERROR, null);
     }
 
     private BuberUser buildUser(String fName, String lName, String phone, String password, String email) {
