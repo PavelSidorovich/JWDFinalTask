@@ -55,6 +55,13 @@ public class BuberUser implements Entity<BuberUser> {
         );
     }
 
+    public BuberUser withStatus(UserStatus status) {
+        return new BuberUser(
+                account, firstName,
+                lastName, email, cash, status
+        );
+    }
+
     public Account getAccount() {
         return new Account(account.getId().orElse(null),
                            account.getPhone(),
