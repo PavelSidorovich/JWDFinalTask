@@ -6,13 +6,13 @@ import java.util.Optional;
 public class Driver implements Entity<Driver> {
 
     private final BuberUser user;
-    private final String driverLicense;
+    private final String drivingLicence;
     private final Taxi taxi;
     private final DriverStatus driverStatus;
 
-    public Driver(BuberUser buberUser, String driverLicense, Taxi taxi, DriverStatus driverStatus) {
+    public Driver(BuberUser buberUser, String drivingLicence, Taxi taxi, DriverStatus driverStatus) {
         this.user = buberUser;
-        this.driverLicense = driverLicense;
+        this.drivingLicence = drivingLicence;
         this.taxi = taxi;
         this.driverStatus = driverStatus;
     }
@@ -24,27 +24,27 @@ public class Driver implements Entity<Driver> {
 
     @Override
     public Driver withId(Long id) {
-        return new Driver(user.withId(id), driverLicense, taxi, driverStatus);
+        return new Driver(user.withId(id), drivingLicence, taxi, driverStatus);
     }
 
     public Driver withBuberUser(BuberUser user) {
-        return new Driver(user, driverLicense, taxi, driverStatus);
+        return new Driver(user, drivingLicence, taxi, driverStatus);
     }
 
     public Driver withTaxi(Taxi taxi) {
-        return new Driver(user, driverLicense, taxi, driverStatus);
+        return new Driver(user, drivingLicence, taxi, driverStatus);
     }
 
     public Driver withDriverStatus(DriverStatus driverStatus) {
-        return new Driver(user, driverLicense, taxi, driverStatus);
+        return new Driver(user, drivingLicence, taxi, driverStatus);
     }
 
     public BuberUser getUser() {
         return user;
     }
 
-    public String getDriverLicense() {
-        return driverLicense;
+    public String getDrivingLicence() {
+        return drivingLicence;
     }
 
     public Taxi getTaxi() {
@@ -79,20 +79,20 @@ public class Driver implements Entity<Driver> {
             return false;
         }
         Driver driver = (Driver) o;
-        return Objects.equals(driverLicense, driver.driverLicense) &&
+        return Objects.equals(drivingLicence, driver.drivingLicence) &&
                Objects.equals(taxi, driver.taxi) && driverStatus == driver.driverStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), driverLicense, taxi, driverStatus);
+        return Objects.hash(super.hashCode(), drivingLicence, taxi, driverStatus);
     }
 
     @Override
     public String toString() {
         return "Driver{" +
                "user=" + user +
-               ", driverLicense='" + driverLicense + '\'' +
+               ", driverLicense='" + drivingLicence + '\'' +
                ", taxi=" + taxi +
                ", driverStatus=" + driverStatus +
                '}';
