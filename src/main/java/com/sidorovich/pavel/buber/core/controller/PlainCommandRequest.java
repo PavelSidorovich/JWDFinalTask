@@ -2,8 +2,13 @@ package com.sidorovich.pavel.buber.core.controller;
 
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.Optional;
 
 public class PlainCommandRequest implements CommandRequest {
@@ -60,5 +65,16 @@ public class PlainCommandRequest implements CommandRequest {
         request.getSession(true);
     }
 
+    public Collection<Part> getParts() throws ServletException, IOException {
+        return request.getParts();
+    }
+
+    public Part getPart(String name) throws ServletException, IOException {
+        return request.getPart(name);
+    }
+
+    public ServletContext getServletContext(){
+        return request.getServletContext();
+    }
 
 }
