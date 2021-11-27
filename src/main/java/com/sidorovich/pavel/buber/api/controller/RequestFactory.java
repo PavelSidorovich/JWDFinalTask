@@ -1,5 +1,7 @@
 package com.sidorovich.pavel.buber.api.controller;
 
+import com.sidorovich.pavel.buber.core.controller.JsonResponseStatus;
+
 import javax.servlet.http.HttpServletRequest;
 
 public interface RequestFactory {
@@ -10,8 +12,10 @@ public interface RequestFactory {
 
     CommandResponse createRedirectResponse(String path);
 
-    <T> CommandResponse createJsonResponse(String command, boolean isRedirect, T object);
+    <T> CommandResponse createRedirectJsonResponse(String command);
 
-    <T> CommandResponse createJsonResponse(String command, boolean isRedirect);
+    <T> CommandResponse createJsonResponse(T object, JsonResponseStatus status, String msg);
+
+    <T> CommandResponse createJsonResponse(T object, JsonResponseStatus status);
 
 }

@@ -1,6 +1,5 @@
 package com.sidorovich.pavel.buber.core.controller;
 
-import com.google.gson.Gson;
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
@@ -41,13 +40,26 @@ public class RequestFactoryImpl implements RequestFactory {
     }
 
     @Override
-    public <T> CommandResponse createJsonResponse(String command, boolean isRedirect, T object) {
-        return new JsonResponse<>(isRedirect, command, object);
+    public <T> CommandResponse createRedirectJsonResponse(String command) {
+        return new JsonResponse<>(
+                true, command, null,
+                JsonResponseStatus.SUCCESS, null
+        );
     }
 
     @Override
-    public <T> CommandResponse createJsonResponse(String command, boolean isRedirect) {
-        return createJsonResponse(command, isRedirect, null);
+    public <T> CommandResponse createJsonResponse(T object, JsonResponseStatus status, String msg) {
+        return new JsonResponse<>(
+                false, null, object, status, msg
+        );
+    }
+
+    @Override
+    public <T> CommandResponse createJsonResponse(T object, JsonResponseStatus status) {
+        return new JsonResponse<>(
+                false, null, object,
+                status, null
+        );
     }
 
 }

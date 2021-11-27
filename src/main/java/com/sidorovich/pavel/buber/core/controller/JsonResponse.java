@@ -5,14 +5,27 @@ import java.util.Objects;
 public class JsonResponse<T> extends PlainCommandResponse {
 
     private final T obj;
+    private final JsonResponseStatus status;
+    private final String message;
 
-    public JsonResponse(boolean redirect, String command, T object) {
+    public JsonResponse(boolean redirect, String command, T object,
+                        JsonResponseStatus status, String message) {
         super(redirect, command);
         this.obj = object;
+        this.status = status;
+        this.message = message;
     }
 
     public T getObj() {
         return obj;
+    }
+
+    public JsonResponseStatus getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     @Override
