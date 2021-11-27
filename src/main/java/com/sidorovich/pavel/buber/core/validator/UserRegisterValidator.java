@@ -1,34 +1,33 @@
 package com.sidorovich.pavel.buber.core.validator;
 
 import com.sidorovich.pavel.buber.api.model.BuberUser;
-import com.sidorovich.pavel.buber.api.validator.Validator;
-import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
-import com.sidorovich.pavel.buber.core.service.UserService;
+import com.sidorovich.pavel.buber.api.validator.BiValidator;
 
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UserRegisterValidator implements Validator<BuberUser, String> {
+public class UserRegisterValidator implements BiValidator<BuberUser, String, Map<String, String>> {
 
     private static final String PHONE_REGEX = "[+]375[ ]\\d{2}[ ]\\d{3}[-]\\d{2}[-]\\d{2}";
     private static final String NAME_REGEX = "[a-zA-Zа-яА-Я]{2,}";
-    private static final String INCORRECT_FIRST_NAME_MSG = "Incorrect first name";
-    private static final String INCORRECT_LAST_NAME_MSG = "Incorrect last name";
-    private static final String INCORRECT_PHONE_MSG = "Incorrect phone";
-    private static final String USER_ALREADY_EXISTS_MSG = "User with this phone already exists";
+    private static final String INCORRECT_FIRST_NAME_MSG = "Valid first name is required";
+    private static final String INCORRECT_LAST_NAME_MSG = "Valid last name is required";
+    private static final String INCORRECT_PHONE_MSG = "Valid phone is required";
+    private static final String PASSWORDS_ARE_NOT_EQUAL_MSG = "Passwords are not equal";
+    private static final String TOO_FEW_CHARACTERS_MSG = "Password should contain at least 8 characters";
+    private static final String F_NAME_PARAM_NAME = "fName";
+    private static final String L_NAME_PARAM_NAME = "lName";
+    private static final String PHONE_PARAM_NAME = "phone";
+    private static final String PASSWORD_PARAM_NAME = "password";
+    private static final String PASSWORD_REPEAT_PARAM_NAME = "passwordRepeat";
 
-    private final UserService userService;
-
-    private UserRegisterValidator(UserService userService) {
-        this.userService = userService;
+    private UserRegisterValidator() {
     }
 
     private static class Holder {
-        private static final UserRegisterValidator INSTANCE =
-                new UserRegisterValidator(
-                        EntityServiceFactory.getInstance().serviceFor(UserService.class)
-                );
+        private static final UserRegisterValidator INSTANCE = new UserRegisterValidator();
     }
 
     public static UserRegisterValidator getInstance() {
@@ -36,33 +35,43 @@ public class UserRegisterValidator implements Validator<BuberUser, String> {
     }
 
     @Override
-    public String validate(BuberUser user) {
+    public Map<String, String> validate(BuberUser user, String passwordRepeat) {
+        Map<String, String> errorsByMessages = new HashMap<>();
         Pattern pattern = Pattern.compile(NAME_REGEX);
         Matcher matcher = pattern.matcher(user.getFirstName());
-        String errorMsg = getErrorMsg(user, pattern, matcher);
 
-        if (errorMsg != null) {
-            return errorMsg;
-        }
-        try {
-            userService.save(user);
-            return null;
-        } catch (SQLException e) {
-            return USER_ALREADY_EXISTS_MSG;
-        }
+        errorsByMessages.putAll(checkPersonalInfo(user, pattern, matcher));
+        errorsByMessages.putAll(checkPasswords(user.getPasswordHash(), passwordRepeat));
+
+        return errorsByMessages;
     }
 
-    private String getErrorMsg(BuberUser user, Pattern pattern, Matcher matcher) {
+    private Map<String, String> checkPersonalInfo(BuberUser user, Pattern pattern, Matcher matcher) {
+        Map<String, String> errorsByMessages = new HashMap<>();
+
         if (!isValid(matcher, pattern, user.getFirstName())) {
-            return INCORRECT_FIRST_NAME_MSG;
+            errorsByMessages.put(F_NAME_PARAM_NAME, INCORRECT_FIRST_NAME_MSG);
         }
         if (!isValid(matcher, pattern, user.getLastName())) {
-            return INCORRECT_LAST_NAME_MSG;
+            errorsByMessages.put(L_NAME_PARAM_NAME, INCORRECT_LAST_NAME_MSG);
         }
         if (!isValid(matcher, Pattern.compile(PHONE_REGEX), user.getPhone())) {
-            return INCORRECT_PHONE_MSG;
+            errorsByMessages.put(PHONE_PARAM_NAME, INCORRECT_PHONE_MSG);
         }
-        return null;
+
+        return errorsByMessages;
+    }
+
+    private Map<String, String> checkPasswords(String password, String passwordRepeat) {
+        Map<String, String> errorsByMessages = new HashMap<>();
+
+        if (password != null && password.length() < 8) {
+            errorsByMessages.put(PASSWORD_PARAM_NAME, TOO_FEW_CHARACTERS_MSG);
+        } else if (password != null && !password.equals(passwordRepeat)) {
+            errorsByMessages.put(PASSWORD_REPEAT_PARAM_NAME, PASSWORDS_ARE_NOT_EQUAL_MSG);
+        }
+
+        return errorsByMessages;
     }
 
 }
