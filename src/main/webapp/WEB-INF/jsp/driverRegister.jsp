@@ -149,7 +149,7 @@
       success: function (data) {
         if (data.status === "ERROR") {
           showErrorMessages(data.obj);
-        } else if(data.isRedirect) {
+        } else if (data.isRedirect) {
           window.location.replace(data.path);
         }
       },
@@ -184,7 +184,7 @@
     errorDiv.show("slow");
   }
 
-  function showErrorMessages(errorsByMessages){
+  function showErrorMessages(errorsByMessages) {
     $('div.invalid-feedback').hide();
 
     if (errorsByMessages.fName) {

@@ -30,21 +30,21 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
         return new UserOrder(id, client, driver, price, initialCoordinates, endCoordinates, status);
     }
 
-    public UserOrder withDriver(Driver driver){
+    public UserOrder withDriver(Driver driver) {
         return new UserOrder(
                 id, client, driver, price,
                 initialCoordinates, endCoordinates, status
         );
     }
 
-    public UserOrder withStatus(OrderStatus status){
+    public UserOrder withStatus(OrderStatus status) {
         return new UserOrder(
                 id, client, driver, price,
                 initialCoordinates, endCoordinates, status
         );
     }
 
-    public UserOrder withPrice(BigDecimal price){
+    public UserOrder withPrice(BigDecimal price) {
         return new UserOrder(
                 id, client, driver, price,
                 initialCoordinates, endCoordinates, status

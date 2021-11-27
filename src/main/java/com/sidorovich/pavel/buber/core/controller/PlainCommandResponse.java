@@ -30,8 +30,12 @@ public class PlainCommandResponse implements CommandResponse {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         PlainCommandResponse that = (PlainCommandResponse) o;
         return isRedirect == that.isRedirect && Objects.equals(path, that.path);
     }

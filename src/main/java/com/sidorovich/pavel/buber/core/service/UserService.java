@@ -56,7 +56,7 @@ public class UserService implements EntityService<BuberUser> {
     private BuberUser buildUser(BuberUser user) {
         return user.withAccount(
                 accountService.findById(user.getId().orElse(-1L))
-                          .orElse(user.getAccount())
+                              .orElse(user.getAccount())
         );
     }
 
@@ -79,7 +79,6 @@ public class UserService implements EntityService<BuberUser> {
     public boolean delete(Long id) {
         return accountService.delete(id);
     }
-
 
 
 }

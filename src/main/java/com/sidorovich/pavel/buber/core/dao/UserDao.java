@@ -78,12 +78,12 @@ public final class UserDao extends CommonDao<BuberUser> {
 
     private BuberUser buildBuberUser(ResultSet resultSet, Account account) throws SQLException {
         return BuberUser.with()
-                .account(account)
-                .firstName(resultSet.getString(FIRST_NAME_COLUMN_NAME))
-                .lastName(resultSet.getString(LAST_NAME_COLUMN_NAME))
-                .email(resultSet.getString(EMAIL_COLUMN_NAME))
-                .cash(resultSet.getBigDecimal(MONEY_COLUMN_NAME))
-                .status(UserStatus.getStatusByName(resultSet.getString(STATUS_NAME_COLUMN_NAME)))
-                .build();
+                        .account(account)
+                        .firstName(resultSet.getString(FIRST_NAME_COLUMN_NAME))
+                        .lastName(resultSet.getString(LAST_NAME_COLUMN_NAME))
+                        .email(resultSet.getString(EMAIL_COLUMN_NAME))
+                        .cash(resultSet.getBigDecimal(MONEY_COLUMN_NAME))
+                        .status(UserStatus.getStatusByName(resultSet.getString(STATUS_NAME_COLUMN_NAME)))
+                        .build();
     }
 }

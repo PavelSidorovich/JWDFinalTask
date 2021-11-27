@@ -24,7 +24,7 @@ public class LoginCommand extends CommonCommand {
     private final AccountService accountService;
 
     private LoginCommand(RequestFactory requestFactory,
-                        AccountService accountService) {
+                         AccountService accountService) {
         super(requestFactory);
         this.accountService = accountService;
     }

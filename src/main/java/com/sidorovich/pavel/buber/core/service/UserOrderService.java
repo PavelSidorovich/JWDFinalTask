@@ -24,8 +24,8 @@ public class UserOrderService implements EntityService<UserOrder> {
     private final CoordinatesDao coordinatesDao;
 
     UserOrderService(UserOrderDao orderDao, DriverService driverService,
-                            UserService userService,
-                            CoordinatesDao coordinatesDao) {
+                     UserService userService,
+                     CoordinatesDao coordinatesDao) {
         this.orderDao = orderDao;
         this.driverService = driverService;
         this.userService = userService;
@@ -71,7 +71,7 @@ public class UserOrderService implements EntityService<UserOrder> {
                         .client(userService.findById(order.getClient().getId().orElse(-1L))
                                            .orElse(null))
                         .driver(driverService.findById(order.getDriver().getId().orElse(-1L))
-                                         .orElse(Driver.empty()))
+                                             .orElse(Driver.empty()))
                         .price(order.getPrice())
                         .initialCoordinates(
                                 coordinatesDao.findById(order.getInitialCoordinates().getId()

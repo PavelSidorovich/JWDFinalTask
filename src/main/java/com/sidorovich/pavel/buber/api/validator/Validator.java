@@ -7,7 +7,7 @@ public interface Validator<T, R> {
 
     R validate(T object);
 
-    default boolean isValid (Matcher matcher, Pattern pattern, String text){
+    default boolean isValid(Matcher matcher, Pattern pattern, String text) {
         matcher.usePattern(pattern);
         matcher.reset(text);
 

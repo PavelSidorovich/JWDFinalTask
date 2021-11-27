@@ -1,7 +1,5 @@
 package com.sidorovich.pavel.buber.api.db;
 
-import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
-
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;

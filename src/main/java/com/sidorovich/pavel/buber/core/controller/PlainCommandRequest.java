@@ -73,7 +73,7 @@ public class PlainCommandRequest implements CommandRequest {
         return request.getPart(name);
     }
 
-    public ServletContext getServletContext(){
+    public ServletContext getServletContext() {
         return request.getServletContext();
     }
 

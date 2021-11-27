@@ -12,7 +12,8 @@ public class TaxiValidator implements Validator<Taxi, Map<String, String>> {
 
     private static final String LICENCE_PLATE_PARAM_NAME = "licencePlate";
     private static final String CAR_PHOTO_PARAM_NAME = "carPhoto";
-    private static final String INVALID_CAR_LICENCE_PLATE_MSG = "Valid car licence plate is required (should be like '4524 AX-7')";
+    private static final String INVALID_CAR_LICENCE_PLATE_MSG =
+            "Valid car licence plate is required (should be like '4524 AX-7')";
     private static final String LICENCE_PLATE_REGEX = "\\d{4} [A-Z]{2}-[1-7]";
     private static final String INVALID_CAR_BRAND_MSG = "Valid car brand is required.";
     private static final String INVALID_CAR_MODEL_MSG = "Valid car model is required.";

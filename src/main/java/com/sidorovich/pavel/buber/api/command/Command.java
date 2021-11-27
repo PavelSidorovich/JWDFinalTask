@@ -6,5 +6,5 @@ import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 public interface Command {
 
     CommandResponse execute(CommandRequest request);
-    
+
 }

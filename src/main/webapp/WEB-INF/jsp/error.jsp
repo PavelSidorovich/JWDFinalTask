@@ -1,4 +1,4 @@
-<%@ page isErrorPage="true" contentType="text/html"%>
+<%@ page isErrorPage="true" contentType="text/html" %>
 
 <!doctype html>
 <html lang="en">

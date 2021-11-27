@@ -7,7 +7,7 @@ public interface BiValidator<T, P, R> {
 
     R validate(T object1, P object2);
 
-    default boolean isValid (Matcher matcher, Pattern pattern, String text){
+    default boolean isValid(Matcher matcher, Pattern pattern, String text) {
         matcher.usePattern(pattern);
         matcher.reset(text);
 

@@ -10,7 +10,8 @@ import java.util.regex.Pattern;
 
 public class DriverRegisterValidator implements BiValidator<Driver, String, Map<String, String>> {
 
-    private static final String INVALID_DRIVER_LICENCE = "Valid driver licence is required (should be like '1VE 255555')";
+    private static final String INVALID_DRIVER_LICENCE =
+            "Valid driver licence is required (should be like '1VE 255555')";
     private static final String DRIVER_LICENCE_PARAM_NAME = "drivingLicence";
     private static final String DRIVER_LICENCE_REGEX = "\\d[A-Z]{2} \\d{6}";
 

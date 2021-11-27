@@ -46,7 +46,8 @@ public class DriverApplicationCommand extends CommonCommand {
     private static final String EMPTY_STRING = "";
     private static final String USER_ALREADY_EXISTS_MSG = "User with this phone already exists";
     private static final String PHONE_PARAM_NAME = "phone";
-    private static final String IMAGES_FOLDER = "D:\\JavaWebDevelopment\\JWDFinalTask\\src\\main\\webapp\\images\\taxes";
+    private static final String IMAGES_FOLDER =
+            "D:\\JavaWebDevelopment\\JWDFinalTask\\src\\main\\webapp\\images\\taxes";
 
     private final DriverService driverService;
     private final ImageUploader imageUploader;
