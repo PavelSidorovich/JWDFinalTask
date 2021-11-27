@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!doctype html>
@@ -9,16 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <%--    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">--%>
-    <title>Signin Template for Bootstrap</title>
+    <title>Sign in</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/css/signin.css" rel="stylesheet">
+    <link href="${contextPath}/css/signIn.css?v=1.0" rel="stylesheet">
 </head>
 
 <body class="text-center">
-<form id="loginForm" class="form-signin" action="${contextPath}/controller?command=login">
+<form id="loginForm" class="form-signIn" action="${contextPath}/controller?command=login">
     <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
          height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>

@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<jsp:include page="commonNav.jsp"/>
+<jsp:include page="partials/commonNav.jsp"/>
 <div class="container mt-3">
     <div class="row">
         <div id="filter" class="col-md-4 order-md-1 mb-4">
@@ -82,6 +82,6 @@
         </div>
     </div>
 </div>
-<jsp:include page="commonFooter.jsp"/>
+<jsp:include page="partials/commonFooter.jsp"/>
 </body>
 </html>
