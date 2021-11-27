@@ -1,11 +1,10 @@
 package com.sidorovich.pavel.buber.core.service;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.sidorovich.pavel.buber.api.db.QueryGenerator;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.AccountDao;
-import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
+import com.sidorovich.pavel.buber.exception.DuplicateKeyException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +19,8 @@ public class AccountService implements EntityService<Account> {
 
     private static final Logger LOG = LogManager.getLogger(AccountService.class);
 
+    private static final String USER_ALREADY_EXISTS_MSG = "User with this phone already exists";
+    private static final String PHONE_PARAM_NAME = "phone";
     private static final byte[] DUMMY_PASSWORD = "password".getBytes(StandardCharsets.UTF_8);
 
     private final AccountDao accountDao;
@@ -34,11 +35,15 @@ public class AccountService implements EntityService<Account> {
     }
 
     @Override
-    public Account save(Account account) throws SQLException {
+    public Account save(Account account) throws DuplicateKeyException {
         final char[] rawPassword = account.getPasswordHash().toCharArray();
         final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
 
-        return accountDao.save(account.withPasswordHash(hashedPassword));
+        try {
+            return accountDao.save(account.withPasswordHash(hashedPassword));
+        } catch (SQLException e) {
+            throw new DuplicateKeyException(PHONE_PARAM_NAME, USER_ALREADY_EXISTS_MSG);
+        }
     }
 
     @Override
@@ -56,7 +61,13 @@ public class AccountService implements EntityService<Account> {
         final char[] rawPassword = account.getPasswordHash().toCharArray();
         final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
 
-        return accountDao.update(account.withPasswordHash(hashedPassword));
+        try {
+            return accountDao.update(account.withPasswordHash(hashedPassword));
+        } catch (SQLException e) {
+            LOG.error(e);
+        }
+
+        return account;
     }
 
     @Override

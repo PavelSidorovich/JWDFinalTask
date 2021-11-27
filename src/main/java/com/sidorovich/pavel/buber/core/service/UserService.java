@@ -3,8 +3,11 @@ package com.sidorovich.pavel.buber.core.service;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.service.EntityService;
-import com.sidorovich.pavel.buber.core.dao.AccountDao;
 import com.sidorovich.pavel.buber.core.dao.UserDao;
+import com.sidorovich.pavel.buber.exception.DuplicateKeyException;
+import com.sidorovich.pavel.buber.exception.EntitySavingException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,6 +15,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UserService implements EntityService<BuberUser> {
+
+    private static final Logger LOG = LogManager.getLogger(UserService.class);
 
     private final UserDao userDao;
     private final AccountService accountService;
@@ -23,7 +28,7 @@ public class UserService implements EntityService<BuberUser> {
 
     // TODO: 11/21/2021 make transactional
     @Override
-    public BuberUser save(BuberUser user) throws SQLException {
+    public BuberUser save(BuberUser user) throws DuplicateKeyException {
         Account account = accountService.save(user.getAccount());
         BuberUser buberUserWithId = user.withAccount(account);
 
@@ -31,7 +36,7 @@ public class UserService implements EntityService<BuberUser> {
             return userDao.save(buberUserWithId).withAccount(account);
         } catch (SQLException e) {
             accountService.delete(account.getId().orElse(-1L));
-            throw e;
+            throw new EntitySavingException();
         }
     }
 
@@ -58,10 +63,16 @@ public class UserService implements EntityService<BuberUser> {
     // TODO: 11/21/2021 make transactional
     @Override
     public BuberUser update(BuberUser user) {
-        Account updatedAccount = accountService.update(user.getAccount());
-        BuberUser updatedUser = userDao.update(user);
+        try {
+            Account updatedAccount = accountService.update(user.getAccount());
+            BuberUser updatedUser = userDao.update(user);
 
-        return updatedUser.withAccount(updatedAccount);
+            return updatedUser.withAccount(updatedAccount);
+        } catch (SQLException e) {
+            LOG.error(e);
+        }
+
+        return user;
     }
 
     @Override

@@ -6,6 +6,8 @@ import com.sidorovich.pavel.buber.api.model.UserOrder;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.CoordinatesDao;
 import com.sidorovich.pavel.buber.core.dao.UserOrderDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UserOrderService implements EntityService<UserOrder> {
+
+    private static final Logger LOG = LogManager.getLogger(UserOrderService.class);
 
     private final UserOrderDao orderDao;
     private final DriverService driverService;
@@ -29,18 +33,23 @@ public class UserOrderService implements EntityService<UserOrder> {
     }
 
     @Override
-    public UserOrder save(UserOrder order) throws SQLException {
-        UserOrder saved = orderDao.save(order);
+    public UserOrder save(UserOrder order) {
+        try {
+            UserOrder saved = orderDao.save(order);
 
-        return UserOrder.with()
-                        .id(saved.getId().orElse(-1L))
-                        .client(order.getClient())
-                        .driver(order.getDriver())
-                        .price(order.getPrice())
-                        .initialCoordinates(order.getInitialCoordinates())
-                        .endCoordinates(order.getEndCoordinates())
-                        .status(order.getStatus())
-                        .build();
+            return UserOrder.with()
+                            .id(saved.getId().orElse(-1L))
+                            .client(order.getClient())
+                            .driver(order.getDriver())
+                            .price(order.getPrice())
+                            .initialCoordinates(order.getInitialCoordinates())
+                            .endCoordinates(order.getEndCoordinates())
+                            .status(order.getStatus())
+                            .build();
+        } catch (SQLException e) {
+            LOG.error(e);
+            return order;
+        }
     }
 
     @Override
@@ -77,21 +86,27 @@ public class UserOrderService implements EntityService<UserOrder> {
 
     @Override
     public UserOrder update(UserOrder order) {
-        UserOrder updatedOrder = orderDao.update(order);
+        try {
+            UserOrder updatedOrder = orderDao.update(order);
 
-        return UserOrder.with()
-                        .id(updatedOrder.getId().orElse(-1L))
-                        .client(order.getClient())
-                        .driver(driverService.findById(updatedOrder.getDriver().getId()
-                                                               .orElse(-1L))
-                                         .orElse(new Driver(
-                                                 BuberUser.with().build(), null,
-                                                 null, null)))
-                        .price(updatedOrder.getPrice())
-                        .initialCoordinates(order.getInitialCoordinates())
-                        .endCoordinates(order.getEndCoordinates())
-                        .status(updatedOrder.getStatus())
-                        .build();
+            return UserOrder.with()
+                            .id(updatedOrder.getId().orElse(-1L))
+                            .client(order.getClient())
+                            .driver(driverService.findById(updatedOrder.getDriver().getId()
+                                                                       .orElse(-1L))
+                                                 .orElse(new Driver(
+                                                         BuberUser.with().build(), null,
+                                                         null, null)))
+                            .price(updatedOrder.getPrice())
+                            .initialCoordinates(order.getInitialCoordinates())
+                            .endCoordinates(order.getEndCoordinates())
+                            .status(updatedOrder.getStatus())
+                            .build();
+        } catch (SQLException e) {
+            LOG.error(e);
+        }
+
+        return order;
     }
 
     @Override

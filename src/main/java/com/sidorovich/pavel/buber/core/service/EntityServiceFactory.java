@@ -4,11 +4,11 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.api.service.ServiceFactory;
 import com.sidorovich.pavel.buber.core.dao.AccountDao;
-import com.sidorovich.pavel.buber.core.dao.UserDao;
 import com.sidorovich.pavel.buber.core.dao.CoordinatesDao;
 import com.sidorovich.pavel.buber.core.dao.DaoFactory;
 import com.sidorovich.pavel.buber.core.dao.DriverDao;
 import com.sidorovich.pavel.buber.core.dao.TaxiDao;
+import com.sidorovich.pavel.buber.core.dao.UserDao;
 import com.sidorovich.pavel.buber.core.dao.UserOrderDao;
 
 import java.util.Map;
@@ -56,9 +56,10 @@ public class EntityServiceFactory implements ServiceFactory {
             case "DriverService":
                 return new DriverService(daoFactory.serviceFor(DriverDao.class),
                                          serviceFor(UserService.class),
-                                         daoFactory.serviceFor(TaxiDao.class));
-//            case "TaxiDao":
-//                return new TaxiDao(connectionPool);
+                                         serviceFor(TaxiService.class));
+            case "TaxiService":
+                return new TaxiService(daoFactory.serviceFor(TaxiDao.class),
+                                       daoFactory.serviceFor(CoordinatesDao.class));
             case "UserOrderService":
                 return new UserOrderService(daoFactory.serviceFor(UserOrderDao.class),
                                             serviceFor(DriverService.class),

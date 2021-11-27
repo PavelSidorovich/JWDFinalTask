@@ -14,7 +14,7 @@ public interface EntityDao<T extends Entity<T>> {
 
     List<T> findAll();
 
-    T update(T entity);
+    T update(T entity) throws SQLException;
 
     boolean delete(Long id);
 

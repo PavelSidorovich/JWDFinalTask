@@ -39,7 +39,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
         return entity.withId(id);
     }
 
-    public T update(T entity) {
+    public T update(T entity) throws SQLException {
         QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
 
         try {
@@ -50,10 +50,8 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
                           .executeUpdate();
             return findById(entity.getId().orElseThrow(IdIsNotDefinedException::new))
                     .orElseThrow(CannotFindEntityByIdException::new);
-        } catch (IdIsNotDefinedException e) {
+        } catch (IdIsNotDefinedException | CannotFindEntityByIdException e) {
             logger.warn("Entity id is not defined", e);
-        } catch (Throwable throwable) {
-            logger.warn("something went wrong", throwable);
         }
         return entity;
     }
