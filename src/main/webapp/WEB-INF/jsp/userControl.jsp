@@ -1,24 +1,26 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <html>
 <head>
-    <title></title>
+    <title>Manage users</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/css/tabulator_modern.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/userControl.js"></script>
+    <script src="${contextPath}/js/userControl.js?v=1.0" type="text/javascript"></script>
+    <script src="${contextPath}/js/tabulator.min.js?v=1.0" type="text/javascript"></script>
 </head>
 
 <body>
-<jsp:include page="partials/commonNav.jsp"/>
-<div class="container mt-3">
-    <div class="row">
-        <div id="filter" class="col-md-4 order-md-1 mb-4">
+<jsp:include page="partials/adminNavBar.jsp"/>
+<div class="container-fluid mt-3">
+    <div class="row p-3">
+        <div id="filter" class="col-md-3 order-md-1 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Filter</span>
                 <span id="filterCount" class="badge badge-secondary badge-pill"></span>
@@ -65,20 +67,7 @@
         <div class="col-md-8 order-md-2">
             <h2>Buber users</h2>
             <br>
-            <table id="table" class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Role</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Cash</th>
-                    <th>Status managing</th>
-                </tr>
-                </thead>
-                <tbody id="userTable"></tbody>
-            </table>
+            <div id="table"></div>
         </div>
     </div>
 </div>
