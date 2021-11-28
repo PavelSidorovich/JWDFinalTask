@@ -10,7 +10,7 @@
     <link href="${contextPath}/css/applications.css?v=1.0" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/driverApplications.js?v=1.2" type="text/javascript"></script>
+    <script src="${contextPath}/js/driverControl.js?v=1.2" type="text/javascript"></script>
 </head>
 
 <body>
@@ -26,7 +26,7 @@
         <div id="cardContainer" class="row"></div>
     </div>
 </div>
-<jsp:include page="partials/applicationModal.jsp"/>
+<jsp:include page="partials/driverModal.jsp"/>
 <jsp:include page="partials/commonFooter.jsp"/>
 </body>
 </html>

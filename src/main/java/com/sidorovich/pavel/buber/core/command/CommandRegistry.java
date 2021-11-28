@@ -23,7 +23,9 @@ public enum CommandRegistry {
     DRIVER_APPLICATION_SUCCESS_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_APPLICATION_SUCCESS),
                                     "successful_application"),
     DRIVER_APPLICATIONS_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_APPLICATIONS), "driver_applications", Role.ADMIN),
-    GET_DRIVER_APPLICATIONS(GetDriverApplications.getInstance(), "get_driver_applications", Role.ADMIN),
+    GET_DRIVER_APPLICATIONS(GetDriversCommand.getInstance(), "get_driver_applications", Role.ADMIN),
+    GET_DRIVER(GetDriverCommand.getInstance(), "get_driver", Role.ADMIN),
+    UPDATE_DRIVER_STATUS(DriverStatusUpdateCommand.getInstance(), "update_driver_status", Role.ADMIN),
     ERROR(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
     DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN), ""),
     ;

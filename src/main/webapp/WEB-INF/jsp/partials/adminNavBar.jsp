@@ -17,7 +17,7 @@
                 <a class="nav-link" href="${contextPath}/controller?command=show_user_control">Manage users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${contextPath}/controller?command=driver_applications">Incoming driver applications</a>
+                <a class="nav-link" href="${contextPath}/controller?command=driver_applications">Manage drivers</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Issue bonuses</a>
@@ -38,19 +38,3 @@
     </div>
 
 </nav>
-
-
-<%--    <nav class="my-2 my-md-0 mr-md-3">--%>
-<%--        <c:if test="${empty sessionScope.user}">--%>
-<%--            <a class="p-2 text-dark" href="${contextPath}/controller?command=show_driver_register">Become a driver</a>--%>
-<%--        </c:if>--%>
-<%--    </nav>--%>
-<%--    <c:choose>--%>
-<%--        <c:when test="${not empty sessionScope.user}">--%>
-<%--            <a class="btn btn-outline-primary" href="${contextPath}/controller?command=logout">Logout</a>--%>
-<%--        </c:when>--%>
-<%--        <c:otherwise>--%>
-<%--            <a class="btn btn-outline-primary" href="${contextPath}/controller?command=show_login">Sign in</a>--%>
-<%--        </c:otherwise>--%>
-<%--    </c:choose>--%>
-<%--</div>--%>

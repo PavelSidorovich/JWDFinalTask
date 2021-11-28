@@ -45,8 +45,6 @@ public class DriverApplicationCommand extends CommonCommand {
     private static final String LATITUDE_CENTER_MINSK = "53.90154429809449";
     private static final String LONGITUDE_CENTER_MINSK = "27.56100654602051";
     private static final String EMPTY_STRING = "";
-    private static final String USER_ALREADY_EXISTS_MSG = "User with this phone already exists";
-    private static final String PHONE_PARAM_NAME = "phone";
     private static final String IMAGES_FOLDER =
             "D:\\JavaWebDevelopment\\JWDFinalTask\\src\\main\\webapp\\images\\taxes";
 

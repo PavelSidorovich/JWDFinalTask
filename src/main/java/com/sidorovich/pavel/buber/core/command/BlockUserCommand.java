@@ -14,6 +14,10 @@ import java.util.Optional;
 
 public class BlockUserCommand extends CommonCommand {
 
+    private static final String ID_REQUEST_PARAM_NAME = "id";
+    private static final String USER_UPDATED_MSG = "User status was successfully updated!";
+    private static final String ERROR_USER_UPDATING_MSG = "Error while updating user status";
+
     private final UserService userService;
 
     private BlockUserCommand(RequestFactory requestFactory,
@@ -35,8 +39,8 @@ public class BlockUserCommand extends CommonCommand {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        request.getParameter("id");
-        Optional<BuberUser> buberUser = userService.findById(Long.parseLong(request.getParameter("id")));
+        long id = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
+        Optional<BuberUser> buberUser = userService.findById(id);
 
         if (buberUser.isPresent()) {
             UserStatus status = buberUser.get().getStatus() == UserStatus.ACTIVE
@@ -45,10 +49,10 @@ public class BlockUserCommand extends CommonCommand {
 
             userService.update(buberUser.get().withStatus(status));
             return requestFactory.createJsonResponse(null, JsonResponseStatus.SUCCESS,
-                                                     "User status was successfully updated!");
+                                                     USER_UPDATED_MSG);
         }
         return requestFactory.createJsonResponse(null, JsonResponseStatus.ERROR,
-                                                 "Error while updating user status");
+                                                 ERROR_USER_UPDATING_MSG);
     }
 
 }

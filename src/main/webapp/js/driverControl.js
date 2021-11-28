@@ -1,3 +1,5 @@
+// todo add driver, taxi, and coordinate classes
+
 $(document).ready(function () {
   getApplications();
   addFilterListener();
@@ -225,17 +227,6 @@ function addFilterListener() {
     processFiltering();
   });
 }
-
-// function createAlert(data) {
-//   let alertDiv = $('<div style="display: none" class="alert alert-success alert-dismissible fade show">' +
-//     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-//     +'</div>')
-//   alertDiv.append($("<strong></strong>").text(data.message)).show();
-//   setTimeout(function () {
-//     alertDiv.fadeOut();
-//   }, 10000);
-//   return alertDiv;
-// }
 
 function addViewButtonListener() {
   $(this).on("click", function (e) {
