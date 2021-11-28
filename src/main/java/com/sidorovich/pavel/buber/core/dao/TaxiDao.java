@@ -56,7 +56,7 @@ public final class TaxiDao extends CommonDao<Taxi> {
         map.put(CAR_BRAND_COLUMN_NAME, taxi.getCarBrand());
         map.put(CAR_MODEL_COLUMN_NAME, taxi.getCarModel());
         map.put(PHOTO_FILEPATH_COLUMN_NAME, taxi.getPhotoFilepath());
-        map.put(LICENSE_PLATE_COLUMN_NAME, taxi.getLicensePlate());
+        map.put(LICENSE_PLATE_COLUMN_NAME, taxi.getLicencePlate());
         map.put(LAST_COORDINATES_ID_COLUMN_NAME, taxi.getLastCoordinates().getId()
                                                      .orElseThrow(IdIsNotDefinedException::new));
         return map;

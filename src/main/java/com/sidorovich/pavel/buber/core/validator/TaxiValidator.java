@@ -35,7 +35,7 @@ public class TaxiValidator implements Validator<Taxi, Map<String, String>> {
     @Override
     public Map<String, String> validate(Taxi taxi) {
         Map<String, String> errorsByMessages = new HashMap<>();
-        Matcher matcher = Pattern.compile(LICENCE_PLATE_REGEX).matcher(taxi.getLicensePlate());
+        Matcher matcher = Pattern.compile(LICENCE_PLATE_REGEX).matcher(taxi.getLicencePlate());
 
         if (taxi.getCarBrand().isEmpty()) {
             errorsByMessages.put(CAR_BRAND_PARAM_NAME, INVALID_CAR_BRAND_MSG);

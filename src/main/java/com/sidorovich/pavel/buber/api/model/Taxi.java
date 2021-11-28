@@ -6,32 +6,32 @@ public class Taxi extends CommonEntity<Taxi> {
 
     private final String carBrand;
     private final String carModel;
-    private final String licensePlate;
+    private final String licencePlate;
     private final String photoFilepath;
     private final Coordinates lastCoordinates;
 
-    public Taxi(Long id, String carBrand, String carModel, String licensePlate, String photoFilepath,
+    public Taxi(Long id, String carBrand, String carModel, String licencePlate, String photoFilepath,
                 Coordinates lastCoordinates) {
         super(id);
         this.carBrand = carBrand;
         this.carModel = carModel;
-        this.licensePlate = licensePlate;
+        this.licencePlate = licencePlate;
         this.photoFilepath = photoFilepath;
         this.lastCoordinates = lastCoordinates;
     }
 
-    public Taxi(String carBrand, String carModel, String licensePlate, String photoFilepath,
+    public Taxi(String carBrand, String carModel, String licencePlate, String photoFilepath,
                 Coordinates lastCoordinates) {
-        this(null, carBrand, carModel, licensePlate, photoFilepath, lastCoordinates);
+        this(null, carBrand, carModel, licencePlate, photoFilepath, lastCoordinates);
     }
 
     @Override
     public Taxi withId(Long id) {
-        return new Taxi(id, carBrand, carModel, licensePlate, photoFilepath, lastCoordinates);
+        return new Taxi(id, carBrand, carModel, licencePlate, photoFilepath, lastCoordinates);
     }
 
     public Taxi withLastCoordinates(Coordinates lastCoordinates) {
-        return new Taxi(id, carBrand, carModel, licensePlate, photoFilepath, lastCoordinates);
+        return new Taxi(id, carBrand, carModel, licencePlate, photoFilepath, lastCoordinates);
     }
 
     public String getCarBrand() {
@@ -42,8 +42,8 @@ public class Taxi extends CommonEntity<Taxi> {
         return carModel;
     }
 
-    public String getLicensePlate() {
-        return licensePlate;
+    public String getLicencePlate() {
+        return licencePlate;
     }
 
     public String getPhotoFilepath() {
@@ -64,14 +64,14 @@ public class Taxi extends CommonEntity<Taxi> {
         }
         Taxi taxi = (Taxi) o;
         return Objects.equals(carBrand, taxi.carBrand) && Objects.equals(carModel, taxi.carModel) &&
-               Objects.equals(licensePlate, taxi.licensePlate) &&
+               Objects.equals(licencePlate, taxi.licencePlate) &&
                Objects.equals(photoFilepath, taxi.photoFilepath) &&
                Objects.equals(lastCoordinates, taxi.lastCoordinates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(carBrand, carModel, licensePlate, photoFilepath, lastCoordinates);
+        return Objects.hash(carBrand, carModel, licencePlate, photoFilepath, lastCoordinates);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class Taxi extends CommonEntity<Taxi> {
                "id=" + id +
                ", carBrand='" + carBrand + '\'' +
                ", carModel='" + carModel + '\'' +
-               ", licensePlate='" + licensePlate + '\'' +
+               ", licensePlate='" + licencePlate + '\'' +
                ", photoFilepath='" + photoFilepath + '\'' +
                ", lastCoordinates=" + lastCoordinates +
                '}';
