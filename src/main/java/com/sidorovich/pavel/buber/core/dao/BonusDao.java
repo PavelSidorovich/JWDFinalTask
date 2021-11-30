@@ -1,7 +1,9 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.Bonus;
+import com.sidorovich.pavel.buber.api.model.BuberUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,6 +41,8 @@ public final class BonusDao extends CommonDao<Bonus> {
         columns.add(ID_COLUMN_NAME);
         columns.add(DISCOUNT_COLUMN_NAME);
         columns.add(EXPIRES_ID_COLUMN_NAME);
+        columns.add(CLIENT_ID_COLUMN_NAME);
+
         return columns;
     }
 
@@ -48,6 +52,8 @@ public final class BonusDao extends CommonDao<Bonus> {
 
         map.put(DISCOUNT_COLUMN_NAME, bonus.getDiscount());
         map.put(EXPIRES_ID_COLUMN_NAME, bonus.getExpireDate());
+        map.put(CLIENT_ID_COLUMN_NAME, bonus.getClient().getId().orElse(-1L));
+
         return map;
     }
 
@@ -61,7 +67,12 @@ public final class BonusDao extends CommonDao<Bonus> {
         return new Bonus(
                 rs.getLong(ID_COLUMN_NAME),
                 rs.getDouble(DISCOUNT_COLUMN_NAME),
-                rs.getDate(EXPIRES_ID_COLUMN_NAME)
+                rs.getDate(EXPIRES_ID_COLUMN_NAME),
+                BuberUser.with()
+                         .account(new Account(
+                                 rs.getLong(CLIENT_ID_COLUMN_NAME), null,
+                                 null, null)
+                         ).build()
         );
     }
 }

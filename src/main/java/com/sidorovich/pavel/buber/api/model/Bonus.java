@@ -7,20 +7,22 @@ public class Bonus extends CommonEntity<Bonus> {
 
     private final Double discount;
     private final Date expires;
+    private final BuberUser client;
 
-    public Bonus(Long id, Double discount, Date expires) {
+    public Bonus(Long id, Double discount, Date expires, BuberUser client) {
         super(id);
         this.discount = discount;
         this.expires = expires;
+        this.client = client;
     }
 
-    public Bonus(Double discount, Date expires) {
-        this(null, discount, expires);
+    public Bonus(Double discount, Date expires, BuberUser client) {
+        this(null, discount, expires, client);
     }
 
     @Override
     public Bonus withId(Long id) {
-        return new Bonus(id, discount, expires);
+        return new Bonus(id, discount, expires, client);
     }
 
     public Double getDiscount() {
@@ -29,6 +31,10 @@ public class Bonus extends CommonEntity<Bonus> {
 
     public Date getExpireDate() {
         return expires;
+    }
+
+    public BuberUser getClient() {
+        return client;
     }
 
     @Override
@@ -40,12 +46,13 @@ public class Bonus extends CommonEntity<Bonus> {
             return false;
         }
         Bonus bonus = (Bonus) o;
-        return Objects.equals(discount, bonus.discount) && Objects.equals(expires, bonus.expires);
+        return Objects.equals(discount, bonus.discount) && Objects.equals(expires, bonus.expires) &&
+               Objects.equals(client, bonus.client);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(discount, expires);
+        return Objects.hash(discount, expires, client);
     }
 
     @Override
@@ -53,6 +60,8 @@ public class Bonus extends CommonEntity<Bonus> {
         return "Bonus{" +
                "discount=" + discount +
                ", expires=" + expires +
+               ", client=" + client +
+               ", expireDate=" + getExpireDate() +
                ", id=" + id +
                '}';
     }
