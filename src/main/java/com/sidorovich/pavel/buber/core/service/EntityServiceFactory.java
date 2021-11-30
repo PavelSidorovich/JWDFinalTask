@@ -4,6 +4,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.api.service.ServiceFactory;
 import com.sidorovich.pavel.buber.core.dao.AccountDao;
+import com.sidorovich.pavel.buber.core.dao.BonusDao;
 import com.sidorovich.pavel.buber.core.dao.CoordinatesDao;
 import com.sidorovich.pavel.buber.core.dao.DaoFactory;
 import com.sidorovich.pavel.buber.core.dao.DriverDao;
@@ -46,13 +47,14 @@ public class EntityServiceFactory implements ServiceFactory {
             case "AccountService":
                 return new AccountService(daoFactory.serviceFor(AccountDao.class),
                                           BCrypt.withDefaults(), BCrypt.verifyer());
-//            case "BonusDao":
-//                return new BonusDao(connectionPool);
             case "UserService":
                 return new UserService(daoFactory.serviceFor(UserDao.class),
                                        serviceFor(AccountService.class));
 //            case "CoordinatesDao":
 //                return new CoordinatesDao(connectionPool);
+            case "BonusService":
+                return new BonusService(daoFactory.serviceFor(BonusDao.class),
+                                        serviceFor(UserService.class));
             case "DriverService":
                 return new DriverService(daoFactory.serviceFor(DriverDao.class),
                                          serviceFor(UserService.class),
