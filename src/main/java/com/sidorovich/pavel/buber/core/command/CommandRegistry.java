@@ -15,7 +15,7 @@ public enum CommandRegistry {
     LOGOUT(LogoutCommand.getInstance(), "logout"),
     USER_REGISTER_PAGE(ShowPageCommand.getInstance(PagePaths.REGISTER), "show_user_register"),
     USER_REGISTER(UserRegisterCommand.getInstance(), "user_register"),
-    USER_CONTROL_PAGE(ShowPageCommand.getInstance(PagePaths.USER_CONTROL_PAGE), "show_user_control", Role.ADMIN),
+    USER_CONTROL_PAGE(ShowPageCommand.getInstance(PagePaths.USER_CONTROL), "show_user_control", Role.ADMIN),
     GET_USERS(GetUsersCommand.getInstance(), "get_users", Role.ADMIN),
     BLOCK_USER(BlockUserCommand.getInstance(), "block_user", Role.ADMIN),
     DRIVER_REGISTER_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_REGISTER), "show_driver_register"),
@@ -26,7 +26,12 @@ public enum CommandRegistry {
     GET_DRIVER_APPLICATIONS(GetDriversCommand.getInstance(), "get_driver_applications", Role.ADMIN),
     GET_DRIVER(GetDriverCommand.getInstance(), "get_driver", Role.ADMIN),
     UPDATE_DRIVER_STATUS(DriverStatusUpdateCommand.getInstance(), "update_driver_status", Role.ADMIN),
-    ERROR(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
+    GET_USERS_BY_ORDER_AMOUNT(GetUsersByAmountOfOrdersCommand.getInstance(), "get_users_by_order_amount", Role.ADMIN),
+    GET_BONUSES(GetBonusesCommand.getInstance(), "get_bonuses", Role.ADMIN),
+    DELETE_BONUS(DeleteBonusCommand.getInstance(), "delete_bonus", Role.ADMIN, Role.CLIENT),
+    BONUS_ISSUE_PAGE(ShowPageCommand.getInstance(PagePaths.ISSUE_BONUSES), "show_bonuses", Role.ADMIN),
+    ISSUE_BONUS(IssueBonusCommand.getInstance(), "issue_bonus", Role.ADMIN),
+    ERROR_PAGE(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
     DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN), ""),
     ;
 
@@ -44,6 +49,10 @@ public enum CommandRegistry {
 
     public Command getCommand() {
         return command;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public List<Role> getAllowedRoles() {

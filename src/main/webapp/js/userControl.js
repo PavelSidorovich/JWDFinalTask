@@ -91,12 +91,12 @@ function createTable(users) {
       {column: "account.role", dir: "asc"},
     ],
     columns: [
-      {title: "Role", field: "account.role", editor: "input", hozAlign: "center"},
+      {title: "Role", field: "account.role", hozAlign: "center"},
       {title: "First name", field: "firstName", hozAlign: "center"},
       {title: "Last name", field: "lastName", hozAlign: "center"},
       {title: "Phone", field: "account.phone", hozAlign: "center", width: 170},
       {title: "Email", field: "email", hozAlign: "center", width: 200},
-      {title: "Cash", field: "cash", sorter: "date", hozAlign: "center", width: 80},
+      {title: "Cash", field: "cash", hozAlign: "center", width: 80},
       {
         title: "Status",
         field: "status",

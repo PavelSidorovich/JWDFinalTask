@@ -93,7 +93,6 @@
     if (errorsByMessages.passwordRepeat) {
       showErrorMessage($("#passwordRepeat"), errorsByMessages.passwordRepeat);
     }
-    console.log(errorsByMessages);
   }
 </script>
 </body>

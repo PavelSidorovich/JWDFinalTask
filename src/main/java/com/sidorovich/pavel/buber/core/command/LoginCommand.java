@@ -76,7 +76,7 @@ public class LoginCommand extends CommonCommand {
 
         switch (acc.getRole()) {
         case ADMIN:
-            userPageCommand = PagePaths.USER_CONTROL_PAGE.getCommand();
+            userPageCommand = PagePaths.USER_CONTROL.getCommand();
             break;
         case DRIVER:
             userPageCommand = "";

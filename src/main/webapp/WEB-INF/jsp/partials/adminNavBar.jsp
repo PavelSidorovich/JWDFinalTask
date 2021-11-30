@@ -20,7 +20,7 @@
                 <a class="nav-link" href="${contextPath}/controller?command=driver_applications">Manage drivers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Issue bonuses</a>
+                <a class="nav-link" href="${contextPath}/controller?command=show_bonuses">Issue bonuses</a>
             </li>
         </ul>
         <div class="dropdown navbar-toggler-icon">

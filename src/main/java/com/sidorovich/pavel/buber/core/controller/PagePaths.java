@@ -2,26 +2,29 @@ package com.sidorovich.pavel.buber.core.controller;
 
 public enum PagePaths {
 
-    INDEX("/", "?command=main"),
-    MAIN("/WEB-INF/jsp/main.jsp", "?command=main"),
-    LOGIN("/WEB-INF/jsp/login.jsp", "?command=show_login"),
-    REGISTER("/WEB-INF/jsp/register.jsp", "?command=show_user_register"),
-    USER_CONTROL_PAGE("/WEB-INF/jsp/userControl.jsp", "?command=show_user_control"),
-    DRIVER_REGISTER("/WEB-INF/jsp/driverRegister.jsp", "?command=show_driver_register"),
-    DRIVER_APPLICATION_SUCCESS("/WEB-INF/jsp/sendingApplicationSuccess.jsp", "?command=successful_application"),
-    DRIVER_APPLICATIONS("/WEB-INF/jsp/driverControl.jsp", "?command=driver_applications"),
-    ERROR("/WEB-INF/jsp/error.jsp", "?command=show_error");
+    INDEX("/", "main"),
+    MAIN("/WEB-INF/jsp/main.jsp", "main"),
+    LOGIN("/WEB-INF/jsp/login.jsp", "show_login"),
+    REGISTER("/WEB-INF/jsp/register.jsp", "show_user_register"),
+    USER_CONTROL("/WEB-INF/jsp/userControl.jsp", "show_user_control"),
+    DRIVER_REGISTER("/WEB-INF/jsp/driverRegister.jsp", "show_driver_register"),
+    DRIVER_APPLICATION_SUCCESS("/WEB-INF/jsp/sendingApplicationSuccess.jsp", "successful_application"),
+    DRIVER_APPLICATIONS("/WEB-INF/jsp/driverControl.jsp", "driver_applications"),
+    ISSUE_BONUSES("/WEB-INF/jsp/issueBonuses.jsp", "show_bonuses"),
+    ERROR("/WEB-INF/jsp/error.jsp", "show_error");
 
-    private final String path;
+    private static final String COMMAND = "?command=";
+
+    private final String jspPath;
     private final String command;
 
-    PagePaths(String path, String command) {
-        this.path = path;
-        this.command = command;
+    PagePaths(String jspPath, String pagePath) {
+        this.jspPath = jspPath;
+        this.command = COMMAND + pagePath;
     }
 
-    public String getPath() {
-        return path;
+    public String getJspPath() {
+        return jspPath;
     }
 
     public String getCommand() {

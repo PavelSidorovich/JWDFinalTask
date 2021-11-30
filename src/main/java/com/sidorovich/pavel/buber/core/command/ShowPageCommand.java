@@ -22,7 +22,7 @@ public class ShowPageCommand extends CommonCommand {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        return requestFactory.createForwardResponse(pagePath.getPath());
+        return requestFactory.createForwardResponse(pagePath.getJspPath());
     }
 
 }
