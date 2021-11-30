@@ -185,12 +185,14 @@ public class QueryGeneratorImpl implements QueryGenerator {
         for (int i = 0; i < preparedStatementValues.size(); i++) {
             statement.setObject(i + 1, preparedStatementValues.get(i));
         }
-        statement.executeUpdate();
+        long editedRows = statement.executeUpdate();
         ResultSet rs = statement.getGeneratedKeys();
+
         if (rs.next()) {
             return rs.getLong(1);
         }
-        return 0L;
+
+        return editedRows;
     }
 
     @Override
