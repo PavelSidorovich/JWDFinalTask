@@ -125,16 +125,16 @@ public class BuberUser implements Entity<BuberUser> {
 
     @Override
     public String toString() {
-        return "BuberUser{" +
-               "id=" + account.getId() +
-               ", phone='" + account.getPhone() + '\'' +
-               ", passwordHash='" + account.getPasswordHash() + '\'' +
-               ", role=" + account.getRole() +
-               ", firstName='" + firstName + '\'' +
-               ", lastName='" + lastName + '\'' +
-               ", email='" + email + '\'' +
-               ", cash=" + cash +
-               ", status=" + status +
+        return "{" +
+               "\"id\":\"" + account.getId().orElse(-1L) + "\"" +
+               ", \"phone\":\"" + account.getPhone() + "\"" +
+               ", \"passwordHash\":\"" + account.getPasswordHash() + "\"" +
+               ", \"role\":\"" + account.getRole() + "\"" +
+               ", \"firstName\":\"" + firstName + "\"" +
+               ", \"lastName\":\"" + lastName + "\"" +
+               ", \"email\":\"" + email + "\"" +
+               ", \"cash\":\"" + cash + "\"" +
+               ", \"status\":\"" + status + "\"" +
                '}';
     }
 
