@@ -11,6 +11,8 @@ public enum PagePaths {
     DRIVER_APPLICATION_SUCCESS("/WEB-INF/jsp/sendingApplicationSuccess.jsp", "successful_application"),
     DRIVER_APPLICATIONS("/WEB-INF/jsp/driverControl.jsp", "driver_applications"),
     ISSUE_BONUSES("/WEB-INF/jsp/issueBonuses.jsp", "show_bonuses"),
+    CLIENT_ORDER("/WEB-INF/jsp/userOrder.jsp", "make_order"),
+    MY_BONUSES("/WEB-INF/jsp/myBonuses.jsp", "my_bonuses"),
     ERROR("/WEB-INF/jsp/error.jsp", "show_error");
 
     private static final String COMMAND = "?command=";

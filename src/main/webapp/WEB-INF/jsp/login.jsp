@@ -32,7 +32,7 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <br>
     <p>Don't have an account?</p>
-    <a class="btn btn-outline-dark btn-primary btn-block" href="${contextPath}/controller?command=show_user_register">Sign
+    <a class="btn btn-outline-secondary btn-block" href="${contextPath}/controller?command=show_user_register">Sign
         up</a>
     <p class="mt-5 mb-3 text-muted">© Copyright 2021-2021 by BuberTaxi.</p>
 </form>

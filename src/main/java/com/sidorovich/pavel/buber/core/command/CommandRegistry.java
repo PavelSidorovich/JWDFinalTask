@@ -7,6 +7,8 @@ import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.sidorovich.pavel.buber.api.model.Role.*;
+
 public enum CommandRegistry {
 
     MAIN_PAGE(ShowPageCommand.getInstance(PagePaths.MAIN), "main"),
@@ -15,22 +17,29 @@ public enum CommandRegistry {
     LOGOUT(LogoutCommand.getInstance(), "logout"),
     USER_REGISTER_PAGE(ShowPageCommand.getInstance(PagePaths.REGISTER), "show_user_register"),
     USER_REGISTER(UserRegisterCommand.getInstance(), "user_register"),
-    USER_CONTROL_PAGE(ShowPageCommand.getInstance(PagePaths.USER_CONTROL), "show_user_control", Role.ADMIN),
-    GET_USERS(GetUsersCommand.getInstance(), "get_users", Role.ADMIN),
-    BLOCK_USER(BlockUserCommand.getInstance(), "block_user", Role.ADMIN),
+    USER_CONTROL_PAGE(ShowPageCommand.getInstance(PagePaths.USER_CONTROL), "show_user_control", ADMIN),
+    GET_USERS(GetUsersCommand.getInstance(), "get_users", ADMIN),
+    BLOCK_USER(BlockUserCommand.getInstance(), "block_user", ADMIN),
     DRIVER_REGISTER_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_REGISTER), "show_driver_register"),
     DRIVER_APPLICATION(DriverApplicationCommand.getInstance(), "driver_application"),
     DRIVER_APPLICATION_SUCCESS_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_APPLICATION_SUCCESS),
                                     "successful_application"),
-    DRIVER_APPLICATIONS_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_APPLICATIONS), "driver_applications", Role.ADMIN),
-    GET_DRIVER_APPLICATIONS(GetDriversCommand.getInstance(), "get_driver_applications", Role.ADMIN),
-    GET_DRIVER(GetDriverCommand.getInstance(), "get_driver", Role.ADMIN),
-    UPDATE_DRIVER_STATUS(DriverStatusUpdateCommand.getInstance(), "update_driver_status", Role.ADMIN),
-    GET_USERS_BY_ORDER_AMOUNT(GetUsersByAmountOfOrdersCommand.getInstance(), "get_users_by_order_amount", Role.ADMIN),
-    GET_BONUSES(GetBonusesCommand.getInstance(), "get_bonuses", Role.ADMIN),
-    DELETE_BONUS(DeleteBonusCommand.getInstance(), "delete_bonus", Role.ADMIN, Role.CLIENT),
-    BONUS_ISSUE_PAGE(ShowPageCommand.getInstance(PagePaths.ISSUE_BONUSES), "show_bonuses", Role.ADMIN),
-    ISSUE_BONUS(IssueBonusCommand.getInstance(), "issue_bonus", Role.ADMIN),
+    DRIVER_APPLICATIONS_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_APPLICATIONS), "driver_applications", ADMIN),
+    GET_DRIVER_APPLICATIONS(GetDriversCommand.getInstance(), "get_driver_applications", ADMIN),
+    GET_DRIVER(GetDriverCommand.getInstance(), "get_driver", ADMIN),
+    UPDATE_DRIVER_STATUS(DriverStatusUpdateCommand.getInstance(), "update_driver_status", ADMIN),
+    GET_USERS_BY_ORDER_AMOUNT(GetUsersByAmountOfOrdersCommand.getInstance(), "get_users_by_order_amount", ADMIN),
+    GET_BONUSES(GetBonusesCommand.getInstance(), "get_bonuses", ADMIN),
+    DELETE_BONUS(DeleteBonusCommand.getInstance(), "delete_bonus", ADMIN, CLIENT),
+    BONUS_ISSUE_PAGE(ShowPageCommand.getInstance(PagePaths.ISSUE_BONUSES), "show_bonuses", ADMIN),
+    ISSUE_BONUS(IssueBonusCommand.getInstance(), "issue_bonus", ADMIN),
+    MY_BONUSES(ShowPageCommand.getInstance(PagePaths.MY_BONUSES), "my_bonuses", CLIENT),
+    CALL_TAXI(CallTaxiCommand.getInstance(), "call_taxi", CLIENT),
+    GET_TAXI_PHOTO(GetTaxiPhotoPathCommand.getInstance(), "get_taxi_photo"),
+//    GET_MY_BONUSES(GetMyBonusesCommand.getInstance(), "get_my_bonuses", CLIENT),
+    GET_ORDER_PRICE(GetOrderPriceCommand.getInstance(), "get_order_price", CLIENT),
+    MAKE_ORDER(MakeOrderCommand.getInstance(), "make_order", CLIENT),
+    CANCEL_USER_ORDER(CancelOrderCommand.getInstance(), "cancel_order", CLIENT),
     ERROR_PAGE(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
     DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN), ""),
     ;
@@ -44,7 +53,7 @@ public enum CommandRegistry {
         this.path = path;
         this.allowedRoles = roles != null && roles.length > 0
                 ? Arrays.asList(roles)
-                : Role.valuesAsList();
+                : valuesAsList();
     }
 
     public Command getCommand() {
