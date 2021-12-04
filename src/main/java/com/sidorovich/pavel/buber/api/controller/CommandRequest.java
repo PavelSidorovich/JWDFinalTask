@@ -1,6 +1,5 @@
 package com.sidorovich.pavel.buber.api.controller;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.io.IOException;
@@ -27,5 +26,4 @@ public interface CommandRequest {
 
     Part getPart(String name) throws ServletException, IOException;
 
-    ServletContext getServletContext();
 }
