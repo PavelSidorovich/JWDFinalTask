@@ -1,6 +1,7 @@
 package com.sidorovich.pavel.buber.api.model;
 
 public enum OrderStatus {
+    NEW("new"),
     IN_PROCESS("in progress"),
     COMPLETED("completed"),
     CANCELLED("cancelled");
