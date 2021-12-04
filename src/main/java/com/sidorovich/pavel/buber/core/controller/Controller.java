@@ -22,7 +22,7 @@ import java.io.PrintWriter;
 @WebServlet("/controller")
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, // 1 MB
-        maxFileSize = 1024 * 1024 * 10,      // 10 MB
+        maxFileSize = 1024 * 1024 * 25,      // 25 MB
         maxRequestSize = 1024 * 1024 * 100   // 100 MB
 )
 public class Controller extends HttpServlet {
@@ -70,18 +70,31 @@ public class Controller extends HttpServlet {
                                                      CommandResponse commandResponse)
             throws IOException, ServletException {
         if (commandResponse instanceof JsonResponse) {
-            try (final PrintWriter writer = resp.getWriter()) {
-                resp.setContentType(JSON_TYPE);
-                writer.write(new Gson().toJson(commandResponse));
-            }
+            sendJsonResponse(resp, commandResponse);
         } else if (commandResponse.isRedirect()) {
-            resp.sendRedirect(commandResponse.getPath());
+            redirectToResponseLocation(resp, commandResponse);
         } else {
-            final String desiredPath = commandResponse.getPath();
-            final RequestDispatcher dispatcher = req.getRequestDispatcher(desiredPath);
-
-            dispatcher.forward(req, resp);
+            forwardToResponseLocation(req, resp, commandResponse);
         }
+    }
+
+    private void sendJsonResponse(HttpServletResponse resp, CommandResponse commandResponse) throws IOException {
+        try (final PrintWriter writer = resp.getWriter()) {
+            resp.setContentType(JSON_TYPE);
+            writer.write(new Gson().toJson(commandResponse));
+        }
+    }
+
+    private void redirectToResponseLocation(HttpServletResponse resp, CommandResponse commandResponse) throws IOException {
+        resp.sendRedirect(commandResponse.getPath());
+    }
+
+    private void forwardToResponseLocation(HttpServletRequest req, HttpServletResponse resp, CommandResponse commandResponse)
+            throws ServletException, IOException {
+        final String desiredPath = commandResponse.getPath();
+        final RequestDispatcher dispatcher = req.getRequestDispatcher(desiredPath);
+
+        dispatcher.forward(req, resp);
     }
 
 }
