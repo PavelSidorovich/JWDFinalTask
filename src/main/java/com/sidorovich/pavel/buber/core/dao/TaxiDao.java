@@ -1,8 +1,10 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.api.db.QueryGenerator;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Taxi;
+import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
 import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public final class TaxiDao extends CommonDao<Taxi> {
@@ -24,11 +28,21 @@ public final class TaxiDao extends CommonDao<Taxi> {
     private static final String CAR_BRAND_COLUMN_NAME = TABLE_NAME + ".car_brand";
     private static final String CAR_MODEL_COLUMN_NAME = TABLE_NAME + ".car_model";
     private static final String PHOTO_FILEPATH_COLUMN_NAME = TABLE_NAME + ".car_photo_path";
-    private static final String LICENSE_PLATE_COLUMN_NAME = TABLE_NAME + ".license_plate";
+    private static final String LICENCE_PLATE_COLUMN_NAME = TABLE_NAME + ".license_plate";
     private static final String LAST_COORDINATES_ID_COLUMN_NAME = TABLE_NAME + ".last_coordinates_id";
 
     TaxiDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
+    }
+
+    public Optional<Taxi> findByLicencePlate(String licencePlate){
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        List<Taxi> list = queryGenerator.select(getColumnNames())
+                                          .from(getTableName())
+                                          .where(LICENCE_PLATE_COLUMN_NAME, licencePlate)
+                                          .fetch(this::extractResultCatchingException);
+
+        return list.isEmpty()? Optional.empty() : Optional.of(list.get(0));
     }
 
     @Override
@@ -44,7 +58,7 @@ public final class TaxiDao extends CommonDao<Taxi> {
         columns.add(CAR_BRAND_COLUMN_NAME);
         columns.add(CAR_MODEL_COLUMN_NAME);
         columns.add(PHOTO_FILEPATH_COLUMN_NAME);
-        columns.add(LICENSE_PLATE_COLUMN_NAME);
+        columns.add(LICENCE_PLATE_COLUMN_NAME);
         columns.add(LAST_COORDINATES_ID_COLUMN_NAME);
         return columns;
     }
@@ -56,7 +70,7 @@ public final class TaxiDao extends CommonDao<Taxi> {
         map.put(CAR_BRAND_COLUMN_NAME, taxi.getCarBrand());
         map.put(CAR_MODEL_COLUMN_NAME, taxi.getCarModel());
         map.put(PHOTO_FILEPATH_COLUMN_NAME, taxi.getPhotoFilepath());
-        map.put(LICENSE_PLATE_COLUMN_NAME, taxi.getLicencePlate());
+        map.put(LICENCE_PLATE_COLUMN_NAME, taxi.getLicencePlate());
         map.put(LAST_COORDINATES_ID_COLUMN_NAME, taxi.getLastCoordinates().getId()
                                                      .orElseThrow(IdIsNotDefinedException::new));
         return map;
@@ -78,7 +92,7 @@ public final class TaxiDao extends CommonDao<Taxi> {
                 rs.getLong(ID_COLUMN_NAME),
                 rs.getString(CAR_BRAND_COLUMN_NAME),
                 rs.getString(CAR_MODEL_COLUMN_NAME),
-                rs.getString(LICENSE_PLATE_COLUMN_NAME),
+                rs.getString(LICENCE_PLATE_COLUMN_NAME),
                 rs.getString(PHOTO_FILEPATH_COLUMN_NAME),
                 coordinates
         );

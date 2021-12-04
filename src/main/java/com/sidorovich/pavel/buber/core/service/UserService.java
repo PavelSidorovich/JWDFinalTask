@@ -46,6 +46,13 @@ public class UserService implements EntityService<BuberUser> {
                       .map(this::buildUser);
     }
 
+    public Optional<BuberUser> findByPhone(String phone) {
+        Optional<Account> account = accountService.readAccountByPhone(phone);
+
+        return account.flatMap(value -> userDao.findById(value.getId().orElse(-1L))
+                                               .map(this::buildUser));
+    }
+
     @Override
     public List<BuberUser> findAll() {
         return userDao.findAll().stream()
@@ -65,6 +72,19 @@ public class UserService implements EntityService<BuberUser> {
     public BuberUser update(BuberUser user) {
         try {
             Account updatedAccount = accountService.update(user.getAccount());
+            BuberUser updatedUser = userDao.update(user);
+
+            return updatedUser.withAccount(updatedAccount);
+        } catch (SQLException e) {
+            LOG.error(e);
+        }
+
+        return user;
+    }
+
+    public BuberUser updatePassword(BuberUser user) {
+        try {
+            Account updatedAccount = accountService.updatePassword(user.getAccount());
             BuberUser updatedUser = userDao.update(user);
 
             return updatedUser.withAccount(updatedAccount);

@@ -34,6 +34,19 @@ public class AccountService implements EntityService<Account> {
         this.verifier = verifier;
     }
 
+    public Account updatePassword(Account account) {
+        final char[] rawPassword = account.getPasswordHash().toCharArray();
+        final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
+
+        try {
+            return accountDao.update(account.withPasswordHash(hashedPassword));
+        } catch (SQLException e) {
+            LOG.error(e);
+        }
+
+        return account;
+    }
+
     @Override
     public Account save(Account account) throws DuplicateKeyException {
         final char[] rawPassword = account.getPasswordHash().toCharArray();
@@ -58,11 +71,8 @@ public class AccountService implements EntityService<Account> {
 
     @Override
     public Account update(Account account) {
-        final char[] rawPassword = account.getPasswordHash().toCharArray();
-        final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
-
         try {
-            return accountDao.update(account.withPasswordHash(hashedPassword));
+            return accountDao.update(account);
         } catch (SQLException e) {
             LOG.error(e);
         }

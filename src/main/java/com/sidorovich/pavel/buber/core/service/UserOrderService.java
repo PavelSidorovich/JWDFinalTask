@@ -32,6 +32,13 @@ public class UserOrderService implements EntityService<UserOrder> {
         this.coordinatesDao = coordinatesDao;
     }
 
+    public List<UserOrder> findByClient(BuberUser client) {
+        return orderDao.findByClientId(client.getId().orElse(-1L))
+                       .stream()
+                       .map(this::buildOrder)
+                       .collect(Collectors.toList());
+    }
+
     @Override
     public UserOrder save(UserOrder order) {
         try {

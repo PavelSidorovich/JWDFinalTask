@@ -61,6 +61,14 @@ public class DriverService implements EntityService<Driver> {
                         .collect(Collectors.toList());
     }
 
+    public Optional<Driver> findByTaxiLicencePlate(String licencePlate) {
+        Optional<Taxi> byLicencePlate = taxiService.findByLicencePlate(licencePlate);
+
+        return byLicencePlate
+                .flatMap(taxi -> driverDao.findByTaxiId(taxi.getId().orElse(-1L))
+                                          .map(this::buildDriver));
+    }
+
     private Driver buildDriver(Driver driver) {
         return driver
                 .withBuberUser(userService.findById(driver.getId().orElse(-1L))

@@ -48,6 +48,11 @@ public class TaxiService implements EntityService<Taxi> {
         }
     }
 
+    public Optional<Taxi> findByLicencePlate(String licencePlate) {
+        return taxiDao.findByLicencePlate(licencePlate)
+                      .map(this::buildTaxi);
+    }
+
     @Override
     public Optional<Taxi> findById(Long id) {
         return taxiDao.findById(id)

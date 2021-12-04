@@ -25,6 +25,12 @@ public class BonusService implements EntityService<Bonus> {
         this.userService = userService;
     }
 
+    public List<Bonus> findBonusesByUserId(Long id) {
+        return bonusDao.findBonusesByUserId(id).stream()
+                       .map(this::buildBonus)
+                       .collect(Collectors.toList());
+    }
+
     @Override
     public Bonus save(Bonus bonus) throws DuplicateKeyException {
         try {

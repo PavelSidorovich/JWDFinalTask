@@ -1,12 +1,14 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.api.db.QueryGenerator;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.OrderStatus;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
+import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
 import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +17,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public final class UserOrderDao extends CommonDao<UserOrder> {
@@ -34,6 +38,15 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
 
     UserOrderDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
+    }
+
+    public List<UserOrder> findByClientId(Long id) {
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+
+        return queryGenerator.select(getColumnNames())
+                             .from(getTableName())
+                             .where(CLIENT_ID_COLUMN_NAME, id)
+                             .fetch(this::extractResultCatchingException);
     }
 
     @Override
