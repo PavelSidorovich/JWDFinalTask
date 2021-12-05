@@ -6,7 +6,6 @@ function addCashValidator() {
   const $cashFeedback = $("#cashFeedback");
   const $cash = $("#cash");
   const cashRegex = new RegExp('^\\d{1,6}[.,]?\\d{0,2}$');
-  console.log("lol1");
   $cash.on("input", function () {
     if ($cash.val().match(cashRegex)) {
       $cash.addClass("is-valid");

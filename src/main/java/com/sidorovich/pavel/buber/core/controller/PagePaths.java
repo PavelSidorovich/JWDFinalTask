@@ -16,6 +16,7 @@ public enum PagePaths {
     INCOMING_ORDER("/WEB-INF/jsp/driverOrder.jsp", "incoming_order"),
     CLIENT_WALLET("/WEB-INF/jsp/clientWallet.jsp", "my_wallet"),
     DRIVER_WALLET("/WEB-INF/jsp/driverWallet.jsp", "driver_wallet"),
+    ACCOUNT_CONTROL("/WEB-INF/jsp/accountControl.jsp", "account_control"),
     ERROR("/WEB-INF/jsp/error.jsp", "show_error");
 
     private static final String COMMAND = "?command=";
