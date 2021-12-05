@@ -14,7 +14,8 @@ public enum PagePaths {
     CLIENT_ORDER("/WEB-INF/jsp/userOrder.jsp", "make_order"),
     MY_BONUSES("/WEB-INF/jsp/myBonuses.jsp", "my_bonuses"),
     INCOMING_ORDER("/WEB-INF/jsp/driverOrder.jsp", "incoming_order"),
-    MY_WALLET("/WEB-INF/jsp/walletControl.jsp", "my_wallet"),
+    CLIENT_WALLET("/WEB-INF/jsp/clientWallet.jsp", "my_wallet"),
+    DRIVER_WALLET("/WEB-INF/jsp/driverWallet.jsp", "driver_wallet"),
     ERROR("/WEB-INF/jsp/error.jsp", "show_error");
 
     private static final String COMMAND = "?command=";

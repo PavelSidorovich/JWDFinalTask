@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import static com.sidorovich.pavel.buber.api.model.OrderStatus.*;
 
-public class MyWalletCommand extends CommonCommand {
+public class ClientWalletCommand extends CommonCommand {
 
     private static final String USER_SESSION_PARAM_NAME = "user";
     private static final String CASH_ATTR_PARAM_NAME = "cash";
@@ -30,9 +30,9 @@ public class MyWalletCommand extends CommonCommand {
     private final UserOrderService orderService;
     private final UserService userService;
 
-    private MyWalletCommand(RequestFactory requestFactory,
-                            UserOrderService orderService,
-                            UserService userService) {
+    private ClientWalletCommand(RequestFactory requestFactory,
+                                UserOrderService orderService,
+                                UserService userService) {
         super(requestFactory);
         this.orderService = orderService;
         this.userService = userService;
@@ -52,7 +52,7 @@ public class MyWalletCommand extends CommonCommand {
             }
         }
 
-        return requestFactory.createForwardResponse(PagePaths.MY_WALLET.getJspPath());
+        return requestFactory.createForwardResponse(PagePaths.CLIENT_WALLET.getJspPath());
     }
 
     private List<BigDecimal> getDebits(BuberUser user) {
@@ -66,12 +66,12 @@ public class MyWalletCommand extends CommonCommand {
                 .collect(Collectors.toList());
     }
 
-    public static MyWalletCommand getInstance() {
+    public static ClientWalletCommand getInstance() {
         return Holder.INSTANCE;
     }
 
     private static class Holder {
-        private static final MyWalletCommand INSTANCE = new MyWalletCommand(
+        private static final ClientWalletCommand INSTANCE = new ClientWalletCommand(
                 RequestFactoryImpl.getInstance(),
                 EntityServiceFactory.getInstance().serviceFor(UserOrderService.class),
                 EntityServiceFactory.getInstance().serviceFor(UserService.class));
