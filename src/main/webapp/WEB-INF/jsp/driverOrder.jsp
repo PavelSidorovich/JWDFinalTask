@@ -198,11 +198,6 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <%--                <c:if test="${not empty requestScope.order}">--%>
-                <%--                    <button class="btn btn-success btn-block" type="submit" data-toggle="modal"--%>
-                <%--                            data-target="#infoModal">Take order--%>
-                <%--                    </button>--%>
-                <%--                </c:if>--%>
             </div>
             <c:if test="${not empty requestScope.order}">
                 <jsp:include page="partials/approveActionModal.jsp"/>

@@ -84,7 +84,10 @@ public class DriverService implements EntityService<Driver> {
         try {
             Driver update = driverDao.update(driver);
 
-            return update.withBuberUser(user);
+            return update.withBuberUser(user)
+                         .withTaxi(taxiService.findById(
+                                 update.getTaxi().getId().orElse(-1L)).orElse(null)
+                         );
         } catch (SQLException e) {
             LOG.error(e);
         }

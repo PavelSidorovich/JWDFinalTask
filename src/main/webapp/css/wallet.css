@@ -1,3 +1,7 @@
-ul>li{
+.debits > li {
   color: red;
+}
+
+.credits > li {
+  color: green;
 }

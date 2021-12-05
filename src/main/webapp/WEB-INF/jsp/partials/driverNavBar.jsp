@@ -25,6 +25,7 @@
         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-expanded="false"></a>
         <div class="dropdown-menu right-align">
             <a class="dropdown-item" href="#">Account control</a>
+            <a class="dropdown-item" href="${contextPath}/controller?command=driver_wallet">My wallet</a>
             <div class="dropdown-divider"></div>
             <c:if test="${not empty sessionScope.user}">
                 <a class="dropdown-item text-danger" href="${contextPath}/controller?command=logout">Logout</a>

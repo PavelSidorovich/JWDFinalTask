@@ -40,7 +40,7 @@ public class TopUpBalanceCommand extends CommonCommand {
             }
         }
 
-        return requestFactory.createRedirectResponse(PagePaths.MY_WALLET.getCommand());
+        return requestFactory.createRedirectResponse(PagePaths.CLIENT_WALLET.getCommand());
     }
 
     private void topUpBalance(CommandRequest request) {
