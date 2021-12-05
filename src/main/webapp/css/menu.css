@@ -1,6 +1,5 @@
-#menu > li > a::after {
-  content: "|";
-  margin-left: 15px;
+#menu > li {
+  margin-right: 80px;
 }
 
 .right-align{
