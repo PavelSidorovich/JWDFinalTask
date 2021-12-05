@@ -16,7 +16,7 @@ function addCancelButtonListener() {
   $("#cancelButton").click(function () {
     clearApproveModal();
     $("#modalHeader").prepend("<h5>Approve cancelling</h5>");
-    $("#modalMessage").text("Are you really want to cancel order?");
+    $("#modalMessage").text("Are you really want to cancel order? (bonus will be lost)");
     $("#approveButton").remove();
     $("#modalButtons").append(
       '<form action="/controller?command=cancel_order" method="post">' +

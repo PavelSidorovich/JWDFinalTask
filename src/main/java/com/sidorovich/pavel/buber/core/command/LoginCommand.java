@@ -87,8 +87,7 @@ public class LoginCommand extends CommonCommand {
             userPageCommand = PagePaths.USER_CONTROL.getCommand();
             break;
         case DRIVER:
-            userPageCommand = "";
-            // TODO: 11/27/2021
+            userPageCommand = PagePaths.INCOMING_ORDER.getCommand();
             break;
         case CLIENT:
             userPageCommand = PagePaths.CLIENT_ORDER.getCommand();

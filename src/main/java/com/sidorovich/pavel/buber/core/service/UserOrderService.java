@@ -39,6 +39,13 @@ public class UserOrderService implements EntityService<UserOrder> {
                        .collect(Collectors.toList());
     }
 
+    public List<UserOrder> findByDriver(Driver driver) {
+        return orderDao.findByDriverId(driver.getId().orElse(-1L))
+                       .stream()
+                       .map(this::buildOrder)
+                       .collect(Collectors.toList());
+    }
+
     @Override
     public UserOrder save(UserOrder order) {
         try {

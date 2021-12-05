@@ -9,6 +9,7 @@ import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
@@ -39,6 +40,16 @@ public final class BonusDao extends CommonDao<Bonus> {
         return queryGenerator.select(getColumnNames())
                              .from(getTableName())
                              .where(CLIENT_ID_COLUMN_NAME, id)
+                             .fetch(this::extractResultCatchingException);
+    }
+
+    public List<Bonus> findBonusesByUserIdAndDiscount(Long id, Double discount) {
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+
+        return queryGenerator.select(getColumnNames())
+                             .from(getTableName())
+                             .where(CLIENT_ID_COLUMN_NAME, id)
+                             .and(DISCOUNT_COLUMN_NAME, discount)
                              .fetch(this::extractResultCatchingException);
     }
 

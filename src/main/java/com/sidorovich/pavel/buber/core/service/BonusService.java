@@ -8,6 +8,7 @@ import com.sidorovich.pavel.buber.exception.EntitySavingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,12 @@ public class BonusService implements EntityService<Bonus> {
 
     public List<Bonus> findBonusesByUserId(Long id) {
         return bonusDao.findBonusesByUserId(id).stream()
+                       .map(this::buildBonus)
+                       .collect(Collectors.toList());
+    }
+
+    public List<Bonus> findBonusesByUserIdAndDiscount(Long id, Double discount) {
+        return bonusDao.findBonusesByUserIdAndDiscount(id, discount).stream()
                        .map(this::buildBonus)
                        .collect(Collectors.toList());
     }

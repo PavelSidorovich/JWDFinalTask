@@ -49,6 +49,15 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
                              .fetch(this::extractResultCatchingException);
     }
 
+    public List<UserOrder> findByDriverId(Long id) {
+        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+
+        return queryGenerator.select(getColumnNames())
+                             .from(getTableName())
+                             .where(DRIVER_ID_COLUMN_NAME, id)
+                             .fetch(this::extractResultCatchingException);
+    }
+
     @Override
     protected String getTableName() {
         return TABLE_NAME_WITH_DB;
