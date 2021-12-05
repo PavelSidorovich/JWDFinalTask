@@ -44,6 +44,8 @@ public enum CommandRegistry {
     DRIVER_PROCESS_ORDER(DriverProcessOrderCommand.getInstance(), "driver_process_order", DRIVER),
     CONFIRM_PAYMENT(ConfirmPaymentCommand.getInstance(), "confirm_payment", DRIVER),
     GET_DRIVER_STATUS(GetDriverStatusCommand.getInstance(), "get_driver_status", DRIVER),
+    MY_WALLET_PAGE(MyWalletCommand.getInstance(), "my_wallet", CLIENT),
+    TOP_UP_BALANCE(TopUpBalanceCommand.getInstance(), "top_up_balance", CLIENT),
     ERROR_PAGE(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
     DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN), ""),
     ;
