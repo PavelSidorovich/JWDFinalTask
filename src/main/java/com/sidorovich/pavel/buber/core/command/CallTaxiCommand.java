@@ -5,6 +5,7 @@ import com.sidorovich.pavel.buber.api.calculator.DistanceCalculator;
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
+import com.sidorovich.pavel.buber.api.model.Bonus;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.DriverStatus;
@@ -18,6 +19,7 @@ import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.dao.CoordinatesDao;
 import com.sidorovich.pavel.buber.core.dao.DaoFactory;
 import com.sidorovich.pavel.buber.core.dto.OrderDto;
+import com.sidorovich.pavel.buber.core.service.BonusService;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.UserOrderService;
@@ -31,6 +33,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class CallTaxiCommand extends CommonCommand {
 
@@ -49,6 +52,7 @@ public class CallTaxiCommand extends CommonCommand {
 
     //todo rename service
     private final UserOrderService orderService;
+    private final BonusService bonusService;
     private final DriverService driverService;
     private final UserService userService;
     private final CoordinatesDao coordinatesDao;
@@ -57,6 +61,7 @@ public class CallTaxiCommand extends CommonCommand {
     private final DistanceCalculator distanceCalculator;
 
     private CallTaxiCommand(RequestFactory requestFactory, UserOrderService orderService,
+                            BonusService bonusService,
                             DriverService driverService, UserService userService,
                             CoordinatesDao coordinatesDao,
                             Validator<UserOrder, Map<String, String>> orderValidator,
@@ -64,6 +69,7 @@ public class CallTaxiCommand extends CommonCommand {
                             DistanceCalculator distanceCalculator) {
         super(requestFactory);
         this.orderService = orderService;
+        this.bonusService = bonusService;
         this.driverService = driverService;
         this.userService = userService;
         this.coordinatesDao = coordinatesDao;
@@ -102,11 +108,21 @@ public class CallTaxiCommand extends CommonCommand {
             }
             driverService.update(order.getDriver().withDriverStatus(DriverStatus.BUSY));
             orderService.save(order);
+            deleteClientBonus(orderDto, order);
         } catch (SQLException e) {
             LOG.error(e);
         }
 
         return Collections.emptyMap();
+    }
+
+    private void deleteClientBonus(OrderDto orderDto, UserOrder order) {
+        Optional<Bonus> bonusesByUserIdAndDiscount = bonusService.findBonusesByUserIdAndDiscount(
+                order.getClient().getId().orElse(-1L),
+                orderDto.getBonus()
+        ).stream().findFirst();
+
+        bonusesByUserIdAndDiscount.ifPresent(bonus -> bonusService.delete(bonus.getId().orElse(-1L)));
     }
 
     private UserOrder getUserOrder(OrderDto orderDto, Coordinates initialCoordinates, Coordinates endCoordinates,
@@ -159,6 +175,7 @@ public class CallTaxiCommand extends CommonCommand {
         private static final CallTaxiCommand INSTANCE = new CallTaxiCommand(
                 RequestFactoryImpl.getInstance(),
                 SERVICE_FACTORY.serviceFor(UserOrderService.class),
+                SERVICE_FACTORY.serviceFor(BonusService.class),
                 SERVICE_FACTORY.serviceFor(DriverService.class),
                 SERVICE_FACTORY.serviceFor(UserService.class),
                 DaoFactory.getInstance().serviceFor(CoordinatesDao.class),
