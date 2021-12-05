@@ -27,53 +27,52 @@
             <img class="img-fluid" src="../../images/map.png">
         </div>
         <div class="col-md-5 order-md-2">
-            <div class="row">
-                <c:choose>
-                    <c:when test="${not empty requestScope.order}">
+            <c:choose>
+                <c:when test="${requestScope.driverStatus eq DriverStatus.PENDING or requestScope.driverStatus eq DriverStatus.REJECTED}">
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <strong>Your application was rejected or it is still processing by admin</strong>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="row">
                         <c:choose>
-                            <c:when test="${requestScope.order.status eq OrderStatus.NEW}">
-                                <h2>Waiting for your response</h2>
-                                <div class="spinner-grow text-danger ml-2" role="status"></div>
-                                <%--                                <jsp:include page="partials/infoModal.jsp"/>--%>
-                                <%--                                <script>showInfoModal()</script>--%>
+                            <c:when test="${not empty requestScope.order}">
+                                <c:choose>
+                                    <c:when test="${requestScope.order.status eq OrderStatus.NEW}">
+                                        <h2>Waiting for your response</h2>
+                                        <div class="spinner-grow text-danger ml-2" role="status"></div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h2>Trip in progress</h2>
+                                        <div class="spinner-grow text-success ml-2" role="status"></div>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:when>
                             <c:otherwise>
-                                <h2>Trip in progress</h2>
-                                <div class="spinner-grow text-success ml-2" role="status"></div>
+                                <c:if test="${not empty requestScope.driverStatus}">
+                                    <c:choose>
+                                        <c:when test="${requestScope.driverStatus eq DriverStatus.BUSY}">
+                                            <h2 id="statusLine">You are taking rest...</h2>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <h2 id="statusLine">Waiting for orders</h2>
+                                            <div id="statusSpinner" class="spinner-grow text-warning ml-2"
+                                                 role="status"></div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
+                                <div class="container mt-2 mb-2">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="statusCheckbox">
+                                        <label class="custom-control-label" for="statusCheckbox">Take orders</label>
+                                    </div>
+                                    <script>getDriverStatus()</script>
+                                </div>
                             </c:otherwise>
                         </c:choose>
-                    </c:when>
-                    <c:otherwise>
-                        <c:if test="${not empty requestScope.driverStatus}">
-                            <c:choose>
-                                <c:when test="${requestScope.driverStatus eq DriverStatus.BUSY}">
-                                    <h2 id="statusLine">You are taking rest...</h2>
-                                </c:when>
-                                <c:otherwise>
-                                    <h2 id="statusLine">Waiting for orders</h2>
-                                    <div id="statusSpinner" class="spinner-grow text-warning ml-2" role="status"></div>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:if>
-                        <div class="container mt-2 mb-2">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="statusCheckbox">
-                                <label class="custom-control-label" for="statusCheckbox">Take orders</label>
-                            </div>
-                            <script>getDriverStatus()</script>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-            <%--            todo--%>
-            <%--            <c:if test="${not empty requestScope.funds}">--%>
-            <%--                <div class="alert alert-danger alert-dismissible fade show">--%>
-            <%--                    <strong>${requestScope.funds}</strong>--%>
-            <%--                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">--%>
-            <%--                        <span aria-hidden="true">&times;</span>--%>
-            <%--                    </button>--%>
-            <%--                </div>--%>
-            <%--            </c:if>--%>
+                    </div>
+                </c:otherwise>
+            </c:choose>
             <c:if test="${not empty sessionScope.user}">
                 <input hidden id="driverId" value="${sessionScope.user.getId().get()}">
             </c:if>
@@ -202,8 +201,7 @@
             <c:if test="${not empty requestScope.order}">
                 <jsp:include page="partials/approveActionModal.jsp"/>
                 <c:choose>
-                    <c:when test="${requestScope.order.status eq OrderStatus.NEW}">
-                        <%--                        <jsp:include page="partials/approveActionModal.jsp"/>--%>
+                    <c:when test="${requestScope.order.status eq OrderStatus.NEW and requestScope.driverStatus ne DriverStatus.REJECTED and requestScope.driverStatus ne DriverStatus.PENDING }">
                         <div class="form-row">
                             <div class="col-md-6 mb-3">
                                 <button id="cancelButton" class="form-control btn btn-outline-danger btn-block">
