@@ -57,8 +57,17 @@ public class ConfirmPaymentCommand extends CommonCommand {
 
     private void confirmPayment(UserOrder order) {
         debitClientCash(order);
+        creditDriverCash(order);
         driverService.update(order.getDriver().withDriverStatus(DriverStatus.FREE));
         orderService.update(order.withStatus(OrderStatus.COMPLETED));
+    }
+
+    private void creditDriverCash(UserOrder order) {
+        Driver driver = order.getDriver();
+        BuberUser driverUser = driver.getUser();
+
+        BuberUser withCash = driverUser.withCash(driverUser.getCash().add(order.getPrice()));
+        driverService.update(driver.withBuberUser(withCash));
     }
 
     private void debitClientCash(UserOrder order) {
