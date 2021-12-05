@@ -2,6 +2,7 @@ package com.sidorovich.pavel.buber.core.validator;
 
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Driver;
+import com.sidorovich.pavel.buber.api.model.DriverStatus;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
 import com.sidorovich.pavel.buber.api.validator.Validator;
 
@@ -27,6 +28,7 @@ public class OrderValidator implements Validator<UserOrder, Map<String, String>>
     private static final BigDecimal RIGHT_LONGITUDE_BOUND_OF_MINSK = new BigDecimal("27.68692016601563");
     private static final BigDecimal BOTTOM_LATITUDE_BOUND_OF_MINSK = new BigDecimal("53.832675494023555");
     private static final BigDecimal TOP_LATITUDE_BOUND_OF_MINSK = new BigDecimal("53.96739671749269");
+    private static final String DRIVER_IS_BUSY_MSG = "Driver is now busy, please, refresh the page";
 
     private OrderValidator() {
     }
@@ -47,6 +49,8 @@ public class OrderValidator implements Validator<UserOrder, Map<String, String>>
 
         if (driver == null) {
             errorsByMessages.put(TAXI_PARAM_NAME, TAXI_IS_NOT_SPECIFIED_MSG);
+        } else if (driver.getDriverStatus() != DriverStatus.FREE) {
+            errorsByMessages.put(TAXI_PARAM_NAME, DRIVER_IS_BUSY_MSG);
         }
 
         return errorsByMessages;

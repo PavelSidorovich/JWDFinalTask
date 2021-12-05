@@ -6,6 +6,8 @@ import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
+import com.sidorovich.pavel.buber.api.model.Driver;
+import com.sidorovich.pavel.buber.api.model.DriverStatus;
 import com.sidorovich.pavel.buber.api.model.OrderStatus;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
 import com.sidorovich.pavel.buber.api.validator.Validator;
@@ -98,6 +100,7 @@ public class CallTaxiCommand extends CommonCommand {
             if (!validate.isEmpty()) {
                 return validate;
             }
+            driverService.update(order.getDriver().withDriverStatus(DriverStatus.BUSY));
             orderService.save(order);
         } catch (SQLException e) {
             LOG.error(e);
@@ -110,21 +113,21 @@ public class CallTaxiCommand extends CommonCommand {
                                    BigDecimal price) throws SQLException {
         Coordinates savedInitialCoordinates = coordinatesDao.save(initialCoordinates);
         Coordinates savedEndCoordinates = coordinatesDao.save(endCoordinates);
-        UserOrder order = UserOrder.with()
-                                   .client(userService.findByPhone(orderDto.getPhone()).orElse(null))
-                                   .driver(driverService.findByTaxiLicencePlate(orderDto.getLicencePlate())
-                                                        .orElse(null))
-                                   .initialCoordinates(savedInitialCoordinates)
-                                   .endCoordinates(savedEndCoordinates)
-                                   .status(OrderStatus.NEW)
-                                   .price(price)
-                                   .build();
+        Driver driver = driverService.findByTaxiLicencePlate(orderDto.getLicencePlate()).orElse(null);
 
-        if (order.getDriver() == null) {
+        if (driver == null) {
             coordinatesDao.delete(savedInitialCoordinates.getId().orElse(-1L));
             coordinatesDao.delete(savedEndCoordinates.getId().orElse(-1L));
         }
-        return order;
+
+        return UserOrder.with()
+                        .client(userService.findByPhone(orderDto.getPhone()).orElse(null))
+                        .driver(driver)
+                        .initialCoordinates(savedInitialCoordinates)
+                        .endCoordinates(savedEndCoordinates)
+                        .status(OrderStatus.NEW)
+                        .price(price)
+                        .build();
     }
 
     private OrderDto getOrderDto(CommandRequest request) {
