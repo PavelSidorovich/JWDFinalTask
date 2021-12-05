@@ -21,7 +21,7 @@ import java.io.PrintWriter;
 
 @WebServlet("/controller")
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024, // 1 MB
+        fileSizeThreshold = 1024, // 1025 B
         maxFileSize = 1024 * 1024 * 25,      // 25 MB
         maxRequestSize = 1024 * 1024 * 100   // 100 MB
 )
