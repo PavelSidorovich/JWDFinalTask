@@ -7,4 +7,10 @@
     <filter-name>RoleFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <jsp-config>
+    <taglib>
+      <taglib-uri>com.sidorovich.pavel</taglib-uri>
+      <taglib-location>WEB-INF/tld/transactionsTags.tld</taglib-location>
+    </taglib>
+  </jsp-config>
 </web-app>

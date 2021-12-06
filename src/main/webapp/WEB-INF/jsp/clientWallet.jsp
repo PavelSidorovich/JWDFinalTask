@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="jwds" uri="com.sidorovich.pavel" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -29,12 +30,7 @@
                 <div class="card-body">
                     <h1 class="card-title pricing-card-title">${requestScope.cash} <small class="text-muted">RUB</small>
                     </h1>
-                    <p>Last order operations:</p>
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <c:forEach var="debit" items="${requestScope.debits}">
-                            <li>-${debit} RUB</li>
-                        </c:forEach>
-                    </ul>
+                    <jwds:transactionsDisplayer title="Last wallet debits:" symbol="-" transactions="${requestScope.debits}"/>
                     <button type="button" class="btn btn-lg btn-block btn-outline-primary" data-toggle="modal"
                             data-target="#topUpBalanceModal">
                         <i class="bi bi-arrow-up"></i>
