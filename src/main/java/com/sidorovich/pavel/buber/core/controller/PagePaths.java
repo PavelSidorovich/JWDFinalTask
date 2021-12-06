@@ -2,7 +2,6 @@ package com.sidorovich.pavel.buber.core.controller;
 
 public enum PagePaths {
 
-    INDEX("/", "main"),
     MAIN("/WEB-INF/jsp/main.jsp", "main"),
     LOGIN("/WEB-INF/jsp/login.jsp", "show_login"),
     REGISTER("/WEB-INF/jsp/register.jsp", "show_user_register"),
