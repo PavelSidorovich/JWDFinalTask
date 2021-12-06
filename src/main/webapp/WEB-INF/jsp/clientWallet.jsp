@@ -10,7 +10,7 @@
     <link href="${contextPath}/css/applications.css?v=1.0" rel="stylesheet" type="text/css">
     <link href="${contextPath}/css/wallet.css?v=1.0" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="${contextPath}/js/bootstrap.min.js" rel="stylesheet"></script>
+    <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
     <script src="${contextPath}/js/topUpBalance.js?v=1.1" type="text/javascript"></script>
 </head>
 

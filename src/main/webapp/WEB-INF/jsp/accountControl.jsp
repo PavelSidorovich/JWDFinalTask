@@ -10,7 +10,7 @@
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/css/applications.css?v=1.0" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="${contextPath}/js/bootstrap.min.js" rel="stylesheet"></script>
+    <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
     <script src="${contextPath}/js/personalInfo.js?v=1.3" type="text/javascript"></script>
 </head>
 
@@ -41,13 +41,16 @@
                             Edit personal information
                         </a>
                         <br>
-                        <a href="#" class="btn-link">Change password</a>
+                        <a href="#" class="btn-link" data-toggle="modal" data-target="#editPasswordModal">
+                            Change password
+                        </a>
                     </div>
                 </c:if>
             </div>
         </div>
     </div>
 </div>
+<jsp:include page="partials/editPasswordModal.jsp"/>
 <jsp:include page="partials/personalInfoModal.jsp"/>
 <jsp:include page="partials/commonFooter.jsp"/>
 </body>

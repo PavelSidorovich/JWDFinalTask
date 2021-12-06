@@ -13,12 +13,12 @@
  (function (factory) {
  	"use strict";
  	if (typeof define === 'function' && define.amd) {
- 		define(['jquery', 'tabulator', 'jquery-ui'], factory);
+ 		define(['jquery', 'src/main/webapp/js/tabulator/tabulator', 'jquery-ui'], factory);
  	}
  	else if(typeof module !== 'undefined' && module.exports) {
  		module.exports = factory(
  			require('jquery'),
- 			require('tabulator'),
+ 			require('src/main/webapp/js/tabulator/tabulator'),
  			require('jquery-ui')
  		);
  	}
