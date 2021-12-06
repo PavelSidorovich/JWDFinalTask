@@ -15,13 +15,13 @@
                 <form id="editPasswordForm" action="${contextPath}/controller?command=change_password" method="post">
                     <div class="form-group">
                         <label for="password">New password</label>
-                        <input type="password" name="password" class="form-control" id="password"
+                        <input type="password" name="password" class="form-control is-invalid" id="password"
                                aria-describedby="passwordFeedback">
                         <div id="passwordFeedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label for="passwordRepeat">Repeat password</label>
-                        <input type="password" name="passwordRepeat" class="form-control" id="passwordRepeat"
+                        <input type="password" name="passwordRepeat" class="form-control is-invalid" id="passwordRepeat"
                                aria-describedby="passwordRepeatFeedback">
                         <div id="passwordRepeatFeedback" class="invalid-feedback"></div>
                     </div>

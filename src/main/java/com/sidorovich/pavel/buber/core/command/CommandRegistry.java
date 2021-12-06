@@ -49,6 +49,7 @@ public enum CommandRegistry {
     TOP_UP_BALANCE(TopUpBalanceCommand.getInstance(), "top_up_balance", CLIENT),
     ACCOUNT_CONTROL_PAGE(AccountControlCommand.getInstance(), "account_control", CLIENT, DRIVER),
     EDIT_PERSONAL_INFO(EditPersonalInfoCommand.getInstance(), "edit_account_info", CLIENT, DRIVER),
+    CHANGE_PASSWORD(ChangePasswordCommand.getInstance(), "change_password", CLIENT, DRIVER),
     ERROR_PAGE(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
     DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN), ""),
     ;

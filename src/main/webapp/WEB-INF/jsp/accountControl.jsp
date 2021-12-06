@@ -12,6 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
     <script src="${contextPath}/js/personalInfo.js?v=1.3" type="text/javascript"></script>
+    <script src="${contextPath}/js/changePassword.js?v=1.1" type="text/javascript"></script>
 </head>
 
 <body>
