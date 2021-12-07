@@ -18,18 +18,21 @@ public class TransactionsTag extends TagSupport {
 
     private static final String TITLE_TAG = "<p>%s</p>";
     private static final String LIST_TAG = "<ul class=\"list-unstyled mt-3 mb-4\">%s</ul>";
-    private static final String LIST_ELEMENT_TAG = "<li>%c%s RUB</li>";
+    private static final String LIST_ELEMENT_TAG = "<li>%c%s %s</li>";
 
     private String title;
     private Character symbol;
     private List<BigDecimal> transactions;
+    private String currency;
 
     @Override
     public int doStartTag() throws JspException {
         final String titleFormatted = format(TITLE_TAG, title);
         final StringBuilder listElements = new StringBuilder();
 
-        transactions.forEach(element -> listElements.append(format(LIST_ELEMENT_TAG, symbol, element)));
+        transactions.forEach(element -> listElements.append(
+                format(LIST_ELEMENT_TAG, symbol, element, currency))
+        );
 
         final String listFormatted = format(LIST_TAG, listElements);
 
@@ -62,6 +65,10 @@ public class TransactionsTag extends TagSupport {
 
     public void setTransactions(List<BigDecimal> transactions) {
         this.transactions = transactions;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
 }
