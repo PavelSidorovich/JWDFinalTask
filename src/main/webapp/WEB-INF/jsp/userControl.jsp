@@ -2,10 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<fmt:requestEncoding value="utf-8"/>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.userControl" var="loc"/>
+<fmt:message bundle="${loc}" key="label.page.title" var="pageTitleLabel"/>
+<fmt:message bundle="${loc}" key="label.header" var="headerLabel"/>
 
 <html>
 <head>
-    <title>Manage users</title>
+    <title>${pageTitleLabel}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +27,7 @@
     <div class="row p-3">
         <jsp:include page="partials/userFilter.jsp"/>
         <div class="col-md-8 order-md-2">
-            <h2>Buber users</h2>
+            <h2>${headerLabel}</h2>
             <br>
             <div id="table"></div>
         </div>

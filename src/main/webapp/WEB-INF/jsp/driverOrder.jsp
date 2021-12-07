@@ -1,13 +1,36 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.sidorovich.pavel.buber.api.model.OrderStatus" %>
 <%@ page import="com.sidorovich.pavel.buber.api.model.DriverStatus" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.driverOrder" var="loc"/>
+<fmt:message bundle="${loc}" key="label.page.title" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.alert.danger" var="dangerAlertLabel"/>
+<fmt:message bundle="${loc}" key="label.header.pending" var="pendingHeaderLabel"/>
+<fmt:message bundle="${loc}" key="label.header.inProcess" var="processHeaderLabel"/>
+<fmt:message bundle="${loc}" key="label.header.rest" var="restHeaderLabel"/>
+<fmt:message bundle="${loc}" key="label.header.free" var="freeHeaderLabel"/>
+<fmt:message bundle="${loc}" key="label.checkbox" var="checkboxLabel"/>
+<fmt:message bundle="${loc}" key="label.header.from" var="fromLabel"/>
+<fmt:message bundle="${loc}" key="label.coordinate.longitude" var="longitudeLabel"/>
+<fmt:message bundle="${loc}" key="label.coordinate.latitude" var="latitudeLabel"/>
+<fmt:message bundle="${loc}" key="label.header.to" var="toLabel"/>
+<fmt:message bundle="${loc}" key="label.header.clientInfo" var="clientInfoLabel"/>
+<fmt:message bundle="${loc}" key="label.clientInfo.firstName" var="firstNameLabel"/>
+<fmt:message bundle="${loc}" key="label.clientInfo.lastName" var="lastNameLabel"/>
+<fmt:message bundle="${loc}" key="label.clientInfo.phone" var="phoneLabel"/>
+<fmt:message bundle="${loc}" key="label.clientInfo.email" var="emailLabel"/>
+<fmt:message bundle="${loc}" key="label.header.price" var="priceLabel"/>
+<fmt:message bundle="${loc}" key="label.rubles" var="rublesLabel"/>
+<fmt:message bundle="${loc}" key="label.button.cancel" var="cancelButtonLabel"/>
+<fmt:message bundle="${loc}" key="label.button.takeOrder" var="takeOrderButtonLabel"/>
+<fmt:message bundle="${loc}" key="label.button.confirm" var="confirmButtonLabel"/>
 
 <html>
 <head>
-    <title>Incoming order</title>
+    <title>${pageTitle}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${contextPath}/css/tabulator_modern.min.css" rel="stylesheet">
@@ -30,7 +53,7 @@
             <c:choose>
                 <c:when test="${requestScope.driverStatus eq DriverStatus.PENDING or requestScope.driverStatus eq DriverStatus.REJECTED}">
                     <div class="alert alert-danger alert-dismissible fade show">
-                        <strong>Your application was rejected or it is still processing by admin</strong>
+                        <strong>${dangerAlertLabel}</strong>
                     </div>
                 </c:when>
                 <c:otherwise>
@@ -39,11 +62,11 @@
                             <c:when test="${not empty requestScope.order}">
                                 <c:choose>
                                     <c:when test="${requestScope.order.status eq OrderStatus.NEW}">
-                                        <h2>Waiting for your response</h2>
+                                        <h2>${pendingHeaderLabel}</h2>
                                         <div class="spinner-grow text-danger ml-2" role="status"></div>
                                     </c:when>
                                     <c:otherwise>
-                                        <h2>Trip in progress</h2>
+                                        <h2>${processHeaderLabel}</h2>
                                         <div class="spinner-grow text-success ml-2" role="status"></div>
                                     </c:otherwise>
                                 </c:choose>
@@ -52,10 +75,10 @@
                                 <c:if test="${not empty requestScope.driverStatus}">
                                     <c:choose>
                                         <c:when test="${requestScope.driverStatus eq DriverStatus.BUSY}">
-                                            <h2 id="statusLine">You are taking rest...</h2>
+                                            <h2 id="statusLine">${restHeaderLabel}</h2>
                                         </c:when>
                                         <c:otherwise>
-                                            <h2 id="statusLine">Waiting for orders</h2>
+                                            <h2 id="statusLine">${freeHeaderLabel}</h2>
                                             <div id="statusSpinner" class="spinner-grow text-warning ml-2"
                                                  role="status"></div>
                                         </c:otherwise>
@@ -64,7 +87,7 @@
                                 <div class="container mt-2 mb-2">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="statusCheckbox">
-                                        <label class="custom-control-label" for="statusCheckbox">Take orders</label>
+                                        <label class="custom-control-label" for="statusCheckbox">${checkboxLabel}</label>
                                     </div>
                                     <script>getDriverStatus()</script>
                                 </div>
@@ -76,10 +99,10 @@
             <c:if test="${not empty sessionScope.user}">
                 <input hidden id="driverId" value="${sessionScope.user.getId().get()}">
             </c:if>
-            <h4>From:</h4>
+            <h4>${fromLabel}</h4>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label for="longitudeFrom">Longitude</label>
+                    <label for="longitudeFrom">${longitudeLabel}</label>
                     <c:choose>
                         <c:when test="${not empty requestScope.order}">
                             <input type="text" class="form-control" name="initialLongitude"
@@ -93,7 +116,7 @@
                     </c:choose>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="latitudeFrom">Latitude</label>
+                    <label for="latitudeFrom">${latitudeLabel}</label>
                     <c:choose>
                         <c:when test="${not empty requestScope.order}">
                             <input type="text" class="form-control" name="initialLatitude"
@@ -106,10 +129,10 @@
                     </c:choose>
                 </div>
             </div>
-            <h4>To:</h4>
+            <h4>${toLabel}</h4>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label for="longitudeTo">Longitude</label>
+                    <label for="longitudeTo">${longitudeLabel}</label>
                     <c:choose>
                         <c:when test="${not empty requestScope.order}">
                             <input type="text" class="form-control" name="endLongitude" id="longitudeTo"
@@ -121,7 +144,7 @@
                     </c:choose>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="latitudeTo">Latitude</label>
+                    <label for="latitudeTo">${latitudeLabel}</label>
                     <c:choose>
                         <c:when test="${not empty requestScope.order}">
                             <input type="text" class="form-control" name="endLatitude" id="latitudeTo"
@@ -133,10 +156,10 @@
                     </c:choose>
                 </div>
             </div>
-            <h4>Client information:</h4>
+            <h4>${clientInfoLabel}</h4>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label for="firstName">First name</label>
+                    <label for="firstName">${firstNameLabel}</label>
                     <c:choose>
                         <c:when test="${not empty requestScope.order}">
                             <input type="text" class="form-control" id="firstName"
@@ -148,7 +171,7 @@
                     </c:choose>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="lastName">Last name</label>
+                    <label for="lastName">${lastNameLabel}</label>
                     <c:choose>
                         <c:when test="${not empty requestScope.order}">
                             <input type="text" class="form-control" id="lastName"
@@ -162,7 +185,7 @@
             </div>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label for="phone">Phone</label>
+                    <label for="phone">${phoneLabel}</label>
                     <c:choose>
                         <c:when test="${not empty requestScope.order}">
                             <input type="text" class="form-control" id="phone"
@@ -174,11 +197,11 @@
                     </c:choose>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="email">Email</label>
+                    <label for="email">${emailLabel}</label>
                     <c:choose>
                         <c:when test="${not empty requestScope.order}">
                             <input type="text" class="form-control" id="email"
-                                   value="${requestScope.order.client.email.orElse('None')}" readonly>
+                                   value="${requestScope.order.client.email.get()}" readonly>
                         </c:when>
                         <c:otherwise>
                             <input type="text" class="form-control" id="email" value="" readonly>
@@ -190,7 +213,7 @@
                 <div class="container-fluid mb-4">
                     <c:choose>
                         <c:when test="${not empty requestScope.order}">
-                            <h5 id="price">Price: ${requestScope.order.price} RUB</h5>
+                            <h5 id="price">${priceLabel} ${requestScope.order.price} ${rublesLabel}</h5>
                         </c:when>
                         <c:otherwise>
                             <h5 id="price"></h5>
@@ -205,18 +228,18 @@
                         <div class="form-row">
                             <div class="col-md-6 mb-3">
                                 <button id="cancelButton" class="form-control btn btn-outline-danger btn-block">
-                                    Cancel order
+                                    ${cancelButtonLabel}
                                 </button>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <button id="takeButton" class="form-control btn btn-success">
-                                    Take order
+                                    ${takeOrderButtonLabel}
                                 </button>
                             </div>
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <button id="confirmOrderButton" class="btn btn-success btn-block">Confirm payment</button>
+                        <button id="confirmOrderButton" class="btn btn-success btn-block">${confirmButtonLabel}</button>
                     </c:otherwise>
                 </c:choose>
             </c:if>

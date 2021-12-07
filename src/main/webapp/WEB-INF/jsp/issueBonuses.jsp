@@ -2,10 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<fmt:setBundle basename="l10n.page.issueBonuses" var="loc"/>
+<fmt:message bundle="${loc}" key="label.page.title" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.header" var="headerLabel"/>
+<fmt:message bundle="${loc}" key="label.button.newBonus" var="newBonusButtonLabel"/>
 
 <html>
 <head>
-    <title>Issue bonuses</title>
+    <title>${pageTitle}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -24,9 +28,9 @@
         <div class="col-md-8 order-md-2">
             <div class="container">
                 <div class="row">
-                    <h2 class="order-1 mr-2">User bonuses</h2>
+                    <h2 class="order-1 mr-2">${headerLabel}</h2>
                     <button type="button" id="newBonusButton" class="btn btn-primary order-2"
-                            data-toggle="modal" data-target="#bonusModal">New bonus
+                            data-toggle="modal" data-target="#bonusModal">${newBonusButtonLabel}
                     </button>
                 </div>
                 <br>

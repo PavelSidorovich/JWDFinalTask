@@ -1,18 +1,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.sidorovich.pavel.buber.api.model.Role" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.accountControl" var="loc"/>
+<fmt:message bundle="${loc}" key="label.page.title" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.link.editPersonalInfo" var="editPersonalInfoLink"/>
+<fmt:message bundle="${loc}" key="label.link.changePassword" var="changePasswordLink"/>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>My account</title>
+    <title>${pageTitle}</title>
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/css/applications.css?v=1.0" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/personalInfo.js?v=1.3" type="text/javascript"></script>
     <script src="${contextPath}/js/changePassword.js?v=1.1" type="text/javascript"></script>
+    <script src="${contextPath}/js/personalInfo.js?v=1.4" type="text/javascript"></script>
 </head>
 
 <body>
@@ -39,11 +45,11 @@
                         <h5 class="card-title">${requestScope.user.account.phone}</h5>
                         <h5 class="card-title">${requestScope.user.email.orElse("")}</h5>
                         <a href="#" class="btn-link" data-toggle="modal" data-target="#personalInfoModal">
-                            Edit personal information
+                            ${editPersonalInfoLink}
                         </a>
                         <br>
                         <a href="#" class="btn-link" data-toggle="modal" data-target="#editPasswordModal">
-                            Change password
+                            ${changePasswordLink}
                         </a>
                     </div>
                 </c:if>

@@ -3,10 +3,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.userOrder" var="loc"/>
+<fmt:message bundle="${loc}" key="label.page.title" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.header.pending" var="pendingHeaderLabel"/>
+<fmt:message bundle="${loc}" key="label.header.inProcess" var="inProcessLabel"/>
+<fmt:message bundle="${loc}" key="label.header.makeOrder" var="makeOrderLabel"/>
+<fmt:message bundle="${loc}" key="label.alert.warn" var="warnAlertLabel"/>
+<fmt:message bundle="${loc}" key="label.header.from" var="fromLabel"/>
+<fmt:message bundle="${loc}" key="label.coordinate.longitude" var="longitudeLabel"/>
+<fmt:message bundle="${loc}" key="label.error.coordinate.longitude" var="longitudeErrorLabel"/>
+<fmt:message bundle="${loc}" key="label.coordinate.latitude" var="latitudeLabel"/>
+<fmt:message bundle="${loc}" key="label.error.coordinate.latitude" var="latitudeErrorLabel"/>
+<fmt:message bundle="${loc}" key="label.header.to" var="toLabel"/>
+<fmt:message bundle="${loc}" key="label.header.taxi" var="taxiHeaderLabel"/>
+<fmt:message bundle="${loc}" key="label.taxi.alt" var="taxiAltLabel"/>
+<fmt:message bundle="${loc}" key="label.option.taxi" var="optionTaxiLabel"/>
+<fmt:message bundle="${loc}" key="label.clientInfo.phone" var="phoneLabel"/>
+<fmt:message bundle="${loc}" key="label.header.bonus" var="bonusLabel"/>
+<fmt:message bundle="${loc}" key="label.bonus.none" var="bonusNoneLabel"/>
+<fmt:message bundle="${loc}" key="label.bonus.discount" var="discountLabel"/>
+<fmt:message bundle="${loc}" key="label.price" var="priceLabel"/>
+<fmt:message bundle="${loc}" key="label.currency" var="currencyLabel"/>
+<fmt:message bundle="${loc}" key="label.button.callTaxi" var="callTaxiButtonLabel"/>
+<fmt:message bundle="${loc}" key="label.button.cancel" var="cancelButtonLabel"/>
 
 <html>
 <head>
-    <title>Make order</title>
+    <title>${pageTitle}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${contextPath}/css/tabulator_modern.min.css" rel="stylesheet">
@@ -31,25 +55,25 @@
                     <c:when test="${not empty requestScope.order}">
                         <c:choose>
                             <c:when test="${requestScope.order.status eq OrderStatus.NEW}">
-                                <h2>Waiting for driver response</h2>
+                                <h2>${pendingHeaderLabel}</h2>
                                 <div class="spinner-grow text-warning ml-2" role="status"></div>
                                 <jsp:include page="partials/infoModal.jsp"/>
                                 <script>showInfoModal()</script>
                             </c:when>
                             <c:otherwise>
-                                <h2>Trip in progress</h2>
+                                <h2>${inProcessLabel}</h2>
                                 <div class="spinner-grow text-success ml-2" role="status"></div>
                             </c:otherwise>
                         </c:choose>
                     </c:when>
                     <c:otherwise>
-                        <h2>Make order</h2>
+                        <h2>${makeOrderLabel}</h2>
                     </c:otherwise>
                 </c:choose>
             </div>
             <c:if test="${requestScope.taxis.size() eq 0}">
                 <div class="alert alert-warning alert-dismissible fade show">
-                    <strong>Sorry, there are no free drivers now. Please wait a few minutes :(</strong>
+                    <strong>${warnAlertLabel}</strong>
                 </div>
             </c:if>
             <c:if test="${not empty requestScope.funds}">
@@ -62,11 +86,11 @@
             </c:if>
             <form id="orderForm" class="needs-validation" action="${contextPath}/controller?command=call_taxi"
                   novalidate method="post">
-                <h4>From:</h4>
+                <h4>${fromLabel}</h4>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <input id="phone" type="text" name="phone" hidden value="${sessionScope.user.phone}">
-                        <label for="longitudeFrom">Longitude</label>
+                        <label for="longitudeFrom">${longitudeLabel}</label>
                         <c:choose>
                             <c:when test="${not empty sessionScope.longitude}">
                                 <input type="text" class="form-control" name="initialLongitude"
@@ -75,12 +99,12 @@
                             <c:otherwise>
                                 <input type="text" class="form-control is-invalid"
                                        id="longitudeFrom" readonly>
-                                <div class="invalid-feedback">Cannot define your current longitude</div>
+                                <div class="invalid-feedback">${longitudeErrorLabel}</div>
                             </c:otherwise>
                         </c:choose>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="latitudeFrom">Latitude</label>
+                        <label for="latitudeFrom">${latitudeLabel}</label>
                         <c:choose>
                             <c:when test="${not empty sessionScope.latitude}">
                                 <input type="text" class="form-control" name="initialLatitude"
@@ -89,15 +113,15 @@
                             <c:otherwise>
                                 <input type="text" class="form-control is-invalid"
                                        id="latitudeFrom" readonly>
-                                <div class="invalid-feedback">Cannot define your current latitude</div>
+                                <div class="invalid-feedback">${latitudeErrorLabel}</div>
                             </c:otherwise>
                         </c:choose>
                     </div>
                 </div>
-                <h4>To:</h4>
+                <h4>${toLabel}</h4>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
-                        <label for="longitudeTo">Longitude</label>
+                        <label for="longitudeTo">${longitudeLabel}</label>
                         <c:choose>
                             <c:when test="${not empty requestScope.order}">
                                 <input type="text" class="form-control" name="endLongitude" id="longitudeTo"
@@ -121,7 +145,7 @@
                         </c:if>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="latitudeTo">Latitude</label>
+                        <label for="latitudeTo">${latitudeLabel}</label>
                         <c:choose>
                             <c:when test="${not empty requestScope.order}">
                                 <input type="text" class="form-control" name="endLatitude" id="latitudeTo"
@@ -145,7 +169,7 @@
                         </c:if>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="taxis">Taxi</label>
+                        <label for="taxis">${taxiHeaderLabel}</label>
                         <c:choose>
                             <c:when test="${not empty requestScope.order}">
                                 <select class="custom-select" id="taxis" name="taxi"
@@ -162,7 +186,7 @@
                             <c:otherwise>
                                 <select class="custom-select" id="taxis" name="taxi"
                                         aria-describedby="validationTaxiFeedback">
-                                    <option selected value="">Choose...</option>
+                                    <option selected value="">${optionTaxiLabel}</option>
                                     <c:forEach var="taxi" items="${requestScope.taxis}">
                                         <option value="${taxi.licencePlate}">
                                                 ${taxi.carBrand} ${taxi.carModel} (${taxi.licencePlate})
@@ -180,12 +204,12 @@
                     </div>
                     <c:if test="${empty requestScope.order}">
                         <div class="col-md-6 mb-3">
-                            <label for="bonuses">Bonus</label>
+                            <label for="bonuses">${bonusLabel}</label>
                             <select class="custom-select" id="bonuses" name="bonus">
-                                <option selected value="">None</option>
+                                <option selected value="">${bonusNoneLabel}</option>
                                 <c:forEach var="bonus" items="${requestScope.bonuses}">
                                     <option value="${bonus.discount}">
-                                            ${bonus.discount}% discount
+                                            ${bonus.discount}${discountLabel}
                                     </option>
                                 </c:forEach>
                             </select>
@@ -196,7 +220,7 @@
                     <div class="container-fluid mb-4">
                         <c:choose>
                             <c:when test="${not empty requestScope.order}">
-                                <h5 id="price">Price: ${requestScope.order.price} RUB</h5>
+                                <h5 id="price">${priceLabel} ${requestScope.order.price} ${currencyLabel}</h5>
                             </c:when>
                             <c:otherwise>
                                 <h5 id="price"></h5>
@@ -205,7 +229,8 @@
                     </div>
                     <c:if test="${empty requestScope.order}">
                         <button class="btn btn-warning btn-block" type="submit" data-toggle="modal"
-                                data-target="#infoModal">Call taxi
+                                data-target="#infoModal">
+                            ${callTaxiButtonLabel}
                         </button>
                     </c:if>
                 </div>
@@ -214,10 +239,10 @@
                 <c:choose>
                     <c:when test="${requestScope.order.status eq OrderStatus.NEW}">
                         <jsp:include page="partials/approveActionModal.jsp"/>
-                        <button id="cancelButton" class="btn btn-danger btn-block" type="submit">Cancel order</button>
+                        <button id="cancelButton" class="btn btn-danger btn-block" type="submit">${cancelButtonLabel}</button>
                     </c:when>
                     <c:otherwise>
-                        <button id="cancelButton" class="btn btn-danger btn-block disabled" type="submit">Cancel order
+                        <button id="cancelButton" class="btn btn-danger btn-block disabled" type="submit">${cancelButtonLabel}
                         </button>
                     </c:otherwise>
                 </c:choose>
