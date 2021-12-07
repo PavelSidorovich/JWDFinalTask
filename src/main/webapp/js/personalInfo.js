@@ -37,18 +37,20 @@ function addNameValidator() {
 
   $firstName.on("input", function () {
     checkField($firstName, nameRegex, $firstNameFeedback, "Valid first name is required");
-    setButtonState();
+    setSaveButtonState();
   });
   $lastName.on("input", function () {
     checkField($lastName, nameRegex, $lastNameFeedback, "Valid last name is required");
-    setButtonState();
+    setSaveButtonState();
   });
 }
 
-function setButtonState() {
+function setSaveButtonState() {
   const state = $("#firstName").hasClass("is-invalid")
     || $("#lastName").hasClass("is-invalid")
     || $("#email").hasClass("is-invalid");
+
+  console.log(state);
 
   $("#submitButton").attr("disabled", state);
 }
@@ -60,6 +62,6 @@ function addEmailValidator() {
 
   $email.on("input", function () {
     checkField($email, emailRegex, $emailFeedback, "Valid email is required");
-    setButtonState();
+    setSaveButtonState();
   });
 }

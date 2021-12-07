@@ -132,7 +132,6 @@ const printButton = function (cell, formatterParams, onRendered) {
 };
 
 function createTable(bonuses) {
-  console.log("lol");
   return new Tabulator("#table", {
     data: bonuses,
     layout: "fitColumns",
