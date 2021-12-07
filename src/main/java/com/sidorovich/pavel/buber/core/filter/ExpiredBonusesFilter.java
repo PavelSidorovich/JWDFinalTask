@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 @WebFilter(filterName = "ExpiredBonusesFilter")
 public class ExpiredBonusesFilter implements Filter {
 
-    private static final Logger LOG = LogManager.getLogger(ExpiredBonusesFilter.class);
-
     private static final long INVALID_INDEX = -1L;
 
     private final BonusService bonusService;
