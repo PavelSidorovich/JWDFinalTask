@@ -5,8 +5,7 @@ $(document).ready(function () {
   addFilterInput();
   addFilterListener(bonusTable);
   addModalButtonsListener(bonusTable);
-  addNewBonusButtonListener();
-  giveBonusButtonListener(bonusTable);
+  addNewBonusButtonListener(bonusTable);
 });
 
 function clearErrorFields() {
@@ -118,9 +117,9 @@ function addModalButtonsListener(table) {
 
           $("#table").before(alertDiv);
           fillBonusesTable(table);
+          $("#modalApprove").modal("hide");
         }, "json");
     }
-    $("#modalApprove").modal("hide");
   });
 }
 
@@ -200,20 +199,22 @@ function createUsersWithExtraField(data) {
     user.orderAmount = value;
     users.push(user);
   }
+
   myMap.forEach(logMapElements);
 
   return users;
 }
 
-function addNewBonusButtonListener() {
-  $('#newBonusButton').on('click', function (event) {
+function addNewBonusButtonListener(bonusTable) {
+  $('#newBonusButton').on('click', function () {
     $.post("/controller?command=get_users_by_order_amount", function (data) {
-      let users = createUsersWithExtraField(data);
-
+      $("#bonusForm").find("#users").children().remove();
+      const users = createUsersWithExtraField(data);
       let userTable = createUserTable(users);
+
       addSelectionButtonListeners(userTable);
+      giveBonusButtonListener(bonusTable, userTable);
       clearErrorFields();
-      Tabulator.findTable("#users")[0].deselectRow();
     }, "json");
   })
 }
@@ -227,12 +228,10 @@ function addSelectionButtonListeners(userTable) {
   })
 }
 
-function giveBonusButtonListener(bonusTable) {
+function giveBonusButtonListener(bonusTable, userTable) {
   $("#bonusForm").submit(function (event) {
     event.preventDefault();
     let idArray = [];
-
-    const userTable = Tabulator.findTable("#users")[0];
 
     for (const selectedUsers of userTable.getSelectedData()) {
       idArray.push(selectedUsers.id);
@@ -243,14 +242,13 @@ function giveBonusButtonListener(bonusTable) {
       function (data) {
         if (data.status === "ERROR") {
           showInvalidFields(data.obj);
-          return;
         } else {
           const alertDiv = createAlert(data);
 
           $("#table").before(alertDiv);
+          $("#bonusModal").modal("hide");
+          fillBonusesTable(bonusTable);
         }
-        $("#bonusModal").modal("hide");
-        fillBonusesTable(bonusTable);
-      }, "json");
+      }, "json")
   });
 }
