@@ -36,4 +36,15 @@
       <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>
+  <tag>
+    <name>bonusDisplayer</name>
+    <tag-class>com.sidorovich.pavel.buber.core.tag.BonusTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <description>User bonus</description>
+      <name>bonus</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
 </taglib>

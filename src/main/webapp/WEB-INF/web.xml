@@ -10,16 +10,15 @@
   <jsp-config>
     <taglib>
       <taglib-uri>com.sidorovich.pavel</taglib-uri>
-      <taglib-location>WEB-INF/tld/transactionsTags.tld</taglib-location>
+      <taglib-location>WEB-INF/tld/buberTaxiTags.tld</taglib-location>
     </taglib>
   </jsp-config>
-
   <filter-mapping>
-    <filter-name>RoleFilter</filter-name>
+    <filter-name>UserBlockFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <filter-mapping>
-    <filter-name>UserBlockFilter</filter-name>
+    <filter-name>RoleFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <filter-mapping>

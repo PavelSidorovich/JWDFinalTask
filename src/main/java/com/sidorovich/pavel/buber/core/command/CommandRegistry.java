@@ -33,7 +33,7 @@ public enum CommandRegistry {
     DELETE_BONUS(DeleteBonusCommand.getInstance(), "delete_bonus", ADMIN, CLIENT),
     BONUS_ISSUE_PAGE(ShowPageCommand.getInstance(PagePaths.ISSUE_BONUSES), "show_bonuses", ADMIN),
     ISSUE_BONUS(IssueBonusCommand.getInstance(), "issue_bonus", ADMIN),
-    MY_BONUSES(ShowPageCommand.getInstance(PagePaths.MY_BONUSES), "my_bonuses", CLIENT),
+    MY_BONUSES_PAGE(GetMyBonusesCommand.getInstance(), "my_bonuses", CLIENT),
     CALL_TAXI(CallTaxiCommand.getInstance(), "call_taxi", CLIENT),
     GET_TAXI_PHOTO(GetTaxiPhotoPathCommand.getInstance(), "get_taxi_photo"),
 //    GET_MY_BONUSES(GetMyBonusesCommand.getInstance(), "get_my_bonuses", CLIENT),
