@@ -15,6 +15,7 @@
 <fmt:message bundle="${loc}" key="label.link.language.ch" var="chLanguageLabel"/>
 <fmt:message bundle="${loc}" key="label.link.logout" var="logoutButtonLabel"/>
 <link href="${contextPath}/css/menu.css?v=1.2" rel="stylesheet">
+<script src="${contextPath}/js/languageSelector.js?v=1.0"></script>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">${companyLabel}</a>
@@ -44,12 +45,9 @@
             ${languageLabel}
         </button>
         <div class="dropdown-menu">
-            <form action="${contextPath}/controller?command=change_language" method="post">
-                <button class="dropdown-item">${ruLanguageLabel}</button>
-            </form>
-
-            <a class="dropdown-item" href="#">${enLanguageLabel}</a>
-            <a class="dropdown-item" href="#">${chLanguageLabel}</a>
+            <button id="ru" class="dropdown-item">${ruLanguageLabel}</button>
+            <button id="en" class="dropdown-item">${enLanguageLabel}</button>
+            <button id="ch" class="dropdown-item">${chLanguageLabel}</button>
         </div>
     </div>
     <c:if test="${not empty sessionScope.user}">
