@@ -1,6 +1,7 @@
 package com.sidorovich.pavel.buber.api.model;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Objects;
 
 public class UserOrder extends CommonEntity<UserOrder> implements Order {
@@ -11,11 +12,12 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
     private final Coordinates initialCoordinates;
     private final Coordinates endCoordinates;
     private final OrderStatus status;
+    private final Date dateOfTrip;
 
     /* can be instantiated only using builder */
     private UserOrder(Long id, BuberUser client, Driver driver, BigDecimal price,
                       Coordinates initialCoordinates, Coordinates endCoordinates,
-                      OrderStatus status) {
+                      OrderStatus status, Date dateOfTrip) {
         super(id);
         this.client = client;
         this.driver = driver;
@@ -23,32 +25,33 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
         this.initialCoordinates = initialCoordinates;
         this.endCoordinates = endCoordinates;
         this.status = status;
+        this.dateOfTrip = dateOfTrip;
     }
 
     @Override
     public UserOrder withId(Long id) {
-        return new UserOrder(id, client, driver, price, initialCoordinates, endCoordinates, status);
+        return new UserOrder(id, client, driver, price, initialCoordinates, endCoordinates, status, dateOfTrip);
     }
 
     public UserOrder withDriver(Driver driver) {
         return new UserOrder(
                 id, client, driver, price,
-                initialCoordinates, endCoordinates, status
-        );
+                initialCoordinates, endCoordinates, status,
+                dateOfTrip);
     }
 
     public UserOrder withStatus(OrderStatus status) {
         return new UserOrder(
                 id, client, driver, price,
-                initialCoordinates, endCoordinates, status
-        );
+                initialCoordinates, endCoordinates, status,
+                dateOfTrip);
     }
 
     public UserOrder withPrice(BigDecimal price) {
         return new UserOrder(
                 id, client, driver, price,
-                initialCoordinates, endCoordinates, status
-        );
+                initialCoordinates, endCoordinates, status,
+                dateOfTrip);
     }
 
     public BuberUser getClient() {
@@ -77,6 +80,17 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
         return status;
     }
 
+    public Date getDateOfTrip() {
+        return dateOfTrip;
+    }
+
+    public UserOrder withDateOfTrip(Date date) {
+        return new UserOrder(
+                id, client, driver, price,
+                initialCoordinates, endCoordinates, status,
+                date);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,15 +100,16 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
             return false;
         }
         UserOrder userOrder = (UserOrder) o;
-        return Objects.equals(id, userOrder.id) && Objects.equals(client, userOrder.client) &&
-               Objects.equals(driver, userOrder.driver) && Objects.equals(price, userOrder.price) &&
+        return Objects.equals(client, userOrder.client) && Objects.equals(driver, userOrder.driver) &&
+               Objects.equals(price, userOrder.price) &&
                Objects.equals(initialCoordinates, userOrder.initialCoordinates) &&
-               Objects.equals(endCoordinates, userOrder.endCoordinates) && status == userOrder.status;
+               Objects.equals(endCoordinates, userOrder.endCoordinates) && status == userOrder.status &&
+               Objects.equals(dateOfTrip, userOrder.dateOfTrip);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, client, driver, price, initialCoordinates, endCoordinates, status);
+        return Objects.hash(client, driver, price, initialCoordinates, endCoordinates, status, dateOfTrip);
     }
 
     @Override
@@ -107,6 +122,7 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
                ", initialCoordinates=" + initialCoordinates +
                ", endCoordinates=" + endCoordinates +
                ", status=" + status +
+               ", dateOfTrip=" + dateOfTrip +
                '}';
     }
 
@@ -123,6 +139,7 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
         private Coordinates initialCoordinates;
         private Coordinates endCoordinates;
         private OrderStatus status;
+        private Date dateOfTrip;
 
         private OrderBuilder() {
         }
@@ -162,6 +179,11 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
             return this;
         }
 
+        public OrderBuilder dateOfTrip(Date date) {
+            this.dateOfTrip = date;
+            return this;
+        }
+
         @Override
         public void reset() {
             id = null;
@@ -171,14 +193,15 @@ public class UserOrder extends CommonEntity<UserOrder> implements Order {
             initialCoordinates = null;
             endCoordinates = null;
             status = null;
+            dateOfTrip = null;
         }
 
         @Override
         public UserOrder build() {
             return new UserOrder(
                     id, client, driver, price,
-                    initialCoordinates, endCoordinates, status
-            );
+                    initialCoordinates, endCoordinates, status,
+                    dateOfTrip);
         }
     }
 

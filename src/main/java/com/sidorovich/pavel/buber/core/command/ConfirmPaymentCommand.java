@@ -16,6 +16,8 @@ import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.UserOrderService;
 import com.sidorovich.pavel.buber.core.service.UserService;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class ConfirmPaymentCommand extends CommonCommand {
@@ -58,7 +60,10 @@ public class ConfirmPaymentCommand extends CommonCommand {
     private void confirmPayment(UserOrder order) {
         debitClientCash(order);
         creditDriverCash(order);
-        orderService.update(order.withStatus(OrderStatus.COMPLETED));
+        orderService.update(
+                order.withStatus(OrderStatus.COMPLETED)
+                     .withDateOfTrip(Date.valueOf(LocalDate.now()))
+        );
     }
 
     private void creditDriverCash(UserOrder order) {

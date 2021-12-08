@@ -19,7 +19,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public final class UserOrderDao extends CommonDao<UserOrder> {
@@ -35,6 +34,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
     private static final String INITIAL_COORDINATES_ID_COLUMN_NAME = TABLE_NAME + ".initial_coordinates_id";
     private static final String END_COORDINATES_ID_COLUMN_NAME = TABLE_NAME + ".end_coordinates_id";
     private static final String STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
+    private static final String DATE_OF_TRIP_COLUMN_NAME = TABLE_NAME + ".date_of_trip";
 
     UserOrderDao(ConnectionPool connectionPool) {
         super(LOG, connectionPool);
@@ -74,6 +74,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
         columns.add(INITIAL_COORDINATES_ID_COLUMN_NAME);
         columns.add(END_COORDINATES_ID_COLUMN_NAME);
         columns.add(STATUS_NAME_COLUMN_NAME);
+        columns.add(DATE_OF_TRIP_COLUMN_NAME);
 
         return columns;
     }
@@ -92,6 +93,8 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
         map.put(END_COORDINATES_ID_COLUMN_NAME, order.getEndCoordinates().getId()
                                                      .orElseThrow(IdIsNotDefinedException::new));
         map.put(STATUS_NAME_COLUMN_NAME, order.getStatus().name());
+        map.put(DATE_OF_TRIP_COLUMN_NAME, order.getDateOfTrip());
+
         return map;
     }
 
@@ -115,6 +118,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
                         .driver(driver)
                         .initialCoordinates(initial)
                         .endCoordinates(end)
+                        .dateOfTrip(rs.getDate(DATE_OF_TRIP_COLUMN_NAME))
                         .build();
     }
 
