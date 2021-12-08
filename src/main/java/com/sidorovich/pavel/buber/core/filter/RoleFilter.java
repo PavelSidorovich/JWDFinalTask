@@ -4,7 +4,6 @@ import com.sidorovich.pavel.buber.api.command.Command;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.Role;
 import com.sidorovich.pavel.buber.core.command.CommandRegistry;
-import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.service.AccountService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +32,8 @@ public class RoleFilter implements Filter {
 
     private static final String COMMAND_PARAM_NAME = "command";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
+    private static final String ERROR_PAGE_MESSAGE_ATTR_PARAM_NAME = "errorPageMessage";
+    private static final String PERMISSION_DENIED_MSG = "You have not permission to proceed this action";
 
     private final AccountService accountService;
     private final Map<Role, Set<Command>> commandsByRoles;
@@ -57,12 +58,14 @@ public class RoleFilter implements Filter {
             throws ServletException, IOException {
         final HttpServletRequest req = (HttpServletRequest) request;
         final String commandName = req.getParameter(COMMAND_PARAM_NAME);
+
         LOG.trace("Checking permissions for command. commandName: {}", commandName);
         if (currentUserHasPermissionForCommand(commandName, req)) {
             chain.doFilter(request, response);
         } else {
             HttpServletResponse servletResponse = (HttpServletResponse) response;
-            servletResponse.sendRedirect(PagePaths.ERROR.getCommand());
+            req.setAttribute(ERROR_PAGE_MESSAGE_ATTR_PARAM_NAME, PERMISSION_DENIED_MSG);
+            servletResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
     }
 
