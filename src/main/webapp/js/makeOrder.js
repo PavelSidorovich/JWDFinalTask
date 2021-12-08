@@ -1,9 +1,7 @@
 $(document).ready(function () {
   $(".invalid-feedback").show("slow");
-  addPriceParametersListener();
   addTaxiListener();
   addCancelButtonListener();
-  getOrderPrice();
 });
 
 function clearApproveModal() {
@@ -70,6 +68,7 @@ function displayPrice(price) {
 }
 
 function addPriceParametersListener() {
+  getOrderPrice();
   $("#longitudeTo").change(function () {
     getOrderPrice();
   });

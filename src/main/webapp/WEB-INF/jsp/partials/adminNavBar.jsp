@@ -8,6 +8,7 @@
 <fmt:message bundle="${loc}" key="label.link.manageUsers" var="manageUsersLink"/>
 <fmt:message bundle="${loc}" key="label.link.manageDrivers" var="manageDriversLink"/>
 <fmt:message bundle="${loc}" key="label.link.issueBonuses" var="issueBonusesLink"/>
+<fmt:message bundle="${loc}" key="label.link.statistics" var="statisticsLink"/>
 <fmt:message bundle="${loc}" key="label.link.logout" var="logoutLink"/>
 <link href="${contextPath}/css/menu.css?v=1.1" rel="stylesheet">
 
@@ -27,6 +28,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${contextPath}/controller?command=show_bonuses">${issueBonusesLink}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${contextPath}/controller?command=show_pie_chart">${statisticsLink}</a>
             </li>
         </ul>
     </div>

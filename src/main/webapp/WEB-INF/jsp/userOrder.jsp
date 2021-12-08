@@ -38,7 +38,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.bundle.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/makeOrder.js?v=1.1" type="text/javascript"></script>
+    <script src="${contextPath}/js/makeOrder.js?v=1.2" type="text/javascript"></script>
     <script src="${contextPath}/js/tabulator/tabulator.min.js?v=1.0" type="text/javascript"></script>
 </head>
 
@@ -224,6 +224,7 @@
                             </c:when>
                             <c:otherwise>
                                 <h5 id="price"></h5>
+                                <script>addPriceParametersListener();</script>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -242,7 +243,8 @@
                         <button id="cancelButton" class="btn btn-danger btn-block" type="submit">${cancelButtonLabel}</button>
                     </c:when>
                     <c:otherwise>
-                        <button id="cancelButton" class="btn btn-danger btn-block disabled" type="submit">${cancelButtonLabel}
+                        <button id="cancelButton" class="btn btn-danger btn-block disabled" type="submit">
+                                ${cancelButtonLabel}
                         </button>
                     </c:otherwise>
                 </c:choose>

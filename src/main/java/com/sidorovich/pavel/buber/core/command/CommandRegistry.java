@@ -36,7 +36,6 @@ public enum CommandRegistry {
     MY_BONUSES_PAGE(GetMyBonusesCommand.getInstance(), "my_bonuses", CLIENT),
     CALL_TAXI(CallTaxiCommand.getInstance(), "call_taxi", CLIENT),
     GET_TAXI_PHOTO(GetTaxiPhotoPathCommand.getInstance(), "get_taxi_photo"),
-//    GET_MY_BONUSES(GetMyBonusesCommand.getInstance(), "get_my_bonuses", CLIENT),
     GET_ORDER_PRICE(GetOrderPriceCommand.getInstance(), "get_order_price", CLIENT),
     MAKE_ORDER_PAGE(MakeOrderCommand.getInstance(), "make_order", CLIENT),
     INCOMING_ORDER_PAGE(IncomingOrderCommand.getInstance(), "incoming_order", DRIVER),
@@ -50,6 +49,10 @@ public enum CommandRegistry {
     ACCOUNT_CONTROL_PAGE(AccountControlCommand.getInstance(), "account_control", CLIENT, DRIVER),
     EDIT_PERSONAL_INFO(EditPersonalInfoCommand.getInstance(), "edit_account_info", CLIENT, DRIVER),
     CHANGE_PASSWORD(ChangePasswordCommand.getInstance(), "change_password", CLIENT, DRIVER),
+    PIE_CHART_PAGE(ShowPageCommand.getInstance(PagePaths.PIE_CHART), "show_pie_chart", ADMIN),
+    GET_PIE_CHART_DATA(OrderStatusesStatisticsCommand.getInstance(), "get_pie_chart", ADMIN),
+    LINE_CHART_PAGE(ShowPageCommand.getInstance(PagePaths.LINE_CHART), "show_line_chart", ADMIN),
+    GET_LINE_CHART_DATA(GetLineChartDataCommand.getInstance(), "get_line_chart", ADMIN),
     ERROR_PAGE(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
     DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN), ""),
     ;
