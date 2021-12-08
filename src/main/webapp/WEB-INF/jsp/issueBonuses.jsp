@@ -16,7 +16,7 @@
     <link href="${contextPath}/css/tabulator_modern.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/bonusesControl.js?v=1.0" type="text/javascript"></script>
+    <script src="${contextPath}/js/bonusesControl.js?v=1.4" type="text/javascript"></script>
     <script src="${contextPath}/js/tabulator/tabulator.min.js?v=1.0" type="text/javascript"></script>
 </head>
 

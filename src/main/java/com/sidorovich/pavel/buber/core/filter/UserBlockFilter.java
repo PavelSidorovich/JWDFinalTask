@@ -44,7 +44,7 @@ public class UserBlockFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         final HttpServletRequest req = (HttpServletRequest) request;
-        final String command = ((HttpServletRequest) request).getQueryString();
+        final String command = req.getQueryString();
 
         if (SHOW_ERROR_COMMAND.equals(command) || currentUserIsNotBlocked(req)) {
             chain.doFilter(request, response);
