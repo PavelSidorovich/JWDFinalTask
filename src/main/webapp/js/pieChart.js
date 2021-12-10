@@ -25,7 +25,6 @@ function showPieChart(map) {
     }]
   };
 
-  Chart.defaults.font.size = 30;
   const ctx = document.getElementById('pieChart').getContext('2d');
   const myChart = new Chart(ctx, {
     type: 'doughnut',
