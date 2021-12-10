@@ -10,6 +10,11 @@
                         <div id="photoContainer" class="col-7"></div>
                         <div id="infoContainer" class="col-5"></div>
                     </div>
+                    <div id="commentBlock">
+                        <label for="validationTextarea">Comment</label>
+                        <textarea class="form-control" style="resize: none" id="validationTextarea" rows="5"
+                                  placeholder="Provide comment"></textarea>
+                    </div>
                 </div>
             </div>
             <div id="modalButtons" class="modal-footer"></div>

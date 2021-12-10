@@ -1,54 +1,47 @@
-// todo add driver, taxi, and coordinate classes
-
 $(document).ready(function () {
   getApplications();
   addFilterListener();
   addViewButtonListener();
 });
 
-function addListenerToRejectButton(getApplications) {
+function addListenerToRejectButton() {
   $("#rejectButton").on("click", function (e) {
-    const id = e.target?.dataset?.id || null;
-    if (id) {
-      $.post("/controller?command=update_driver_status", {id: id, driverStatus: "REJECTED"})
-        .done(function (data) {
-          if (data.obj.status === "ERROR") {
-            $("#cardContainer").before(createAlert("ERROR",
-              "Fail on rejection driver application"));
-          } else {
-            $("#cardContainer").before(createAlert("SUCCESS",
-              "Successful rejecting driver application"));
-          }
-          getApplications();
-        }, "json");
-    }
-    $("#driverApplicationModal").modal("hide");
+    sendPostRequest(e, "REJECTED");
   })
 }
 
-function addListenerToApproveButton(getApplications) {
+function addListenerToApproveButton() {
   $("#approveButton").on("click", function (e) {
-    const id = e.target?.dataset?.id || null;
-    if (id) {
-      $.post("/controller?command=update_driver_status", {id: id, driverStatus: "BUSY"})
-        .done(function (data) {
-          if (data.obj.status === "ERROR") {
-            $("#cardContainer").before(createAlert("ERROR",
-              "Fail on approving driver application"));
-          } else {
-            $("#cardContainer").before(createAlert("SUCCESS",
-              "Successful approving driver application!"));
-          }
-          getApplications();
-        }, "json");
-    }
-    $("#driverApplicationModal").modal("hide");
+    sendPostRequest(e, "BUSY");
   })
+}
+
+//todo get message from server
+function sendPostRequest(e, driverStatus) {
+  const id = e.target?.dataset?.id || null;
+  if (id) {
+    $.post("/controller?command=update_driver_status", {
+      id: id,
+      driverStatus: driverStatus,
+      comment: $("textArea").val()
+    })
+      .done(function (data) {
+        if (data.obj.status === "ERROR") {
+          $("#cardContainer").before(createAlert("ERROR",
+            "Fail on approving driver application"));
+        } else {
+          $("#cardContainer").before(createAlert("SUCCESS",
+            "Successful approving driver application!"));
+        }
+        getApplications();
+      }, "json");
+  }
+  $("#driverApplicationModal").modal("hide");
 }
 
 function addModalWindowButtonListeners() {
-  addListenerToRejectButton(getApplications);
-  addListenerToApproveButton(getApplications);
+  addListenerToRejectButton();
+  addListenerToApproveButton();
 }
 
 function createAlert(status, message) {
@@ -255,6 +248,7 @@ function clearModalWindow(modalWindow) {
   modalWindow.find("#photoContainer").text("");
   modalWindow.find("#infoContainer").text("");
   modalWindow.find("#modalButtons").text("");
+  modalWindow.find("textarea").val("");
 }
 
 function fillModalHeader(modalWindow, driver) {
@@ -288,6 +282,10 @@ function fillModalButtons(modalWindow, driver) {
     .append(getModalButtons(driver));
 }
 
+function hideOrShowComment(driver) {
+  $("#commentBlock").toggle(driver.driverStatus === "PENDING")
+}
+
 function fillModalWindow(driver) {
   const modalWindow = $('#driverApplicationModal');
 
@@ -296,6 +294,7 @@ function fillModalWindow(driver) {
   fillModalPhoto(modalWindow, driver);
   fillModalInfo(modalWindow, driver);
   fillModalButtons(modalWindow, driver);
+  hideOrShowComment(driver);
 
   modalWindow.modal();
   addModalWindowButtonListeners();
