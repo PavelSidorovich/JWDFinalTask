@@ -40,16 +40,14 @@ public class DriverWalletCommand extends CommonCommand {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        if (request.sessionExists()) {
-            Account account = (Account) request.retrieveFromSession(USER_SESSION_PARAM_NAME).orElseGet(null);
-            Optional<Driver> driver = driverService.findById(account.getId().orElse(-1L));
+        Account account = (Account) request.retrieveFromSession(USER_SESSION_PARAM_NAME).orElseGet(null);
+        Optional<Driver> driver = driverService.findById(account.getId().orElse(-1L));
 
-            if (driver.isPresent()) {
-                List<BigDecimal> credits = getCredits(driver.get());
+        if (driver.isPresent()) {
+            List<BigDecimal> credits = getCredits(driver.get());
 
-                request.addAttributeToJsp(CASH_ATTR_PARAM_NAME, driver.get().getUser().getCash());
-                request.addAttributeToJsp(CREDITS_ATTR_PARAM_NAME, credits);
-            }
+            request.addAttributeToJsp(CASH_ATTR_PARAM_NAME, driver.get().getUser().getCash());
+            request.addAttributeToJsp(CREDITS_ATTR_PARAM_NAME, credits);
         }
 
         return requestFactory.createForwardResponse(PagePaths.DRIVER_WALLET.getJspPath());
