@@ -38,7 +38,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.bundle.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/driverOrder.js?v=1.1" type="text/javascript"></script>
+    <script src="${contextPath}/js/driverOrder.js?v=1.2" type="text/javascript"></script>
     <script src="${contextPath}/js/tabulator/tabulator.min.js?v=1.0" type="text/javascript"></script>
 </head>
 
@@ -47,7 +47,7 @@
 <div class="container-fluid mt-3">
     <div class="row p-3">
         <div class="col-md-7 order-md-1 mb-4">
-            <img class="img-fluid" src="../../images/map.png">
+            <img class="img-fluid" src="../../images/map.png" alt="city map">
         </div>
         <div class="col-md-5 order-md-2">
             <c:choose>
@@ -63,11 +63,11 @@
                                 <c:choose>
                                     <c:when test="${requestScope.order.status eq OrderStatus.NEW}">
                                         <h2>${pendingHeaderLabel}</h2>
-                                        <div class="spinner-grow text-danger ml-2" role="status"></div>
+                                        <div id="statusSpinner" class="spinner-grow text-danger ml-2" role="status"></div>
                                     </c:when>
                                     <c:otherwise>
                                         <h2>${processHeaderLabel}</h2>
-                                        <div class="spinner-grow text-success ml-2" role="status"></div>
+                                        <div id="statusSpinner" class="spinner-grow text-success ml-2" role="status"></div>
                                     </c:otherwise>
                                 </c:choose>
                             </c:when>
