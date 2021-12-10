@@ -39,6 +39,42 @@
         </div>
     </div>
 </div>
+<script>
+  function createTable(bonuses) {
+    return new Tabulator("#table", {
+      data: bonuses,
+      layout: "fitColumns",
+      responsiveLayout: "hide",
+      addRowPos: "top",
+      history: false,
+      pagination: true,
+      paginationButtonCount: "5",
+      paginationSize: 11,
+      movableColumns: false,
+      resizableRows: true,
+      placeholder: "No Data Available",
+      initialSort: [
+        {column: "discount", dir: "asc"},
+      ],
+      columns: [
+        {title: "First name", field: "client.firstName", hozAlign: "center"},
+        {title: "Last name", field: "client.lastName", hozAlign: "center"},
+        {title: "Phone", field: "client.account.phone", hozAlign: "center", width: 170},
+        {title: "Discount, %", field: "discount", hozAlign: "center"},
+        {title: "Expire date", field: "expires", hozAlign: "center", width: 200},
+        {
+          title: "Control",
+          hozAlign: "center",
+          width: 100,
+          formatter: printButton,
+          cellClick: function (e, cell) {
+            showModal(e, cell);
+          }
+        },
+      ],
+    });
+  }
+</script>
 <jsp:include page="partials/commonFooter.jsp"/>
 <jsp:include page="partials/approveActionModal.jsp"/>
 <jsp:include page="partials/newBonusModal.jsp"/>

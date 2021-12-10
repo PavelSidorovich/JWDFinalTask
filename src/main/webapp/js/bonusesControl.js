@@ -91,7 +91,7 @@ function addFilterListener(table) {
   });
 }
 
-function showModal(e, cell) {
+function showModal(e) {
   const id = e.target?.dataset?.id || null;
 
   if (id) {
@@ -123,78 +123,18 @@ function addModalButtonsListener(table) {
   });
 }
 
-const printButton = function (cell, formatterParams, onRendered) {
+const printButton = function (cell) {
   const bonus = cell.getRow().getData();
 
   return '<button type="button" data-id="' + bonus.id +
     '" class="btn btn-outline-danger btn-block">Delete</button>'
 };
 
-function createTable(bonuses) {
-  return new Tabulator("#table", {
-    data: bonuses,
-    layout: "fitColumns",
-    responsiveLayout: "hide",
-    addRowPos: "top",
-    history: false,
-    pagination: true,
-    paginationButtonCount: "5",
-    paginationSize: 11,
-    movableColumns: false,
-    resizableRows: true,
-    placeholder: "No Data Available",
-    initialSort: [
-      {column: "discount", dir: "asc"},
-    ],
-    columns: [
-      {title: "First name", field: "client.firstName", hozAlign: "center"},
-      {title: "Last name", field: "client.lastName", hozAlign: "center"},
-      {title: "Phone", field: "client.account.phone", hozAlign: "center", width: 170},
-      {title: "Discount, %", field: "discount", hozAlign: "center"},
-      {title: "Expire date", field: "expires", hozAlign: "center", width: 200},
-      {
-        title: "Control",
-        hozAlign: "center",
-        width: 100,
-        formatter: printButton,
-        cellClick: function (e, cell) {
-          showModal(e, cell);
-        }
-      },
-    ],
-  });
-}
-
-function createUserTable(usersByOrderAmount) {
-  return new Tabulator("#users", {
-    data: usersByOrderAmount,
-    layout: "fitColumns",
-    responsiveLayout: "hide",
-    addRowPos: "top",
-    history: false,
-    pagination: true,
-    paginationButtonCount: "3",
-    paginationSize: 5,
-    movableColumns: false,
-    resizableRows: true,
-    selectable: true,
-    placeholder: "No Data Available",
-    initialSort: [
-      {column: "orderAmount", dir: "asc"},
-    ],
-    columns: [
-      {title: "First name", field: "firstName", hozAlign: "center"},
-      {title: "Last name", field: "lastName", hozAlign: "center"},
-      {title: "Order amount", field: "orderAmount", hozAlign: "center", width: 170},
-    ],
-  });
-}
-
 function createUsersWithExtraField(data) {
   const myMap = new Map(Object.entries(data.obj));
   let users = [];
 
-  function logMapElements(value, key, map) {
+  function logMapElements(value, key) {
     let user = JSON.parse(key);
     user.orderAmount = value;
     users.push(user);

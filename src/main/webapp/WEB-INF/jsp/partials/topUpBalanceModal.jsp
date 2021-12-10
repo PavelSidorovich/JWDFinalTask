@@ -41,3 +41,9 @@
         </div>
     </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    addCashValidator("Valid cash value is required (for example, 500.00)");
+  });
+</script>

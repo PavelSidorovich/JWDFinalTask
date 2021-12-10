@@ -1,38 +1,33 @@
 package com.sidorovich.pavel.buber.core.validator;
 
+import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Driver;
+import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.validator.BiValidator;
+import com.sidorovich.pavel.buber.api.validator.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DriverRegisterValidator implements BiValidator<Driver, String, Map<String, String>> {
 
-    private static final String INVALID_DRIVER_LICENCE =
-            "Valid driver licence is required (should be like '1VE 255555')";
-    private static final String DRIVER_LICENCE_PARAM_NAME = "drivingLicence";
-    private static final String DRIVER_LICENCE_REGEX = "\\d[A-Z]{2} \\d{6}";
-    private static final String EMAIL_REGEX = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     private static final String EMPTY_STRING = "";
-    private static final String EMAIL_PARAM_NAME = "email";
-    private static final String INVALID_EMAIL_ADDRESS_MSG = "Valid email address is required";
+    private static final boolean EMAIL_IS_OPTIONAL = false;
 
-    private final UserRegisterValidator userRegisterValidator;
-    private final TaxiValidator taxiValidator;
+    private final BiValidator<BuberUser, String, Map<String, String>> userRegisterValidator;
+    private final BiValidator<String, Boolean, Map<String, String>> emailValidator;
+    private final Validator<String, Map<String, String>> drivingLicenceValidator;
+    private final Validator<Taxi, Map<String, String>> taxiValidator;
 
-    private DriverRegisterValidator() {
-        this.userRegisterValidator = UserRegisterValidator.getInstance();
-        this.taxiValidator = TaxiValidator.getInstance();
-    }
-
-    private static class Holder {
-        private static final DriverRegisterValidator INSTANCE = new DriverRegisterValidator();
-    }
-
-    public static DriverRegisterValidator getInstance() {
-        return Holder.INSTANCE;
+    private DriverRegisterValidator(
+            BiValidator<BuberUser, String, Map<String, String>> userRegisterValidator,
+            BiValidator<String, Boolean, Map<String, String>> emailValidator,
+            Validator<String, Map<String, String>> drivingLicenceValidator,
+            Validator<Taxi, Map<String, String>> taxiValidator) {
+        this.userRegisterValidator = userRegisterValidator;
+        this.emailValidator = emailValidator;
+        this.drivingLicenceValidator = drivingLicenceValidator;
+        this.taxiValidator = taxiValidator;
     }
 
     @Override
@@ -40,25 +35,26 @@ public class DriverRegisterValidator implements BiValidator<Driver, String, Map<
         Map<String, String> errorsByMessages = new HashMap<>();
 
         errorsByMessages.putAll(userRegisterValidator.validate(driver.getUser(), passwordRepeat));
-        errorsByMessages.putAll(checkDriverLicence(driver));
+        errorsByMessages.putAll(emailValidator.validate(driver.getUser().getEmail()
+                                                              .orElse(EMPTY_STRING),
+                                                        EMAIL_IS_OPTIONAL));
+        errorsByMessages.putAll(drivingLicenceValidator.validate(driver.getDrivingLicence()));
         errorsByMessages.putAll(taxiValidator.validate(driver.getTaxi()));
 
         return errorsByMessages;
     }
 
-    private Map<String, String> checkDriverLicence(Driver driver) {
-        Map<String, String> errorsByMessages = new HashMap<>();
-        Matcher matcher = Pattern.compile(DRIVER_LICENCE_REGEX).matcher(driver.getDrivingLicence());
+    public static DriverRegisterValidator getInstance() {
+        return Holder.INSTANCE;
+    }
 
-        if (!matcher.matches()) {
-            errorsByMessages.put(DRIVER_LICENCE_PARAM_NAME, INVALID_DRIVER_LICENCE);
-        }
-        if (!isValid(matcher, Pattern.compile(EMAIL_REGEX),
-                driver.getUser().getEmail().orElse(EMPTY_STRING))) {
-            errorsByMessages.put(EMAIL_PARAM_NAME, INVALID_EMAIL_ADDRESS_MSG);
-        }
-
-        return errorsByMessages;
+    private static class Holder {
+        private static final DriverRegisterValidator INSTANCE = new DriverRegisterValidator(
+                UserRegisterValidator.getInstance(),
+                EmailValidator.getInstance(),
+                DrivingLicenceValidator.getInstance(),
+                TaxiValidator.getInstance()
+        );
     }
 
 }

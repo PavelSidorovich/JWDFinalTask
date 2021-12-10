@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.sidorovich.pavel.buber.api.model.OrderStatus" %>
 <%@ page import="com.sidorovich.pavel.buber.api.model.DriverStatus" %>
+<jsp:useBean id="driverStatus" scope="request" type="com.sidorovich.pavel.buber.api.model.DriverStatus"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.driverOrder" var="loc"/>
@@ -51,7 +52,7 @@
         </div>
         <div class="col-md-5 order-md-2">
             <c:choose>
-                <c:when test="${requestScope.driverStatus eq DriverStatus.PENDING or requestScope.driverStatus eq DriverStatus.REJECTED}">
+                <c:when test="${driverStatus eq DriverStatus.PENDING or driverStatus eq DriverStatus.REJECTED}">
                     <div class="alert alert-danger alert-dismissible fade show">
                         <strong>${dangerAlertLabel}</strong>
                     </div>
@@ -72,9 +73,9 @@
                                 </c:choose>
                             </c:when>
                             <c:otherwise>
-                                <c:if test="${not empty requestScope.driverStatus}">
+                                <c:if test="${not empty driverStatus}">
                                     <c:choose>
-                                        <c:when test="${requestScope.driverStatus eq DriverStatus.BUSY}">
+                                        <c:when test="${driverStatus eq DriverStatus.REST}">
                                             <h2 id="statusLine">${restHeaderLabel}</h2>
                                         </c:when>
                                         <c:otherwise>
@@ -224,7 +225,8 @@
             <c:if test="${not empty requestScope.order}">
                 <jsp:include page="partials/approveActionModal.jsp"/>
                 <c:choose>
-                    <c:when test="${requestScope.order.status eq OrderStatus.NEW and requestScope.driverStatus ne DriverStatus.REJECTED and requestScope.driverStatus ne DriverStatus.PENDING }">
+                    <c:when test="${requestScope.order.status eq OrderStatus.NEW and driverStatus
+                     ne DriverStatus.REJECTED and driverStatus ne DriverStatus.PENDING }">
                         <div class="form-row">
                             <div class="col-md-6 mb-3">
                                 <button id="cancelButton" class="form-control btn btn-outline-danger btn-block">

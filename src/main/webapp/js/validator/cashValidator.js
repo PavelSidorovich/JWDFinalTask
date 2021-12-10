@@ -1,12 +1,9 @@
-$(document).ready(function () {
-  addCashValidator();
-});
-
-function addCashValidator() {
+function addCashValidator(errorMessage) {
   const $cashFeedback = $("#cashFeedback");
   const $cash = $("#cash");
-  const cashRegex = new RegExp('^\\d{1,6}[.,]?\\d{0,2}$');
-  $cash.on("input", function () {
+  const cashRegex = new RegExp('^\\d{1,6}[.]?\\d{0,2}$');
+
+  function showErrorIfInvalid() {
     if ($cash.val().match(cashRegex)) {
       $cash.addClass("is-valid");
       $cash.removeClass("is-invalid");
@@ -15,9 +12,14 @@ function addCashValidator() {
     } else {
       $cash.addClass("is-invalid");
       $cash.removeClass("is-valid");
-      $cashFeedback.text("Valid cash value is required (for example, 500.00)");
+      $cashFeedback.text(errorMessage);
       $cashFeedback.show("slow");
       $("#submitButton").attr("disabled", true);
     }
+  }
+
+  showErrorIfInvalid();
+  $cash.on("input", function () {
+    showErrorIfInvalid();
   });
 }

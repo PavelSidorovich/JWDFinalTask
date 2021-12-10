@@ -35,6 +35,7 @@
     <link href="${contextPath}/css/register.css?v=1.0" rel="stylesheet" type="text/css"/>
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="${contextPath}/js/driverRegister.js?v=1.0"></script>
 </head>
 
 <body class="bg-light m-md-5">
@@ -132,7 +133,8 @@
                     <input type="file" name="carPhoto" class="file" accept="image/*">
                     <label for="carPhoto">${carPhotoLabel}</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" disabled placeholder="${carPhotoPlaceholderLabel}" id="carPhoto">
+                        <input type="text" class="form-control" disabled placeholder="${carPhotoPlaceholderLabel}"
+                               id="carPhoto">
                         <div id="browseButton" class="input-group-append">
                             <button type="button" class="browse btn btn-primary">${carPhotoButtonLabel}</button>
                         </div>
@@ -148,36 +150,12 @@
         </div>
     </div>
 </div>
-
 <script>
-  $('#registerForm').on("submit", (function (e) {
-    e.preventDefault();
-    $.ajax({
-      type: 'POST',
-      url: $(this).attr('action'),
-      data: new FormData(this),
-      cache: false,
-      contentType: false,
-      processData: false,
-      enctype: "multipart/form-data",
-      success: function (data) {
-        if (data.status === "ERROR") {
-          showErrorMessages(data.obj);
-        } else if (data.isRedirect) {
-          window.location.replace(data.path);
-        }
-      },
-      error: function (data) {
-        console.log("error");
-        console.log(data);
-      }
-    });
-  }));
-
   $(document).on("click", ".browse", function () {
     let file = $(this).parents().find(".file");
     file.trigger("click");
   });
+
   $('input[type="file"]').change(function (e) {
     let fileName = e.target.files[0].name;
     $("#carPhoto").val(fileName);
@@ -190,52 +168,6 @@
     // read the image file as a data URL.
     reader.readAsDataURL(this.files[0]);
   });
-
-  function showErrorMessage($firstName, error) {
-    let errorDiv = $firstName.next('div.invalid-feedback');
-
-    errorDiv.text(error);
-    errorDiv.show("slow");
-  }
-
-  function showErrorMessages(errorsByMessages) {
-    $('div.invalid-feedback').hide();
-
-    if (errorsByMessages.fName) {
-      showErrorMessage($("#firstName"), errorsByMessages.fName);
-    }
-    if (errorsByMessages.lName) {
-      showErrorMessage($("#lastName"), errorsByMessages.lName);
-    }
-    if (errorsByMessages.phone) {
-      showErrorMessage($("#phone"), errorsByMessages.phone);
-    }
-    if (errorsByMessages.password) {
-      showErrorMessage($("#password"), errorsByMessages.password);
-    }
-    if (errorsByMessages.passwordRepeat) {
-      showErrorMessage($("#passwordRepeat"), errorsByMessages.passwordRepeat);
-    }
-    if (errorsByMessages.drivingLicence) {
-      showErrorMessage($("#drivingLicence"), errorsByMessages.drivingLicence);
-    }
-    if (errorsByMessages.carBrand) {
-      showErrorMessage($("#brand"), errorsByMessages.carBrand);
-    }
-    if (errorsByMessages.carModel) {
-      showErrorMessage($("#model"), errorsByMessages.carModel);
-    }
-    if (errorsByMessages.licencePlate) {
-      showErrorMessage($("#licencePlate"), errorsByMessages.licencePlate);
-    }
-    if (errorsByMessages.carPhoto) {
-      showErrorMessage($("#browseButton"), errorsByMessages.carPhoto);
-    }
-    if (errorsByMessages.email) {
-      showErrorMessage($("#email"), errorsByMessages.email);
-    }
-    console.log(errorsByMessages);
-  }
 </script>
 </body>
 </html>

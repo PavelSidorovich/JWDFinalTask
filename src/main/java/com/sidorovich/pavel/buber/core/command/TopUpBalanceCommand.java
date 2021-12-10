@@ -9,6 +9,7 @@ import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.UserService;
+import com.sidorovich.pavel.buber.exception.EmptySessionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,27 +33,30 @@ public class TopUpBalanceCommand extends CommonCommand {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        if (request.sessionExists()) {
-            try {
-                topUpBalance(request);
-            } catch (NumberFormatException e) {
-                LOG.error(e);
-            }
+        try {
+            topUpBalance(request);
+        } catch (NumberFormatException e) {
+            LOG.error(e);
         }
 
         return requestFactory.createRedirectResponse(PagePaths.CLIENT_WALLET.getCommand());
     }
 
     private void topUpBalance(CommandRequest request) {
-        BigDecimal cash = new BigDecimal(request.getParameter(CASH_REQUEST_PARAM_NAME));
-        Account account = (Account) request.retrieveFromSession(USER_SESSION_PARAM_NAME).orElseGet(null);
-        Optional<BuberUser> user = userService.findByPhone(account.getPhone());
+        try {
+            BigDecimal cash = new BigDecimal(request.getParameter(CASH_REQUEST_PARAM_NAME));
+            Account account = (Account) request.retrieveFromSession(USER_SESSION_PARAM_NAME)
+                                               .orElseThrow(EmptySessionException::new);
+            Optional<BuberUser> user = userService.findByPhone(account.getPhone());
 
-        if (user.isPresent()) {
-            BuberUser client = user.get();
-            BigDecimal currentCash = client.getCash();
+            if (user.isPresent()) {
+                BuberUser client = user.get();
+                BigDecimal currentCash = client.getCash();
 
-            userService.update(client.withCash(currentCash.add(cash)));
+                userService.update(client.withCash(currentCash.add(cash)));
+            }
+        } catch (EmptySessionException e) {
+            LOG.error(e);
         }
     }
 

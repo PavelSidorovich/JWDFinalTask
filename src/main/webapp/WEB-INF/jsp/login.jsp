@@ -22,21 +22,22 @@
     <meta name="author" content="">
     <title>${pageTitle}</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/css/signIn.css?v=1.0" rel="stylesheet">
+    <link href="${contextPath}/css/signIn.css?v=1.1" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="${contextPath}/js/login.js?v=1.0"></script>
 </head>
 
 <body class="text-center">
-<form id="loginForm" class="form-signIn" action="${contextPath}/controller?command=login">
+<form id="loginForm" class="form-signIn" action="${contextPath}/controller?command=login" novalidate>
     <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
          height="72">
     <h1 class="h3 mb-3 font-weight-normal">${signInLabel}</h1>
     <label for="inputPhone" class="sr-only">${phoneLabel}</label>
-    <input type="tel" name="phone" id="inputPhone" class="form-control" placeholder="${phonePlaceholderLabel}" required autofocus>
+    <input type="tel" name="phone" id="inputPhone" class="form-control" placeholder="${phonePlaceholderLabel}" autofocus>
     <br>
     <label for="inputPassword" class="sr-only">${passwordLabel}</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="${passwordPlaceholderLabel}" required>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="${passwordPlaceholderLabel}">
     <br>
     <b id="errorLoginMsg"></b>
     <br><br>
@@ -49,20 +50,7 @@
     <p class="mt-5 mb-3 text-muted">© Copyright 2021-2021 by BuberTaxi.</p>
 </form>
 <script>
-  $("#loginForm").submit(function (event) {
-    event.preventDefault();
-    console.log($(this).serialize());
-    $.post(
-      $(this).attr("action"),
-      $(this).serialize(),
-      function (data) {
-        if (data.status === "ERROR") {
-          $('#errorLoginMsg').text(data.message);
-        } else {
-          window.location.replace(data.path);
-        }
-      });
-  });
+
 </script>
 </body>
 </html>

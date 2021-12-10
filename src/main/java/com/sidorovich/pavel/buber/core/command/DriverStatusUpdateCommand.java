@@ -20,10 +20,10 @@ public class DriverStatusUpdateCommand extends CommonCommand {
     private static final String ID_REQUEST_PARAM_NAME = "id";
     private static final String DRIVER_STATUS_REQUEST_PARAM_NAME = "driverStatus";
     private static final String COMMENT_REQUEST_PARAM_NAME = "comment";
-    private static final String APPLICATION_REJECTED_MSG = "<p>Hello, %s %s!</p>" +
+    private static final String APPLICATION_REJECTED_MSG = "<h2>Hello, %s %s!</h2>" +
                                                            " <p>We are sorry that your driver application was rejected &#128577;</p>" +
                                                            " <p>Details: %s</p><p>---</p><p>Best wishes,</p><p>Buber.Taxi team &#128662;</p>";
-    private static final String APPLICATION_APPROVED_MSG = "<p>Hello, %s %s!</p>" +
+    private static final String APPLICATION_APPROVED_MSG = "<h2>Hello, %s %s!</h2>" +
                                                            " <p>Your application was approved and you can take your first order! We are glad that you became part of our Buber.Taxi team! &#128512;</p>" +
                                                            " <p>Details: %s</p><p>---</p><p>Best wishes,</p><p>Buber.Taxi team &#128662;</p>";
     private static final String APPLICATION_WAS_APPROVED_SUBJECT = "Application was approved";

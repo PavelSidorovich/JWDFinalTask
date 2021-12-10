@@ -8,15 +8,19 @@ import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.DriverStatus;
 import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.service.ImageUploader;
+import com.sidorovich.pavel.buber.api.validator.Validator;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.ImageUploaderImpl;
 import com.sidorovich.pavel.buber.core.service.TaxiService;
+import com.sidorovich.pavel.buber.core.validator.DrivingLicenceValidator;
+import com.sidorovich.pavel.buber.core.validator.TaxiValidator;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 public class EditDriverInfoCommand extends CommonCommand {
@@ -34,15 +38,21 @@ public class EditDriverInfoCommand extends CommonCommand {
     private final DriverService driverService;
     private final TaxiService taxiService;
     private final ImageUploader imageUploader;
+    private final Validator<String, Map<String, String>> drivingLicenceValidator;
+    private final Validator<Taxi, Map<String, String>> taxiValidator;
 
     private EditDriverInfoCommand(RequestFactory requestFactory,
                                   DriverService driverService,
                                   TaxiService taxiService,
-                                  ImageUploader imageUploader) {
+                                  ImageUploader imageUploader,
+                                  Validator<String, Map<String, String>> drivingLicenceValidator,
+                                  Validator<Taxi, Map<String, String>> taxiValidator) {
         super(requestFactory);
         this.driverService = driverService;
         this.taxiService = taxiService;
         this.imageUploader = imageUploader;
+        this.drivingLicenceValidator = drivingLicenceValidator;
+        this.taxiValidator = taxiValidator;
     }
 
     @Override
@@ -65,21 +75,24 @@ public class EditDriverInfoCommand extends CommonCommand {
         final Taxi updatedTaxi = getUpdatedTaxi(request, taxi);
         final Driver updatedDriver = getUpdatedDriver(request, driver, updatedTaxi);
 
-        taxiService.update(updatedTaxi);
-        driverService.update(updatedDriver);
+        if (drivingLicenceValidator.validate(updatedDriver.getDrivingLicence()).isEmpty()
+            && taxiValidator.validate(updatedTaxi).isEmpty()) {
+            taxiService.update(updatedTaxi);
+            driverService.update(updatedDriver);
+        }
     }
 
     private Driver getUpdatedDriver(CommandRequest request, Driver driverToUpdate, Taxi updatedTaxi) {
-        String drivingLicence = request.getParameter(DRIVING_LICENCE_PARAM_NAME);
+        final String drivingLicence = request.getParameter(DRIVING_LICENCE_PARAM_NAME);
 
         return new Driver(driverToUpdate.getUser(), drivingLicence, updatedTaxi, DriverStatus.PENDING);
     }
 
     private Taxi getUpdatedTaxi(CommandRequest request, Taxi taxi) {
-        String carModel = request.getParameter(CAR_MODEL_REQUEST_PARAM_NAME);
-        String carLicencePlate = request.getParameter(
+        final String carModel = request.getParameter(CAR_MODEL_REQUEST_PARAM_NAME);
+        final String carLicencePlate = request.getParameter(
                 CAR_LICENCE_PLATE_REQUEST_PARAM_NAME);
-        String carBrand = request.getParameter(CAR_BRAND_REQUEST_PARAM_NAME);
+        final String carBrand = request.getParameter(CAR_BRAND_REQUEST_PARAM_NAME);
         String photoPath;
 
         try {
@@ -102,7 +115,9 @@ public class EditDriverInfoCommand extends CommonCommand {
                 RequestFactoryImpl.getInstance(),
                 EntityServiceFactory.getInstance().serviceFor(DriverService.class),
                 EntityServiceFactory.getInstance().serviceFor(TaxiService.class),
-                ImageUploaderImpl.getInstance());
+                ImageUploaderImpl.getInstance(),
+                DrivingLicenceValidator.getInstance(),
+                TaxiValidator.getInstance());
     }
 
 }
