@@ -10,7 +10,7 @@ function addStatusListener() {
   let $statusCheckbox = $("#statusCheckbox");
 
   $statusCheckbox.change(function () {
-    const status = $statusCheckbox.is(":checked") ? "FREE" : "BUSY";
+    const status = $statusCheckbox.is(":checked") ? "FREE" : "REST";
 
     $.post("/controller?command=update_driver_status",
       {id: $("#driverId").val(), driverStatus: status}
