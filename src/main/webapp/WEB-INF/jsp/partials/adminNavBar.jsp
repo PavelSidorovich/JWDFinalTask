@@ -9,8 +9,13 @@
 <fmt:message bundle="${loc}" key="label.link.manageDrivers" var="manageDriversLink"/>
 <fmt:message bundle="${loc}" key="label.link.issueBonuses" var="issueBonusesLink"/>
 <fmt:message bundle="${loc}" key="label.link.statistics" var="statisticsLink"/>
+<fmt:message bundle="${loc}" key="label.button.language" var="languageLabel"/>
+<fmt:message bundle="${loc}" key="label.link.language.ru" var="ruLanguageLabel"/>
+<fmt:message bundle="${loc}" key="label.link.language.en" var="enLanguageLabel"/>
+<fmt:message bundle="${loc}" key="label.link.language.ch" var="chLanguageLabel"/>
 <fmt:message bundle="${loc}" key="label.link.logout" var="logoutLink"/>
 <link href="${contextPath}/css/menu.css?v=1.1" rel="stylesheet">
+<script src="${contextPath}/js/languageSelector.js?v=1.0"></script>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">${companyLabel}</a>
@@ -24,7 +29,8 @@
                 <a class="nav-link" href="${contextPath}/controller?command=show_user_control">${manageUsersLink}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${contextPath}/controller?command=driver_applications">${manageDriversLink}</a>
+                <a class="nav-link"
+                   href="${contextPath}/controller?command=driver_applications">${manageDriversLink}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${contextPath}/controller?command=show_bonuses">${issueBonusesLink}</a>
@@ -34,7 +40,27 @@
             </li>
         </ul>
     </div>
+    <div class="btn-group pr-5">
+        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-expanded="false">
+            ${languageLabel}
+        </button>
+        <div class="dropdown-menu">
+            <button id="ru" class="dropdown-item">${ruLanguageLabel}</button>
+            <button id="en" class="dropdown-item">${enLanguageLabel}</button>
+            <button id="ch" class="dropdown-item">${chLanguageLabel}</button>
+        </div>
+    </div>
     <c:if test="${not empty sessionScope.user}">
-        <a class="btn btn-outline-danger" href="${contextPath}/controller?command=logout">${logoutLink}</a>
+        <a class="btn btn-outline-danger" href="${contextPath}/controller?command=logout">
+                ${logoutLink}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"></path>
+                <path fill-rule="evenodd"
+                      d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"></path>
+            </svg>
+        </a>
     </c:if>
 </nav>
