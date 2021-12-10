@@ -158,4 +158,5 @@ buildNumber.properties
 /logs
 /.idea
 /src/main/webapp/images/taxes
+/src/main/resources/mail.properties
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,intellij
