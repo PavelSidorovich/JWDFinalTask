@@ -19,7 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/pieChart.js?v=1.0"></script>
+    <script src="${contextPath}/js/pieChart.js?v=1.1"></script>
 </head>
 
 <body>
