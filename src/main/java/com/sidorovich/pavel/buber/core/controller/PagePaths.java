@@ -18,6 +18,7 @@ public enum PagePaths {
     ACCOUNT_CONTROL("/WEB-INF/jsp/accountControl.jsp", "account_control"),
     PIE_CHART("/WEB-INF/jsp/pieChart.jsp", "show_pie_chart"),
     LINE_CHART("/WEB-INF/jsp/lineChart.jsp", "show_line_chart"),
+    MY_TAXI("/WEB-INF/jsp/driverInfo.jsp", "my_taxi"),
     ERROR("/WEB-INF/jsp/error.jsp", "show_error");
 
     private static final String COMMAND = "?command=";

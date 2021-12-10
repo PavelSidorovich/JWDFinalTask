@@ -11,7 +11,7 @@ import static com.sidorovich.pavel.buber.api.model.Role.*;
 
 public enum CommandRegistry {
 
-    MAIN_PAGE(ShowPageCommand.getInstance(PagePaths.MAIN), "main"),
+    MAIN_PAGE(MainPageCommand.getInstance(), "main"),
     SHOW_LOGIN_PAGE(ShowPageCommand.getInstance(PagePaths.LOGIN), "show_login"),
     LOGIN(LoginCommand.getInstance(), "login"),
     LOGOUT(LogoutCommand.getInstance(), "logout"),
@@ -53,8 +53,10 @@ public enum CommandRegistry {
     GET_PIE_CHART_DATA(OrderStatusesStatisticsCommand.getInstance(), "get_pie_chart", ADMIN),
     LINE_CHART_PAGE(ShowPageCommand.getInstance(PagePaths.LINE_CHART), "show_line_chart", ADMIN),
     GET_LINE_CHART_DATA(GetLineChartDataCommand.getInstance(), "get_line_chart", ADMIN),
+    MY_TAXI_PAGE(TaxiInfoCommand.getInstance(), "my_taxi", DRIVER),
+    EDIT_DRIVER_INFO(EditDriverInfoCommand.getInstance(), "edit_driver_info", DRIVER),
     ERROR_PAGE(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
-    DEFAULT(ShowPageCommand.getInstance(PagePaths.MAIN), ""),
+    DEFAULT(MainPageCommand.getInstance(), ""),
     ;
 
     private final Command command;
