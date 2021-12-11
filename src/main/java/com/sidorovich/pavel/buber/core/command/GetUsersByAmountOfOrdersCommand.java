@@ -4,6 +4,7 @@ import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
+import com.sidorovich.pavel.buber.api.model.OrderStatus;
 import com.sidorovich.pavel.buber.api.model.Role;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
 import com.sidorovich.pavel.buber.core.controller.JsonResponseStatus;
@@ -50,14 +51,17 @@ public class GetUsersByAmountOfOrdersCommand extends CommonCommand {
         List<BuberUser> users = userService.findAll().stream()
                                            .filter(user -> user.getAccount().getRole() == Role.CLIENT)
                                            .collect(Collectors.toList());
-        List<UserOrder> orders = new ArrayList<>(userOrderService.findAll());
+        List<UserOrder> orders = userOrderService.findAll().stream()
+                                                 .filter(order -> order.getStatus() == OrderStatus.COMPLETED)
+                                                 .collect(Collectors.toList());
 
         getUsersByOrderAmount(usersByOrderAmount, users, orders);
 
         return requestFactory.createJsonResponse(usersByOrderAmount, JsonResponseStatus.SUCCESS);
     }
 
-    private void getUsersByOrderAmount(Map<BuberUser, Integer> usersByOrderAmount, List<BuberUser> users, List<UserOrder> orders) {
+    private void getUsersByOrderAmount(Map<BuberUser, Integer> usersByOrderAmount,
+                                       List<BuberUser> users, List<UserOrder> orders) {
         for (BuberUser user : users) {
             for (UserOrder order : orders) {
                 if (order.getClient().equals(user)) {

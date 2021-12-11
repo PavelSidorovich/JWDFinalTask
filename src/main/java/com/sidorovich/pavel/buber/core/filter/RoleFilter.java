@@ -3,9 +3,12 @@ package com.sidorovich.pavel.buber.core.filter;
 import com.sidorovich.pavel.buber.api.command.Command;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.Role;
+import com.sidorovich.pavel.buber.api.util.ResourceBundleExtractor;
 import com.sidorovich.pavel.buber.core.command.CommandRegistry;
+import com.sidorovich.pavel.buber.core.controller.PlainCommandRequest;
 import com.sidorovich.pavel.buber.core.service.AccountService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
+import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +26,7 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 @WebFilter(filterName = "RoleFilter")
@@ -30,15 +34,18 @@ public class RoleFilter implements Filter {
 
     private static final Logger LOG = LogManager.getLogger(RoleFilter.class);
 
+    private static final String BASE_NAME = "l10n.msg.error";
     private static final String COMMAND_PARAM_NAME = "command";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String ERROR_PAGE_MESSAGE_ATTR_PARAM_NAME = "errorPageMessage";
-    private static final String PERMISSION_DENIED_MSG = "You have not permission to proceed this action";
+    private static final String INVALID_PERMISSION_KEY = "msg.permission";
 
     private final AccountService accountService;
     private final Map<Role, Set<Command>> commandsByRoles;
+    private final ResourceBundleExtractor resourceBundleExtractor;
 
     public RoleFilter() {
+        resourceBundleExtractor = ResourceBundleExtractorImpl.getInstance();
         accountService = EntityServiceFactory.getInstance().serviceFor(AccountService.class);
         commandsByRoles = new EnumMap<>(Role.class);
     }
@@ -64,7 +71,10 @@ public class RoleFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             HttpServletResponse servletResponse = (HttpServletResponse) response;
-            req.setAttribute(ERROR_PAGE_MESSAGE_ATTR_PARAM_NAME, PERMISSION_DENIED_MSG);
+            ResourceBundle resourceBundle = resourceBundleExtractor.extractResourceBundle(
+                    new PlainCommandRequest(req), BASE_NAME
+            );
+            req.setAttribute(ERROR_PAGE_MESSAGE_ATTR_PARAM_NAME, resourceBundle.getString(INVALID_PERMISSION_KEY));
             servletResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
     }

@@ -2,7 +2,6 @@ $(document).ready(function () {
   const bonusTable = createTable([]);
 
   fillBonusesTable(bonusTable);
-  addFilterInput();
   addFilterListener(bonusTable);
   addModalButtonsListener(bonusTable);
   addNewBonusButtonListener(bonusTable);
@@ -32,17 +31,6 @@ function showErrorMessage($field, errorMsg) {
   $field.show("slow");
 }
 
-function addFilterInput() {
-  $("#filterInputs").append(
-    `<li class="list-group-item d-flex justify-content-between lh-condensed">
-        <div>
-          <h6 class="my-0">Order amount</h6>
-          <input class="form-control" id="orderAmount" type="text">
-        </div>
-      </li>`
-  );
-}
-
 function processFiltering(table) {
   const fNameVal = $("#firstName").val().toLowerCase();
   const lNameVal = $("#lastName").val().toLowerCase();
@@ -63,6 +51,7 @@ function processFiltering(table) {
 
 function fillBonusesTable(table) {
   $.post("/controller?command=get_bonuses", function (data) {
+    console.log(data.obj);
     table.replaceData(data.obj);
     processFiltering(table);
   }, "json");
@@ -91,7 +80,7 @@ function addFilterListener(table) {
   });
 }
 
-function showModal(e) {
+function showModal(e, headerMsg, bodyMessage) {
   const id = e.target?.dataset?.id || null;
 
   if (id) {
@@ -101,8 +90,8 @@ function showModal(e) {
     $($modalHeader).find('h5:first').remove();
     $modalMessage.text("");
     $("#approveButton").attr("data-id", id);
-    $modalHeader.prepend('<h5 class="modal-title">Approve deletion</h5>');
-    $modalMessage.append('<p>Are you really want to delete users bonus?</p>');
+    $modalHeader.prepend('<h5 class="modal-title">' + headerMsg + '</h5>');
+    $modalMessage.append('<p>' + bodyMessage + '</p>');
     $("#modalApprove").modal();
   }
 }
@@ -127,7 +116,10 @@ const printButton = function (cell) {
   const bonus = cell.getRow().getData();
 
   return '<button type="button" data-id="' + bonus.id +
-    '" class="btn btn-outline-danger btn-block">Delete</button>'
+    '" class="btn btn-outline-danger btn-block"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">' +
+    '  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>' +
+    '  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>' +
+    '</svg></button>'
 };
 
 function createUsersWithExtraField(data) {

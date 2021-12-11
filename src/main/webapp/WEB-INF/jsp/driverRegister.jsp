@@ -25,7 +25,7 @@
 <fmt:message bundle="${loc}" key="label.button.submit" var="submitButtonLabel"/>
 
 <!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -69,9 +69,6 @@
                 <div class="mb-3">
                     <label for="phone">${phoneLabel}</label>
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">+</span>
-                        </div>
                         <input type="tel" class="form-control" name="phone" id="phone" placeholder="+375 29 XXX-XX-XX"
                                required>
                         <div class="invalid-feedback" style="width: 100%;"></div>

@@ -36,7 +36,7 @@ function addDrivingLicenceValidator() {
   const drivingLicenceRegex = new RegExp('^\\d[A-Z]{2} \\d{6}$');
 
   $drivingLicenceSerial.on("input", function () {
-    checkField($drivingLicenceSerial, drivingLicenceRegex, $drivingLicenceSerialFeedback, "Valid driving licence serial number is required");
+    checkField($drivingLicenceSerial, drivingLicenceRegex, $drivingLicenceSerialFeedback, drivingLicenceFeedback);
     setSaveButtonState();
   });
 }
@@ -49,11 +49,11 @@ function addCarNameValidator() {
   const carNameRegex = new RegExp('^[A-zА-Я0-9 ]{2,255}$');
 
   $carBrand.on("input", function () {
-    checkField($carBrand, carNameRegex, $carBrandFeedback, "Valid car brand is required");
+    checkField($carBrand, carNameRegex, $carBrandFeedback, carBrandFeedback);
     setSaveButtonState();
   });
   $carModel.on("input", function () {
-    checkField($carModel, carNameRegex, $carModelFeedback, "Valid car model is required");
+    checkField($carModel, carNameRegex, $carModelFeedback, carModelFeedback);
     setSaveButtonState();
   });
 }
@@ -64,7 +64,7 @@ function addCarLicencePlateValidator() {
   const carLicencePlateRegex = new RegExp('^\\d{4} [A-Z]{2}-[1-7]$');
 
   $carLicencePlate.on("input", function () {
-    checkField($carLicencePlate, carLicencePlateRegex, $carLicencePlateFeedback, "Valid car licence plate is required");
+    checkField($carLicencePlate, carLicencePlateRegex, $carLicencePlateFeedback, carLicencePlateFeedback);
     setSaveButtonState();
   });
 }

@@ -8,6 +8,12 @@
 <fmt:message bundle="${loc}" key="label.link.becomeDriver" var="becomeDriverLink"/>
 <fmt:message bundle="${loc}" key="label.link.logout" var="logoutLink"/>
 <fmt:message bundle="${loc}" key="label.link.login" var="loginLink"/>
+<fmt:message bundle="${loc}" key="label.button.language" var="languageLabel"/>
+<fmt:message bundle="${loc}" key="label.link.language.ru" var="ruLanguageLabel"/>
+<fmt:message bundle="${loc}" key="label.link.language.en" var="enLanguageLabel"/>
+<fmt:message bundle="${loc}" key="label.link.language.ch" var="zhLanguageLabel"/>
+<fmt:message bundle="${loc}" key="label.link.logout" var="logoutButtonLabel"/>
+<script src="${contextPath}/js/languageSelector.js?v=1.1"></script>
 
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h5 class="my-0 mr-md-auto font-weight-normal">${companyLabel}</h5>
@@ -16,6 +22,17 @@
             <a class="p-2 text-dark" href="${contextPath}/controller?command=show_driver_register">${becomeDriverLink}</a>
         </c:if>
     </nav>
+    <div class="btn-group pr-5">
+        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-expanded="false">
+            ${languageLabel}
+        </button>
+        <div class="dropdown-menu">
+            <button id="ru" class="dropdown-item">${ruLanguageLabel}</button>
+            <button id="en" class="dropdown-item">${enLanguageLabel}</button>
+            <button id="zh" class="dropdown-item">${zhLanguageLabel}</button>
+        </div>
+    </div>
     <c:choose>
         <c:when test="${not empty sessionScope.user}">
             <a class="btn btn-outline-primary" href="${contextPath}/controller?command=logout">${logoutLink}</a>

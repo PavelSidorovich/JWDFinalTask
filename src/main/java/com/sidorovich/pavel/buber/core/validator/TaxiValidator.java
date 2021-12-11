@@ -5,6 +5,7 @@ import com.sidorovich.pavel.buber.api.validator.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class TaxiValidator implements Validator<Taxi, Map<String, String>> {
 
@@ -22,11 +23,11 @@ public class TaxiValidator implements Validator<Taxi, Map<String, String>> {
     }
 
     @Override
-    public Map<String, String> validate(Taxi taxi) {
-        Map<String, String> errorsByMessages = new HashMap<>(carNameValidator.validate(taxi));
+    public Map<String, String> validate(Taxi taxi, ResourceBundle resourceBundle) {
+        Map<String, String> errorsByMessages = new HashMap<>(carNameValidator.validate(taxi, resourceBundle));
 
-        errorsByMessages.putAll(carLicencePlateValidator.validate(taxi.getLicencePlate()));
-        errorsByMessages.putAll(imageExtValidator.validate(taxi.getPhotoFilepath()));
+        errorsByMessages.putAll(carLicencePlateValidator.validate(taxi.getLicencePlate(), resourceBundle));
+        errorsByMessages.putAll(imageExtValidator.validate(taxi.getPhotoFilepath(), resourceBundle));
 
         return errorsByMessages;
     }

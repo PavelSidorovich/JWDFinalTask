@@ -12,10 +12,10 @@
 <fmt:message bundle="${loc}" key="label.button.language" var="languageLabel"/>
 <fmt:message bundle="${loc}" key="label.link.language.ru" var="ruLanguageLabel"/>
 <fmt:message bundle="${loc}" key="label.link.language.en" var="enLanguageLabel"/>
-<fmt:message bundle="${loc}" key="label.link.language.ch" var="chLanguageLabel"/>
+<fmt:message bundle="${loc}" key="label.link.language.ch" var="zhLanguageLabel"/>
 <fmt:message bundle="${loc}" key="label.link.logout" var="logoutButtonLabel"/>
 <link href="${contextPath}/css/menu.css?v=1.2" rel="stylesheet">
-<script src="${contextPath}/js/languageSelector.js?v=1.0"></script>
+<script src="${contextPath}/js/languageSelector.js?v=1.1"></script>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">${companyLabel}</a>
@@ -47,7 +47,7 @@
         <div class="dropdown-menu">
             <button id="ru" class="dropdown-item">${ruLanguageLabel}</button>
             <button id="en" class="dropdown-item">${enLanguageLabel}</button>
-            <button id="ch" class="dropdown-item">${chLanguageLabel}</button>
+            <button id="zh" class="dropdown-item">${zhLanguageLabel}</button>
         </div>
     </div>
     <c:if test="${not empty sessionScope.user}">

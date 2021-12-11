@@ -7,6 +7,7 @@
 <fmt:setBundle basename="l10n.page.accountControl" var="loc"/>
 <fmt:message bundle="${loc}" key="label.page.title" var="pageTitle"/>
 <fmt:message bundle="${loc}" key="label.link.editPersonalInfo" var="editPersonalInfoLink"/>
+<fmt:message bundle="${loc}" key="label.alt.accountPhoto" var="accountPhotoLabel"/>
 <fmt:message bundle="${loc}" key="label.link.changePassword" var="changePasswordLink"/>
 
 <html>
@@ -17,8 +18,8 @@
     <link href="${contextPath}/css/applications.css?v=1.0" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/changePassword.js?v=1.1" type="text/javascript"></script>
-    <script src="${contextPath}/js/personalInfo.js?v=1.4" type="text/javascript"></script>
+    <script src="${contextPath}/js/changePassword.js?v=1.2" type="text/javascript"></script>
+    <script src="${contextPath}/js/personalInfo.js?v=1.5" type="text/javascript"></script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
     <div class="card">
         <div class="row no-gutters">
             <div class="col-md-3 my-5 ml-5">
-                <img src="../../images/person-circle.svg" width="200em" alt="account photo">
+                <img src="${contextPath}/images/person-circle.svg" width="200em" alt="${accountPhotoLabel}">
             </div>
             <div class="col">
                 <c:if test="${not empty requestScope.user}">

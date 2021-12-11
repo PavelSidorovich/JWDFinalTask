@@ -3,10 +3,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="carPhotoPaths" scope="request" type="java.util.List"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<fmt:requestEncoding value="utf-8"/>
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.main" var="loc"/>
 <fmt:message bundle="${loc}" key="label.title" var="title"/>
+<fmt:message bundle="${loc}" key="label.alt" var="altLabel"/>
+<fmt:message bundle="${loc}" key="label.header" var="headerLabel"/>
+<fmt:message bundle="${loc}" key="label.li.carFeed" var="fastCarFeedLabel"/>
+<fmt:message bundle="${loc}" key="label.li.onlineControl" var="onlineControlLabel"/>
+<fmt:message bundle="${loc}" key="label.li.payment" var="paymentLabel"/>
+<fmt:message bundle="${loc}" key="label.li.tripControl" var="tripControlLabel"/>
+<fmt:message bundle="${loc}" key="label.button.makeOrder" var="makeOrderLabel"/>
 
 <html>
 <head>
@@ -15,8 +21,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
+    <script src="${contextPath}/js/bootstrap/bootstrap.bundle.min.js" rel="stylesheet"></script>
+    <script src="${contextPath}/js/bootstrap/bootstrap.bundle.min.js" rel="stylesheet"></script>
 </head>
+
 <body>
 <jsp:include page="partials/commonNav.jsp"/>
 <div class="container mb-3">
@@ -28,12 +36,12 @@
                         <c:choose>
                             <c:when test="${loop.index eq 0}">
                                 <div class="carousel-item active" data-interval="5000">
-                                    <img src="../../images/taxes/${carPhotoPath}" class="w-100" alt="taxiPhoto">
+                                    <img src="${contextPath}/images/taxes/${carPhotoPath}" class="w-100" alt="${altLabel}">
                                 </div>
                             </c:when>
                             <c:otherwise>
                                 <div class="carousel-item" data-interval="5000">
-                                    <img src="../../images/taxes/${carPhotoPath}" class="w-100" alt="taxiPhoto">
+                                    <img src="${contextPath}/images/taxes/${carPhotoPath}" class="w-100" alt="${altLabel}">
                                 </div>
                             </c:otherwise>
                         </c:choose>
@@ -52,7 +60,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <h3 class="mb-5">На работу - с Buber.Taxi!</h3>
+            <h3 class="mb-5">${headerLabel}</h3>
             <ul class="list-unstyled ml-5">
                 <li class="media mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -61,7 +69,7 @@
                         <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"></path>
                     </svg>
                     <div class="media-body ml-2">
-                        <h5 class="lead">Быстрая подача авто</h5>
+                        <h5 class="lead">${fastCarFeedLabel}</h5>
                         <p></p>
                     </div>
                 </li>
@@ -72,7 +80,7 @@
                         <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"></path>
                     </svg>
                     <div class="media-body ml-2">
-                        <h5 class="lead">Онлайн-контроль расходов</h5>
+                        <h5 class="lead">${onlineControlLabel}</h5>
                         <p></p>
                     </div>
                 </li>
@@ -83,7 +91,7 @@
                         <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"></path>
                     </svg>
                     <div class="media-body ml-2">
-                        <h5 class="lead">Безналичная оплата</h5>
+                        <h5 class="lead">${paymentLabel}</h5>
                         <p></p>
                     </div>
                 </li>
@@ -93,12 +101,12 @@
                         <path d="M7 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zM2 1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm0 8a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H2zm.854-3.646a.5.5 0 0 1-.708 0l-1-1a.5.5 0 1 1 .708-.708l.646.647 1.646-1.647a.5.5 0 1 1 .708.708l-2 2zm0 8a.5.5 0 0 1-.708 0l-1-1a.5.5 0 0 1 .708-.708l.646.647 1.646-1.647a.5.5 0 0 1 .708.708l-2 2zM7 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0-5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"></path>
                     </svg>
                     <div class="media-body ml-2">
-                        <h5 class="lead">Контроль поездок онлайн</h5>
+                        <h5 class="lead">${tripControlLabel}</h5>
                         <p></p>
                     </div>
                 </li>
             </ul>
-            <a href="${contextPath}/controller?command=show_login" class="btn btn-warning btn-block">Заказать такси</a>
+            <a href="${contextPath}/controller?command=show_login" class="btn btn-warning btn-block">${makeOrderLabel}</a>
         </div>
     </div>
 </div>

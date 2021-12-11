@@ -8,6 +8,7 @@
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.driverOrder" var="loc"/>
 <fmt:message bundle="${loc}" key="label.page.title" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.alt.cityMap" var="cityMapLabel"/>
 <fmt:message bundle="${loc}" key="label.alert.danger" var="dangerAlertLabel"/>
 <fmt:message bundle="${loc}" key="label.header.pending" var="pendingHeaderLabel"/>
 <fmt:message bundle="${loc}" key="label.header.inProcess" var="processHeaderLabel"/>
@@ -39,7 +40,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.bundle.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/driverOrder.js?v=1.2" type="text/javascript"></script>
+    <script src="${contextPath}/js/driverOrder.js?v=1.3" type="text/javascript"></script>
     <script src="${contextPath}/js/tabulator/tabulator.min.js?v=1.0" type="text/javascript"></script>
 </head>
 
@@ -48,7 +49,7 @@
 <div class="container-fluid mt-3">
     <div class="row p-3">
         <div class="col-md-7 order-md-1 mb-4">
-            <img class="img-fluid" src="../../images/map.png" alt="city map">
+            <img class="img-fluid" src="${contextPath}/images/map.png" alt="${cityMapLabel}">
         </div>
         <div class="col-md-5 order-md-2">
             <c:choose>
@@ -193,7 +194,7 @@
                                    value="${requestScope.order.client.account.phone}" readonly>
                         </c:when>
                         <c:otherwise>
-                            <input type="text" class="form-control" id="phone" value="" readonly>
+                            <input type="text" class="form-control" id="phone" readonly>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -205,7 +206,7 @@
                                    value="${requestScope.order.client.email.get()}" readonly>
                         </c:when>
                         <c:otherwise>
-                            <input type="text" class="form-control" id="email" value="" readonly>
+                            <input type="text" class="form-control" id="email" readonly>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -248,6 +249,19 @@
         </div>
     </div>
 </div>
+<script>
+  const freeStatus = '${freeHeaderLabel}';
+  const restStatus = '${restHeaderLabel}';
+  const cancelButtonLabel = '${cancelButtonLabel}';
+  const takeButtonLabel = '${takeOrderButtonLabel}';
+  const confirmButtonLabel = '${confirmButtonLabel}';
+  const approveCancelHeader = '<fmt:message bundle="${loc}" key="label.header.approveCancel"/>';
+  const approveTakingHeader = '<fmt:message bundle="${loc}" key="label.header.approveTaking"/>';
+  const confirmPaymentHeader = '<fmt:message bundle="${loc}" key="label.header.confirmPayment"/>';
+  const approveCancelling = '<fmt:message bundle="${loc}" key="label.approveCancel"/>';
+  const approveTaking = '<fmt:message bundle="${loc}" key="label.approveTaking"/>';
+  const confirmPayment = '<fmt:message bundle="${loc}" key="label.confirmPayment"/>';
+</script>
 <jsp:include page="partials/commonFooter.jsp"/>
 </body>
 </html>

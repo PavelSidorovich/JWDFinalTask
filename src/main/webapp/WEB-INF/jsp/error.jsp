@@ -5,14 +5,12 @@
 <fmt:message bundle="${loc}" key="label.page.title" var="pageTitle"/>
 <fmt:message bundle="${loc}" key="label.page.message" var="errorMsgLabel"/>
 
-<!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
     <title>${pageTitle}</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -30,6 +28,5 @@
                 <h2 class="font-weight-normal lead" id="desc">${errorMsgLabel}</h2>
             </c:otherwise>
         </c:choose>
-
     </div>
 </div>

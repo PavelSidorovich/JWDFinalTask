@@ -23,10 +23,10 @@ function editStatusLine() {
   const $statusLine = $("#statusLine");
 
   if ($("#statusCheckbox").is(":checked")) {
-    $statusLine.text("Waiting for orders");
+    $statusLine.text(freeStatus);
     $statusLine.after('<div id="statusSpinner" class="spinner-grow text-warning ml-2" role="status"></div>');
   } else {
-    $statusLine.text("You are taking rest...");
+    $statusLine.text(restStatus);
     $("#statusSpinner").remove();
   }
 }
@@ -54,13 +54,13 @@ function clearApproveModal() {
 function addCancelButtonListener() {
   $("#cancelButton").click(function () {
     clearApproveModal();
-    $("#modalHeader").prepend("<h5>Approve cancelling</h5>");
-    $("#modalMessage").text("Are you really want to cancel order?");
+    $("#modalHeader").prepend("<h5>" + approveCancelHeader + "</h5>");
+    $("#modalMessage").text(approveCancelling);
     $("#approveButton").remove();
     $("#modalButtons").append(
       '<form action="/controller?command=driver_process_order" method="post">' +
       '<input type="text" name="orderStatus" value="CANCELLED" hidden>' +
-      '<button class="btn btn-danger btn-block" type="submit">Cancel order</button>' +
+      '<button class="btn btn-danger btn-block" type="submit">' + cancelButtonLabel + '</button>' +
       ' </form>'
     );
     $("#modalApprove").modal();
@@ -70,13 +70,13 @@ function addCancelButtonListener() {
 function addTakeButtonListener() {
   $("#takeButton").click(function () {
     clearApproveModal();
-    $("#modalHeader").prepend("<h5>Approve taking order</h5>");
-    $("#modalMessage").text("Are you really want take this order?");
+    $("#modalHeader").prepend("<h5>" + approveTakingHeader + "</h5>");
+    $("#modalMessage").text(approveTaking);
     $("#approveButton").remove();
     $("#modalButtons").append(
       '<form action="/controller?command=driver_process_order" method="post">' +
       '<input type="text" name="orderStatus" value="IN_PROCESS" hidden>' +
-      '<button class="btn btn-success btn-block" type="submit">Take order</button>' +
+      '<button class="btn btn-success btn-block" type="submit">' + takeButtonLabel + '</button>' +
       ' </form>'
     );
     $("#modalApprove").modal();
@@ -86,12 +86,12 @@ function addTakeButtonListener() {
 function addConfirmButtonListener() {
   $("#confirmOrderButton").click(function () {
     clearApproveModal();
-    $("#modalHeader").prepend("<h5>Approve confirming payment</h5>");
-    $("#modalMessage").text("Are you really want confirm the payment?");
+    $("#modalHeader").prepend("<h5>" + confirmPaymentHeader + "</h5>");
+    $("#modalMessage").text(confirmPayment);
     $("#approveButton").remove();
     $("#modalButtons").append(
       '<form action="/controller?command=confirm_payment" method="post">' +
-      '<button class="btn btn-success btn-block" type="submit">Confirm payment</button>' +
+      '<button class="btn btn-success btn-block" type="submit">' + confirmButtonLabel + '</button>' +
       ' </form>'
     );
     $("#modalApprove").modal();

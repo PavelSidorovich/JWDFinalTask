@@ -1,14 +1,14 @@
 $(document).ready(function () {
   $("#ru").click(function () {
-    document.cookie = "lang=ru_RU"
+    document.cookie = "lang=ru_RU";
     location.reload();
   })
   $("#en").click(function () {
-    document.cookie = "lang=en_US"
+    document.cookie = "lang=en_US";
     location.reload();
   })
-  $("#ch").click(function () {
-    $.cookie("lang", "ch_US");
+  $("#zh").click(function () {
+    document.cookie = "lang=zh_TW";
     location.reload();
   })
 });

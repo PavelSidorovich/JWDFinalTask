@@ -16,6 +16,7 @@ function addRegisterFormListener() {
       function (data) {
         if (data.status === "ERROR") {
           showErrorMessages(data.obj);
+          console.log(data.obj);
         } else if (data.isRedirect) {
           window.location.replace(data.path);
         }

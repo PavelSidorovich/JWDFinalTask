@@ -6,6 +6,7 @@ import com.sidorovich.pavel.buber.api.validator.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class UserRegisterValidator implements BiValidator<BuberUser, String, Map<String, String>> {
 
@@ -29,13 +30,13 @@ public class UserRegisterValidator implements BiValidator<BuberUser, String, Map
     }
 
     @Override
-    public Map<String, String> validate(BuberUser user, String passwordRepeat) {
+    public Map<String, String> validate(BuberUser user, String passwordRepeat, ResourceBundle resourceBundle) {
         Map<String, String> errorsByMessages = new HashMap<>();
 
-        errorsByMessages.putAll(personalInfoValidator.validate(user));
-        errorsByMessages.putAll(phoneValidator.validate(user.getPhone()));
-        errorsByMessages.putAll(passwordValidator.validate(user.getPasswordHash(), passwordRepeat));
-        errorsByMessages.putAll(emailValidator.validate(user.getEmail().orElse(EMPTY_STRING), EMAIL_IS_OPTIONAL));
+        errorsByMessages.putAll(personalInfoValidator.validate(user, resourceBundle));
+        errorsByMessages.putAll(phoneValidator.validate(user.getPhone(), resourceBundle));
+        errorsByMessages.putAll(passwordValidator.validate(user.getPasswordHash(), passwordRepeat, resourceBundle));
+        errorsByMessages.putAll(emailValidator.validate(user.getEmail().orElse(EMPTY_STRING), EMAIL_IS_OPTIONAL, resourceBundle));
 
         return errorsByMessages;
     }

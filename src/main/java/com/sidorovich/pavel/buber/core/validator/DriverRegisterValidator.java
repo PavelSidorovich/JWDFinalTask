@@ -8,6 +8,7 @@ import com.sidorovich.pavel.buber.api.validator.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class DriverRegisterValidator implements BiValidator<Driver, String, Map<String, String>> {
 
@@ -31,15 +32,15 @@ public class DriverRegisterValidator implements BiValidator<Driver, String, Map<
     }
 
     @Override
-    public Map<String, String> validate(Driver driver, String passwordRepeat) {
+    public Map<String, String> validate(Driver driver, String passwordRepeat, ResourceBundle resourceBundle) {
         Map<String, String> errorsByMessages = new HashMap<>();
 
-        errorsByMessages.putAll(userRegisterValidator.validate(driver.getUser(), passwordRepeat));
+        errorsByMessages.putAll(userRegisterValidator.validate(driver.getUser(), passwordRepeat, resourceBundle));
         errorsByMessages.putAll(emailValidator.validate(driver.getUser().getEmail()
                                                               .orElse(EMPTY_STRING),
-                                                        EMAIL_IS_OPTIONAL));
-        errorsByMessages.putAll(drivingLicenceValidator.validate(driver.getDrivingLicence()));
-        errorsByMessages.putAll(taxiValidator.validate(driver.getTaxi()));
+                                                        EMAIL_IS_OPTIONAL, resourceBundle));
+        errorsByMessages.putAll(drivingLicenceValidator.validate(driver.getDrivingLicence(), resourceBundle));
+        errorsByMessages.putAll(taxiValidator.validate(driver.getTaxi(), resourceBundle));
 
         return errorsByMessages;
     }

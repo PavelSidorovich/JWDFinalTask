@@ -6,6 +6,7 @@ import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
 import com.sidorovich.pavel.buber.core.command.CommandRegistry;
+import com.sun.org.apache.xml.internal.serializer.Encodings;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +22,7 @@ import java.io.PrintWriter;
 
 @WebServlet("/controller")
 @MultipartConfig(
-        fileSizeThreshold = 1024, // 1025 B
+        fileSizeThreshold = 1024, // 1024 B
         maxFileSize = 1024 * 1024 * 25,      // 25 MB
         maxRequestSize = 1024 * 1024 * 100   // 100 MB
 )
@@ -30,7 +31,7 @@ public class Controller extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     private static final String COMMAND_NAME_PARAM = "command";
-    private static final String JSON_TYPE = "application/json";
+    private static final String JSON_TYPE = "application/json;charset=UTF-8";
 
     private final RequestFactory requestFactory = RequestFactoryImpl.getInstance();
 
@@ -79,8 +80,8 @@ public class Controller extends HttpServlet {
     }
 
     private void sendJsonResponse(HttpServletResponse resp, CommandResponse commandResponse) throws IOException {
+        resp.setContentType(JSON_TYPE);
         try (final PrintWriter writer = resp.getWriter()) {
-            resp.setContentType(JSON_TYPE);
             writer.write(new Gson().toJson(commandResponse));
         }
     }

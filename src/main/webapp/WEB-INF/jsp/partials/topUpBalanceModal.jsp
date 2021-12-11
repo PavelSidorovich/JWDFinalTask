@@ -9,6 +9,7 @@
 <fmt:message bundle="${loc}" key="label.rubles" var="rublesLabel"/>
 <fmt:message bundle="${loc}" key="label.button.cancel" var="cancelButtonLabel"/>
 <fmt:message bundle="${loc}" key="label.button.submit" var="submitButtonLabel"/>
+<fmt:message bundle="${loc}" key="label.cashFeedback" var="cashFeedbackLabel"/>
 
 <div id="topUpBalanceModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -43,7 +44,5 @@
 </div>
 
 <script>
-  $(document).ready(function () {
-    addCashValidator("Valid cash value is required (for example, 500.00)");
-  });
+  const invalidCashMsg = '${cashFeedbackLabel}';
 </script>

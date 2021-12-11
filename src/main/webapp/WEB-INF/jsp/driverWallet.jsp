@@ -1,14 +1,15 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="jwds" uri="com.sidorovich.pavel" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="jwds" uri="com.sidorovich.pavel" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.clientWallet" var="loc"/>
 <fmt:message bundle="${loc}" key="label.page.title" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.alt.bankPhoto" var="piggyBankLabel"/>
 <fmt:message bundle="${loc}" key="label.card.header" var="cardHeaderLabel"/>
 <fmt:message bundle="${loc}" key="label.card.rubles" var="rublesLabel"/>
 <fmt:message bundle="${loc}" key="label.card.credits" var="transactionsLabel"/>
-<fmt:message bundle="${loc}" key="label.button.topUpBalance" var="topUpBalanceButton"/>
 
 <html>
 <head>
@@ -26,7 +27,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6 order-md-2">
-            <img class="d-block mx-auto" src="${contextPath}/images/piggy-bank.svg" alt="piggy bank" width="400">
+            <img class="d-block mx-auto" src="${contextPath}/images/piggy-bank.svg" alt="${piggyBankLabel}" width="400">
         </div>
         <div class="col-md-6 order-md-1 card-deck mb-3 text-center">
             <div class="card mb-4 shadow-sm">

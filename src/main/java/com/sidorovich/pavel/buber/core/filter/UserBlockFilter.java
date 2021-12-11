@@ -3,8 +3,11 @@ package com.sidorovich.pavel.buber.core.filter;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.UserStatus;
+import com.sidorovich.pavel.buber.api.util.ResourceBundleExtractor;
+import com.sidorovich.pavel.buber.core.controller.PlainCommandRequest;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.UserService;
+import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,20 +22,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 @WebFilter(filterName = "UserBlockFilter")
 public class UserBlockFilter implements Filter {
 
     private static final Logger LOG = LogManager.getLogger(UserBlockFilter.class);
 
+    private static final String BASE_NAME = "l10n.msg.error";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String SHOW_ERROR_COMMAND = "command=show_error";
-    private static final String ACCOUNT_BLOCKED_MSG = "This account was blocked";
+    private static final String BLOCKED_KEY = "msg.blocked";
     private static final String ERROR_PAGE_MESSAGE_ATTR_PARAM_NAME = "errorPageMessage";
 
     private final UserService userService;
+    private final ResourceBundleExtractor resourceBundleExtractor;
 
     public UserBlockFilter() {
+        resourceBundleExtractor = ResourceBundleExtractorImpl.getInstance();
         this.userService = EntityServiceFactory.getInstance().serviceFor(UserService.class);
     }
 
@@ -50,8 +57,11 @@ public class UserBlockFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             HttpServletResponse servletResponse = (HttpServletResponse) response;
+            ResourceBundle resourceBundle = resourceBundleExtractor.extractResourceBundle(
+                    new PlainCommandRequest(req), BASE_NAME
+            );
 
-            request.setAttribute(ERROR_PAGE_MESSAGE_ATTR_PARAM_NAME, ACCOUNT_BLOCKED_MSG);
+            request.setAttribute(ERROR_PAGE_MESSAGE_ATTR_PARAM_NAME, resourceBundle.getString(BLOCKED_KEY));
             servletResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
     }

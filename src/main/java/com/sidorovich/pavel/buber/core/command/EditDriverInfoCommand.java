@@ -8,6 +8,7 @@ import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.DriverStatus;
 import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.service.ImageUploader;
+import com.sidorovich.pavel.buber.api.util.ResourceBundleExtractor;
 import com.sidorovich.pavel.buber.api.validator.Validator;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
@@ -15,6 +16,7 @@ import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.ImageUploaderImpl;
 import com.sidorovich.pavel.buber.core.service.TaxiService;
+import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 import com.sidorovich.pavel.buber.core.validator.DrivingLicenceValidator;
 import com.sidorovich.pavel.buber.core.validator.TaxiValidator;
 
@@ -22,9 +24,11 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class EditDriverInfoCommand extends CommonCommand {
 
+    private static final String BASE_NAME = "l10n.msg.error";
     private static final String IMAGES_FOLDER =
             "D:\\JavaWebDevelopment\\JWDFinalTask\\src\\main\\webapp\\images\\taxes";
     private static final String PHOTO_PATH_PARAM_NAME = "carPhoto";
@@ -40,19 +44,22 @@ public class EditDriverInfoCommand extends CommonCommand {
     private final ImageUploader imageUploader;
     private final Validator<String, Map<String, String>> drivingLicenceValidator;
     private final Validator<Taxi, Map<String, String>> taxiValidator;
+    private final ResourceBundleExtractor resourceBundleExtractor;
 
     private EditDriverInfoCommand(RequestFactory requestFactory,
                                   DriverService driverService,
                                   TaxiService taxiService,
                                   ImageUploader imageUploader,
                                   Validator<String, Map<String, String>> drivingLicenceValidator,
-                                  Validator<Taxi, Map<String, String>> taxiValidator) {
+                                  Validator<Taxi, Map<String, String>> taxiValidator,
+                                  ResourceBundleExtractor resourceBundleExtractor) {
         super(requestFactory);
         this.driverService = driverService;
         this.taxiService = taxiService;
         this.imageUploader = imageUploader;
         this.drivingLicenceValidator = drivingLicenceValidator;
         this.taxiValidator = taxiValidator;
+        this.resourceBundleExtractor = resourceBundleExtractor;
     }
 
     @Override
@@ -74,9 +81,10 @@ public class EditDriverInfoCommand extends CommonCommand {
         final Taxi taxi = driver.getTaxi();
         final Taxi updatedTaxi = getUpdatedTaxi(request, taxi);
         final Driver updatedDriver = getUpdatedDriver(request, driver, updatedTaxi);
+        ResourceBundle resourceBundle = resourceBundleExtractor.extractResourceBundle(request, BASE_NAME);
 
-        if (drivingLicenceValidator.validate(updatedDriver.getDrivingLicence()).isEmpty()
-            && taxiValidator.validate(updatedTaxi).isEmpty()) {
+        if (drivingLicenceValidator.validate(updatedDriver.getDrivingLicence(), resourceBundle).isEmpty()
+            && taxiValidator.validate(updatedTaxi, resourceBundle).isEmpty()) {
             taxiService.update(updatedTaxi);
             driverService.update(updatedDriver);
         }
@@ -117,7 +125,9 @@ public class EditDriverInfoCommand extends CommonCommand {
                 EntityServiceFactory.getInstance().serviceFor(TaxiService.class),
                 ImageUploaderImpl.getInstance(),
                 DrivingLicenceValidator.getInstance(),
-                TaxiValidator.getInstance());
+                TaxiValidator.getInstance(),
+                ResourceBundleExtractorImpl.getInstance()
+        );
     }
 
 }

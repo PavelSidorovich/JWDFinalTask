@@ -2,8 +2,8 @@ package com.sidorovich.pavel.buber.core.controller;
 
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
@@ -65,16 +65,19 @@ public class PlainCommandRequest implements CommandRequest {
         request.getSession(true);
     }
 
+    @Override
     public Collection<Part> getParts() throws ServletException, IOException {
         return request.getParts();
     }
 
+    @Override
     public Part getPart(String name) throws ServletException, IOException {
         return request.getPart(name);
     }
 
-    public ServletContext getServletContext() {
-        return request.getServletContext();
+    @Override
+    public Cookie[] getCookies(){
+        return request.getCookies();
     }
 
 }

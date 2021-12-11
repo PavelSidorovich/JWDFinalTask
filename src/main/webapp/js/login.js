@@ -11,7 +11,7 @@ function addLoginFormListener() {
       $(this).serialize(),
       function (data) {
         if (data.status === "ERROR") {
-          $('#errorLoginMsg').text(data.message);
+          $('#errorLoginMsg').text(invalidLoginOrPassword);
         } else {
           window.location.replace(data.path);
         }

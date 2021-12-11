@@ -28,10 +28,10 @@ function sendPostRequest(e, driverStatus) {
       .done(function (data) {
         if (data.obj.status === "ERROR") {
           $("#cardContainer").before(createAlert("ERROR",
-            "Fail on approving driver application"));
+            failMsg));
         } else {
           $("#cardContainer").before(createAlert("SUCCESS",
-            "Successful approving driver application!"));
+            successMsg));
         }
         getApplications();
       }, "json");
@@ -70,7 +70,7 @@ function processFiltering() {
 
 function getCarImage(driver) {
   return $('<img class="card-img-top" width="100px" ' +
-    'src="../images/taxes/' + driver.taxi.photoFilepath + '" alt="Card image cap">');
+    'src="../images/taxes/' + driver.taxi.photoFilepath + '" alt=' + taxiPhotoAlt + '>');
 }
 
 function createCard(driver) {
@@ -95,14 +95,23 @@ function getCardCar(driver) {
 }
 
 function getStatus(driver) {
-  const cardStatus = $('<span>' + driver.driverStatus + '</span>');
+  const cardStatus = $('<span></span>');
 
   if (driver.driverStatus === "PENDING") {
+    cardStatus.text(pendingLabel);
     cardStatus.attr("class", "badge badge-pill badge-warning");
   } else if (driver.driverStatus === "REJECTED") {
+    cardStatus.text(rejectedLabel);
     cardStatus.attr("class", "badge badge-pill badge-danger");
-  } else {
+  } else if (driver.driverStatus === "FREE") {
+    cardStatus.text(freeLabel);
     cardStatus.attr("class", "badge badge-pill badge-success");
+  } else if (driver.driverStatus === "BUSY") {
+    cardStatus.text(busyLabel);
+    cardStatus.attr("class", "badge badge-pill badge-success");
+  } else if (driver.driverStatus === "REST") {
+    cardStatus.text(restLabel);
+    cardStatus.attr("class", "badge badge-pill badge-info");
   }
 
   return cardStatus;
@@ -122,33 +131,33 @@ function getCardButton(driver) {
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <button type="button" data-id="` + driver.user.account.id + `" 
-                  class="btn btn-sm btn-outline-info">View details</button>
+                  class="btn btn-sm btn-outline-info">` + detailsButtonLabel + `</button>
                 </div>
               </div>`);
 }
 
 function getDriver(driver) {
-  return $('<span><strong>Driver: </strong></span>')
+  return $('<span><strong>' + driverLabel + ' </strong></span>')
     .append("<span>" + driver.user.lastName + " " + driver.user.firstName + "</span><br>");
 }
 
 function getFirstName(driver) {
-  return '<span><strong>First name: </strong></span>'
+  return '<span><strong>' + fNameLabel + ' </strong></span>'
     + '<span>' + driver.user.firstName + '</span><br>';
 }
 
 function getLastName(driver) {
-  return '<span><strong>Last name: </strong></span>'
+  return '<span><strong>' + lNameLabel + ' </strong></span>'
     + '<span>' + driver.user.lastName + '</span><br>';
 }
 
 function getPhone(driver) {
-  return $('<span><strong>Phone: </strong></span>')
+  return $('<span><strong>' + phoneLabel + ' </strong></span>')
     .append("<span>" + driver.user.account.phone + "</span><br>");
 }
 
 function getEmail(driver) {
-  return $('<span><strong>Email: </strong></span><span>' + driver.user.email + '</span><br><br>');
+  return $('<span><strong>' + emailLabel + ' </strong></span><span>' + driver.user.email + '</span><br><br>');
 }
 
 function getCardDetails(driver) {
@@ -203,16 +212,16 @@ function getModalCloseButton() {
 function getModalButtons(driver) {
   if (driver.driverStatus === "PENDING") {
     return '<button type="button" id="rejectButton" data-id="'
-      + driver.user.account.id + '" class="btn btn-outline-danger">Reject</button>'
+      + driver.user.account.id + '" class="btn btn-outline-danger">' + rejectButtonLabel + '</button>'
       + '<button type="button" id="approveButton" data-id="'
-      + driver.user.account.id + '" class="btn btn-success">Approve</button>';
+      + driver.user.account.id + '" class="btn btn-success">' + approveButtonLabel + '</button>';
   }
 
   return "";
 }
 
 function getBottomCloseButton() {
-  return '<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>'
+  return '<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">' + closeButtonLabel + '</button>'
 }
 
 function addFilterListener() {
@@ -235,7 +244,7 @@ function addViewButtonListener() {
 }
 
 function getDrivingLicence(driver) {
-  return $('<span><strong>Driving licence: </strong></span>')
+  return $('<span><strong>' + drivingLicenceLabel + ' </strong></span>')
     .append("<span>" + driver.drivingLicence + "</span><br>");
 }
 
@@ -264,16 +273,16 @@ function fillModalPhoto(modalWindow, driver) {
 
 function fillModalInfo(modalWindow, driver) {
   modalWindow.find("#infoContainer")
-    .append("<h3>Driver information</h3>")
+    .append("<h3>" + driverInfoLabel + "</h3>")
     .append(getFirstName(driver))
     .append(getLastName(driver))
     .append(getPhone(driver))
     .append(getDrivingLicence(driver))
     .append(getEmail(driver))
     .append("<hr>")
-    .append("<h3>Position</h3>")
-    .append(getCoordinate("Latitude", driver.taxi.lastCoordinates.latitude))
-    .append(getCoordinate("Longitude", driver.taxi.lastCoordinates.longitude));
+    .append("<h3>" + positionLabel + "</h3>")
+    .append(getCoordinate(latitudeLabel, driver.taxi.lastCoordinates.latitude))
+    .append(getCoordinate(longitudeLabel, driver.taxi.lastCoordinates.longitude));
 }
 
 function fillModalButtons(modalWindow, driver) {

@@ -22,15 +22,14 @@ function addPasswordValidator() {
   const $passwordRepeat = $("#passwordRepeat");
 
   $password.on("input", function () {
-    checkField($password, passwordRegex, $passwordFeedback,
-      "Password should contain minimum eight characters, at least one letter and one number");
+    checkField($password, passwordRegex, $passwordFeedback, passwordFeedbackMsg);
     checkField($passwordRepeat, "^" + $password.val() + "$", $passwordRepeatFeedback,
-      "Passwords are not equal");
+      passwordRepeatFeedbackMsg);
     setButtonState();
   });
   $passwordRepeat.on("input", function () {
     checkField($passwordRepeat, "^" + $password.val() + "$", $passwordRepeatFeedback,
-      "Passwords are not equal");
+      passwordRepeatFeedbackMsg);
     setButtonState();
   });
 }

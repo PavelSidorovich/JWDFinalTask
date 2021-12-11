@@ -38,7 +38,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.bundle.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/makeOrder.js?v=1.2" type="text/javascript"></script>
+    <script src="${contextPath}/js/makeOrder.js?v=1.3" type="text/javascript"></script>
     <script src="${contextPath}/js/tabulator/tabulator.min.js?v=1.0" type="text/javascript"></script>
 </head>
 
@@ -47,7 +47,7 @@
 <div class="container-fluid mt-3">
     <div class="row p-3">
         <div class="col-md-7 order-md-1 mb-4">
-            <img class="img-fluid" src="../../images/map.png">
+            <img class="img-fluid" src="${contextPath}/images/map.png">
         </div>
         <div class="col-md-5 order-md-2">
             <div class="row">
@@ -180,7 +180,8 @@
                                         (${requestScope.order.driver.taxi.licencePlate})
                                     </option>
                                 </select>
-                                <img src="../images/taxes/${order.driver.taxi.photoFilepath}" alt="taxi photo"
+                                <img src="${contextPath}/images/taxes/${order.driver.taxi.photoFilepath}"
+                                     alt="${taxiAltLabel}"
                                      class="img-fluid">
                             </c:when>
                             <c:otherwise>
@@ -198,7 +199,7 @@
                                     <div id="endLatitudeFeedback"
                                          class="invalid-feedback">${requestScope.taxi}</div>
                                 </c:if>
-                                <img id="taxiPreview" src="" alt="taxi photo" class="img-fluid">
+                                <img id="taxiPreview" src="" alt="" class="img-fluid">
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -231,7 +232,7 @@
                     <c:if test="${empty requestScope.order}">
                         <button class="btn btn-warning btn-block" type="submit" data-toggle="modal"
                                 data-target="#infoModal">
-                            ${callTaxiButtonLabel}
+                                ${callTaxiButtonLabel}
                         </button>
                     </c:if>
                 </div>
@@ -240,7 +241,8 @@
                 <c:choose>
                     <c:when test="${requestScope.order.status eq OrderStatus.NEW}">
                         <jsp:include page="partials/approveActionModal.jsp"/>
-                        <button id="cancelButton" class="btn btn-danger btn-block" type="submit">${cancelButtonLabel}</button>
+                        <button id="cancelButton" class="btn btn-danger btn-block"
+                                type="submit">${cancelButtonLabel}</button>
                     </c:when>
                     <c:otherwise>
                         <button id="cancelButton" class="btn btn-danger btn-block disabled" type="submit">
@@ -252,6 +254,13 @@
         </div>
     </div>
 </div>
+<script>
+  const currencyLabel = "${currencyLabel}";
+  const priceLabel = "${priceLabel}";
+  const cancelButtonLabel = "${cancelButtonLabel}";
+  const approveCancellingHeader = '<fmt:message bundle="${loc}" key="label.header.approveCancelling"/>'
+  const approveCancelling = '<fmt:message bundle="${loc}" key="label.approveCancelling"/>';
+</script>
 <jsp:include page="partials/commonFooter.jsp"/>
 </body>
 </html>

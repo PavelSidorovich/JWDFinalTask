@@ -9,6 +9,8 @@
 <fmt:message bundle="${loc}" key="label.repeatPassword" var="passwordRepeatLabel"/>
 <fmt:message bundle="${loc}" key="label.button.cancel" var="cancelButtonLabel"/>
 <fmt:message bundle="${loc}" key="label.button.submit" var="submitButtonLabel"/>
+<fmt:message bundle="${loc}" key="label.feedback.password" var="passwordFeedbackLabel"/>
+<fmt:message bundle="${loc}" key="label.feedback.repeatPassword" var="passwordRepeatFeedbackLabel"/>
 
 <div id="editPasswordModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -44,3 +46,8 @@
         </div>
     </div>
 </div>
+
+<script>
+  const passwordFeedbackMsg = '${passwordFeedbackLabel}';
+  const passwordRepeatFeedbackMsg = '${passwordRepeatFeedbackLabel}';
+</script>

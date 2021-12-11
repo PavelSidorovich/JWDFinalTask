@@ -1,6 +1,7 @@
 package com.sidorovich.pavel.buber.api.controller;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.Collection;
@@ -25,5 +26,7 @@ public interface CommandRequest {
     Collection<Part> getParts() throws ServletException, IOException;
 
     Part getPart(String name) throws ServletException, IOException;
+
+    Cookie[] getCookies();
 
 }

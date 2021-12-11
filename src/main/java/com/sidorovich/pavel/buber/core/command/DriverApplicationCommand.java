@@ -12,12 +12,14 @@ import com.sidorovich.pavel.buber.api.model.Role;
 import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.model.UserStatus;
 import com.sidorovich.pavel.buber.api.service.ImageUploader;
+import com.sidorovich.pavel.buber.api.util.ResourceBundleExtractor;
 import com.sidorovich.pavel.buber.api.validator.BiValidator;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.ImageUploaderImpl;
+import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 import com.sidorovich.pavel.buber.core.validator.DriverRegisterValidator;
 import com.sidorovich.pavel.buber.exception.DuplicateKeyException;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +30,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import static com.sidorovich.pavel.buber.core.controller.JsonResponseStatus.*;
 
@@ -35,6 +38,7 @@ public class DriverApplicationCommand extends CommonCommand {
 
     private static final Logger LOG = LogManager.getLogger(DriverApplicationCommand.class);
 
+    private static final String BASE_NAME = "l10n.msg.error";
     private static final String F_NAME_REQUEST_PARAM_NAME = "fName";
     private static final String L_NAME_REQUEST_PARAM_NAME = "lName";
     private static final String PHONE_REQUEST_PARAM_NAME = "phone";
@@ -52,19 +56,21 @@ public class DriverApplicationCommand extends CommonCommand {
             "D:\\JavaWebDevelopment\\JWDFinalTask\\src\\main\\webapp\\images\\taxes";
     private static final String FILE_UPLOAD_ERROR_MSG = "Error while saving photo";
 
+    private final BiValidator<Driver, String, Map<String, String>> validator;
+    private final ResourceBundleExtractor resourceBundleExtractor;
     private final DriverService driverService;
     private final ImageUploader imageUploader;
-
-    private final BiValidator<Driver, String, Map<String, String>> validator;
 
     private DriverApplicationCommand(RequestFactory requestFactory,
                                      DriverService driverService,
                                      ImageUploader imageUploader,
-                                     BiValidator<Driver, String, Map<String, String>> validator) {
+                                     BiValidator<Driver, String, Map<String, String>> validator,
+                                     ResourceBundleExtractor resourceBundleExtractor) {
         super(requestFactory);
         this.driverService = driverService;
         this.imageUploader = imageUploader;
         this.validator = validator;
+        this.resourceBundleExtractor = resourceBundleExtractor;
     }
 
     @Override
@@ -89,7 +95,9 @@ public class DriverApplicationCommand extends CommonCommand {
     private CommandResponse processRegisterRequest(CommandRequest request, Driver driver,
                                                    String passwordRepeat,
                                                    Map<String, String> errorsByMessages) {
-        errorsByMessages.putAll(validator.validate(driver, passwordRepeat));
+        ResourceBundle resourceBundle = resourceBundleExtractor.extractResourceBundle(request, BASE_NAME);
+
+        errorsByMessages.putAll(validator.validate(driver, passwordRepeat, resourceBundle));
         if (errorsByMessages.isEmpty()) {
             try {
                 imageUploader.upload(request.getPart(PHOTO_PATH_PARAM_NAME), IMAGES_FOLDER);
@@ -146,7 +154,8 @@ public class DriverApplicationCommand extends CommonCommand {
                         RequestFactoryImpl.getInstance(),
                         EntityServiceFactory.getInstance().serviceFor(DriverService.class),
                         ImageUploaderImpl.getInstance(),
-                        DriverRegisterValidator.getInstance()
+                        DriverRegisterValidator.getInstance(),
+                        ResourceBundleExtractorImpl.getInstance()
                 );
     }
 

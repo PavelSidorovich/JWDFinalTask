@@ -109,18 +109,16 @@ public class BuberUser implements Entity<BuberUser> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
         BuberUser buberUser = (BuberUser) o;
-        return Objects.equals(firstName, buberUser.firstName) &&
+        return Objects.equals(account, buberUser.account) &&
+               Objects.equals(firstName, buberUser.firstName) &&
                Objects.equals(lastName, buberUser.lastName) && Objects.equals(email, buberUser.email) &&
-               Objects.equals(cash, buberUser.cash) && status == buberUser.status;
+               status == buberUser.status && Objects.equals(cash, buberUser.cash);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), firstName, lastName, email, cash, status);
+        return Objects.hash(account, firstName, lastName, email, status, cash);
     }
 
     @Override

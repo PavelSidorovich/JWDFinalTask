@@ -12,6 +12,9 @@
 <fmt:message bundle="${loc}" key="label.email.optional" var="emailOptionalLabel"/>
 <fmt:message bundle="${loc}" key="label.button.cancel" var="cancelButtonLabel"/>
 <fmt:message bundle="${loc}" key="label.button.submit" var="submitButtonLabel"/>
+<fmt:message bundle="${loc}" key="label.feedback.fName" var="fNameFeedbackLabel"/>
+<fmt:message bundle="${loc}" key="label.feedback.lName" var="lNameFeedbackLabel"/>
+<fmt:message bundle="${loc}" key="label.feedback.email" var="emailFeedbackLabel"/>
 
 <div id="personalInfoModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -41,18 +44,21 @@
                     </div>
                     <div class="form-group">
                         <label for="phone">${phoneLabel}</label>
-                        <input type="tel" class="form-control" id="phone" readonly value="${requestScope.user.account.phone}">
+                        <input type="tel" class="form-control" id="phone" readonly
+                               value="${requestScope.user.account.phone}">
                     </div>
                     <div class="form-group">
                         <label for="email">${emailLabel}<span class="text-muted">${emailOptionalLabel}</span></label>
-                        <input type="email" name="email" class="form-control is-valid" id="email" aria-describedby="emailFeedback"
+                        <input type="email" name="email" class="form-control is-valid" id="email"
+                               aria-describedby="emailFeedback"
                                placeholder="example@gmail.com" value="${requestScope.user.email.orElse("")}">
                         <div id="emailFeedback" class="invalid-feedback"></div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">${cancelButtonLabel}</button>
+                <button type="button" class="btn btn-outline-secondary"
+                        data-dismiss="modal">${cancelButtonLabel}</button>
                 <button id="submitButton" type="submit" form="editPersonalInfoForm" class="btn btn-primary">
                     ${submitButtonLabel}
                 </button>
@@ -60,3 +66,9 @@
         </div>
     </div>
 </div>
+
+<script>
+  const invalidFirstNameMsg = '${fNameFeedbackLabel}';
+  const invalidLastNameMsg = '${lNameFeedbackLabel}';
+  const invalidEmailMsg = '${emailFeedbackLabel}';
+</script>

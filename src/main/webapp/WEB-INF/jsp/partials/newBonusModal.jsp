@@ -11,6 +11,14 @@
 <fmt:message bundle="${loc}" key="label.button.selectAll" var="selectButtonLabel"/>
 <fmt:message bundle="${loc}" key="label.button.cancel" var="cancelButtonLabel"/>
 <fmt:message bundle="${loc}" key="label.button.submit" var="submitButtonLabel"/>
+<fmt:message bundle="${loc}" key="label.noData" var="noDataLabel"/>
+<fmt:message bundle="${loc}" key="label.table.fNameColumn" var="fNameColumnLabel"/>
+<fmt:message bundle="${loc}" key="label.table.lNameColumn" var="lNameColumnLabel"/>
+<fmt:message bundle="${loc}" key="label.table.orderAmountColumn" var="orderAmountColumnLabel"/>
+<fmt:message bundle="${loc}" key="label.table.first" var="firstLabel"/>
+<fmt:message bundle="${loc}" key="label.table.prev" var="prevLabel"/>
+<fmt:message bundle="${loc}" key="label.table.next" var="nextLabel"/>
+<fmt:message bundle="${loc}" key="label.table.last" var="lastLabel"/>
 <script src="${contextPath}/js/validator/bonusValidator.js?v=1.1" type="text/javascript"></script>
 
 <div id="bonusModal" class="modal fade" tabindex="-1">
@@ -67,6 +75,7 @@
   function createUserTable(usersByOrderAmount) {
     return new Tabulator("#users", {
       data: usersByOrderAmount,
+      locale: true,
       layout: "fitColumns",
       responsiveLayout: "hide",
       addRowPos: "top",
@@ -77,14 +86,24 @@
       movableColumns: false,
       resizableRows: true,
       selectable: true,
-      placeholder: "No Data Available",
+      placeholder: "${noDataLabel}",
+      langs: {
+        "ru-ru": {
+          "pagination": {
+            "first": "${firstLabel}",
+            "last": "${lastLabel}",
+            "prev": "${prevLabel}",
+            "next": "${nextLabel}",
+          },
+        },
+      },
       initialSort: [
-        {column: "orderAmount", dir: "asc"},
+        {column: "orderAmount", dir: "desc"},
       ],
       columns: [
-        {title: "First name", field: "firstName", hozAlign: "center"},
-        {title: "Last name", field: "lastName", hozAlign: "center"},
-        {title: "Order amount", field: "orderAmount", hozAlign: "center", width: 170},
+        {title: "${fNameColumnLabel}", field: "firstName", hozAlign: "center"},
+        {title: "${lNameColumnLabel}", field: "lastName", hozAlign: "center"},
+        {title: "${orderAmountColumnLabel}", field: "orderAmount", hozAlign: "center", width: 170},
       ],
     });
   }

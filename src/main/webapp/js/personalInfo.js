@@ -36,11 +36,11 @@ function addNameValidator() {
   const $lastName = $("#lastName");
 
   $firstName.on("input", function () {
-    checkField($firstName, nameRegex, $firstNameFeedback, "Valid first name is required");
+    checkField($firstName, nameRegex, $firstNameFeedback, invalidFirstNameMsg);
     setSaveButtonState();
   });
   $lastName.on("input", function () {
-    checkField($lastName, nameRegex, $lastNameFeedback, "Valid last name is required");
+    checkField($lastName, nameRegex, $lastNameFeedback, invalidLastNameMsg);
     setSaveButtonState();
   });
 }
@@ -61,7 +61,7 @@ function addEmailValidator() {
   const emailRegex = new RegExp('^([\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4})?$');
 
   $email.on("input", function () {
-    checkField($email, emailRegex, $emailFeedback, "Valid email is required");
+    checkField($email, emailRegex, $emailFeedback, invalidEmailMsg);
     setSaveButtonState();
   });
 }

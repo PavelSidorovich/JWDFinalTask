@@ -1,6 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.register" var="loc"/>
@@ -16,8 +17,7 @@
 <fmt:message bundle="${loc}" key="label.haveAccount" var="haveAccLabel"/>
 <fmt:message bundle="${loc}" key="label.link.signIn" var="signInLink"/>
 
-<!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,7 +28,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
     <link href="${contextPath}/css/register.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="${contextPath}/js/register.js?v=1.0"></script>
+    <script src="${contextPath}/js/register.js?v=1.1"></script>
 </head>
 
 <body class="text-center">
@@ -37,19 +37,23 @@
          height="72">
     <h1 class="h3 mb-3 font-weight-normal">${headerLabel}</h1>
     <label for="firstName" class="sr-only">${firstNameLabel}</label>
-    <input type="text" name="fName" id="firstName" class="form-control" placeholder="${firstNameLabel}" aria-describedby="firstNameFeedback" autofocus>
+    <input type="text" name="fName" id="firstName" class="form-control" placeholder="${firstNameLabel}"
+           aria-describedby="firstNameFeedback" autofocus>
     <div id="firstNameFeedback" class="invalid-feedback"></div>
     <br>
     <label for="lastName" class="sr-only">${lastNameLabel}</label>
-    <input type="text" name="lName" id="lastName" class="form-control" placeholder="${lastNameLabel}" aria-describedby="lastNameFeedback">
+    <input type="text" name="lName" id="lastName" class="form-control" placeholder="${lastNameLabel}"
+           aria-describedby="lastNameFeedback">
     <div id="lastNameFeedback" class="invalid-feedback"></div>
     <br>
     <label for="phone" class="sr-only">${phoneLabel}</label>
-    <input type="tel" name="phone" id="phone" class="form-control" placeholder="${phoneLabel}" aria-describedby="phoneFeedback">
+    <input type="tel" name="phone" id="phone" class="form-control" placeholder="${phoneLabel}"
+           aria-describedby="phoneFeedback">
     <div id="phoneFeedback" class="invalid-feedback"></div>
     <br>
     <label for="password" class="sr-only">${passwordLabel}</label>
-    <input type="password" name="password" id="password" class="form-control" placeholder="${passwordLabel}" aria-describedby="passwordFeedback">
+    <input type="password" name="password" id="password" class="form-control" placeholder="${passwordLabel}"
+           aria-describedby="passwordFeedback">
     <div id="passwordFeedback" class="invalid-feedback"></div>
     <br>
     <label for="passwordRepeat" class="sr-only">${repeatPasswordLabel}</label>
@@ -58,7 +62,8 @@
     <div id="passwordRepeatFeedback" class="invalid-feedback"></div>
     <br>
     <label for="inputEmail" class="sr-only">${emailLabel}</label>
-    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="${emailLabel}" aria-describedby="emailFeedback">
+    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="${emailLabel}"
+           aria-describedby="emailFeedback">
     <div id="emailFeedback" class="invalid-feedback"></div>
     <br>
     <button class="btn btn-lg btn-primary btn-block" type="submit">${submitButtonLabel}</button>
