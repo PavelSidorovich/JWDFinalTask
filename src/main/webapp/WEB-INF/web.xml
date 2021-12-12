@@ -12,7 +12,26 @@
       <taglib-uri>com.sidorovich.pavel</taglib-uri>
       <taglib-location>WEB-INF/tld/buberTaxiTags.tld</taglib-location>
     </taglib>
+    <jsp-property-group>
+      <url-pattern>/*</url-pattern>
+      <page-encoding>UTF-8</page-encoding>
+    </jsp-property-group>
   </jsp-config>
+
+  <filter>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>
+      com.sidorovich.pavel.buber.core.filter.EncodingFilter
+    </filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <filter-mapping>
     <filter-name>UserBlockFilter</filter-name>
     <url-pattern>/*</url-pattern>
