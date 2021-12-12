@@ -27,7 +27,7 @@ public enum CommandRegistry {
     DRIVER_APPLICATIONS_PAGE(ShowPageCommand.getInstance(PagePaths.DRIVER_APPLICATIONS), "driver_applications", ADMIN),
     GET_DRIVER_APPLICATIONS(GetDriversCommand.getInstance(), "get_driver_applications", ADMIN),
     GET_DRIVER(GetDriverCommand.getInstance(), "get_driver", ADMIN),
-    UPDATE_DRIVER_STATUS(DriverStatusUpdateCommand.getInstance(), "update_driver_status", ADMIN, DRIVER),
+    UPDATE_DRIVER_STATUS(DriverStatusUpdateCommand.getInstance(), "update_driver_status", ADMIN),
     GET_USERS_BY_ORDER_AMOUNT(GetUsersByAmountOfOrdersCommand.getInstance(), "get_users_by_order_amount", ADMIN),
     GET_BONUSES(GetBonusesCommand.getInstance(), "get_bonuses", ADMIN),
     DELETE_BONUS(DeleteBonusCommand.getInstance(), "delete_bonus", ADMIN, CLIENT),
@@ -55,6 +55,7 @@ public enum CommandRegistry {
     GET_LINE_CHART_DATA(GetLineChartDataCommand.getInstance(), "get_line_chart", ADMIN),
     MY_TAXI_PAGE(TaxiInfoCommand.getInstance(), "my_taxi", DRIVER),
     EDIT_DRIVER_INFO(EditDriverInfoCommand.getInstance(), "edit_driver_info", DRIVER),
+    TOGGLE_DRIVER_STATUS(ToggleDriverStatusCommand.getInstance(), "toggle_driver_status", DRIVER),
     ERROR_PAGE(ShowPageCommand.getInstance(PagePaths.ERROR), "show_error"),
     DEFAULT(MainPageCommand.getInstance(), ""),
     ;

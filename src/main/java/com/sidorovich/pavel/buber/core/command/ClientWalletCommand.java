@@ -13,7 +13,6 @@ import com.sidorovich.pavel.buber.core.service.UserOrderService;
 import com.sidorovich.pavel.buber.core.service.UserService;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +25,7 @@ public class ClientWalletCommand extends CommonCommand {
     private static final String CASH_ATTR_PARAM_NAME = "cash";
     private static final String DEBITS_ATTR_PARAM_NAME = "debits";
     private static final int LAST_OPERATIONS_AMOUNT = 5;
+    private static final long INVALID_INDEX = -1L;
 
     private final UserOrderService orderService;
     private final UserService userService;
@@ -60,7 +60,9 @@ public class ClientWalletCommand extends CommonCommand {
                 .findByClient(user)
                 .stream()
                 .filter(order -> order.getStatus() == COMPLETED)
-                .sorted(Comparator.comparing(o -> o.getId().orElse(-1L)))
+                .sorted((o1, o2) -> o2.getId().orElse(INVALID_INDEX)
+                                      .compareTo(o1.getId().orElse(INVALID_INDEX))
+                )
                 .map(UserOrder::getPrice)
                 .limit(LAST_OPERATIONS_AMOUNT)
                 .collect(Collectors.toList());

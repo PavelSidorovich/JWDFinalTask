@@ -37,9 +37,10 @@ public class CancelOrderCommand extends CommonCommand {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        if (request.sessionExists()) {
-            Account account = (Account) request.retrieveFromSession(USER_SESSION_PARAM_NAME).orElse(null);
-            Optional<BuberUser> user = userService.findByPhone(account.getPhone());
+        Optional<Object> optAccount = request.retrieveFromSession(USER_SESSION_PARAM_NAME);
+
+        if (optAccount.isPresent()) {
+            Optional<BuberUser> user = userService.findByPhone(((Account) optAccount.get()).getPhone());
 
             if (user.isPresent()) {
                 Optional<UserOrder> userOrder = findCurrentUserOrder(user.get());

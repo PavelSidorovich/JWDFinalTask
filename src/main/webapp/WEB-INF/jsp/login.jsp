@@ -24,7 +24,7 @@
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/css/signIn.css?v=1.1" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="${contextPath}/js/login.js?v=1.1"></script>
+    <script src="${contextPath}/js/login.js?v=1.2"></script>
 </head>
 
 <body class="text-center">

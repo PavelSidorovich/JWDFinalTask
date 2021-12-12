@@ -40,7 +40,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.bundle.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/driverOrder.js?v=1.3" type="text/javascript"></script>
+    <script src="${contextPath}/js/driverOrder.js?v=1.5" type="text/javascript"></script>
     <script src="${contextPath}/js/tabulator/tabulator.min.js?v=1.0" type="text/javascript"></script>
 </head>
 

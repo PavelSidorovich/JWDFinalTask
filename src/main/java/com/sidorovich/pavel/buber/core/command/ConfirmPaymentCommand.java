@@ -22,7 +22,7 @@ import java.util.Optional;
 
 public class ConfirmPaymentCommand extends CommonCommand {
 
-    public static final String USER_SESSION_PARAM_NAME = "user";
+    private static final String USER_SESSION_PARAM_NAME = "user";
 
     private final UserOrderService orderService;
     private final UserService userService;
@@ -40,17 +40,15 @@ public class ConfirmPaymentCommand extends CommonCommand {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        if (request.sessionExists()) {
-            Account account = (Account) request.retrieveFromSession(USER_SESSION_PARAM_NAME).orElse(null);
+        Account account = (Account) request.retrieveFromSession(USER_SESSION_PARAM_NAME).orElse(null);
 
-            if (account != null) {
-                Optional<Driver> driver = driverService.findById(account.getId().orElse(-1L));
+        if (account != null) {
+            Optional<Driver> driver = driverService.findById(account.getId().orElse(-1L));
 
-                if (driver.isPresent()) {
-                    Optional<UserOrder> driverOrder = findCurrentDriverOrder(driver.get());
+            if (driver.isPresent()) {
+                Optional<UserOrder> driverOrder = findCurrentDriverOrder(driver.get());
 
-                    driverOrder.ifPresent(order -> confirmPayment(driverOrder.get()));
-                }
+                driverOrder.ifPresent(order -> confirmPayment(driverOrder.get()));
             }
         }
 
