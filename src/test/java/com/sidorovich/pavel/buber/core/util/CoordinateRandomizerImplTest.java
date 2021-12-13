@@ -1,7 +1,6 @@
 package com.sidorovich.pavel.buber.core.util;
 
 import com.sidorovich.pavel.buber.api.util.CoordinateRandomizer;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;

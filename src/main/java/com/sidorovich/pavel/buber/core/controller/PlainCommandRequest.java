@@ -76,7 +76,7 @@ public class PlainCommandRequest implements CommandRequest {
     }
 
     @Override
-    public Cookie[] getCookies(){
+    public Cookie[] getCookies() {
         return request.getCookies();
     }
 

@@ -3,13 +3,13 @@ package com.sidorovich.pavel.buber.core.dao;
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
 import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
+import com.sidorovich.pavel.buber.api.exception.IdIsNotDefinedException;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.OrderStatus;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
-import com.sidorovich.pavel.buber.api.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

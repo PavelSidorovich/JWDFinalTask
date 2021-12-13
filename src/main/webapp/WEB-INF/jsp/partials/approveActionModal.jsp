@@ -17,7 +17,8 @@
                 <p id="modalMessage"></p>
             </div>
             <div id="modalButtons" class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">${cancelButtonLabel}</button>
+                <button type="button" class="btn btn-outline-secondary"
+                        data-dismiss="modal">${cancelButtonLabel}</button>
                 <button type="button" id="approveButton" class="btn btn-primary">${confirmButtonLabel}</button>
             </div>
         </div>

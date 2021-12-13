@@ -1,6 +1,5 @@
 package com.sidorovich.pavel.buber.core.validator;
 
-import com.sidorovich.pavel.buber.api.model.Taxi;
 import org.testng.annotations.Test;
 
 import java.util.Collections;

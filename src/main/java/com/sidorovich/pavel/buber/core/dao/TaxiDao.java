@@ -3,10 +3,9 @@ package com.sidorovich.pavel.buber.core.dao;
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
 import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
+import com.sidorovich.pavel.buber.api.exception.IdIsNotDefinedException;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Taxi;
-import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
-import com.sidorovich.pavel.buber.api.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,12 +35,12 @@ public final class TaxiDao extends CommonDao<Taxi> {
         super(LOG, connectionPool, queryGeneratorFactory);
     }
 
-    public Optional<Taxi> findByLicencePlate(String licencePlate){
+    public Optional<Taxi> findByLicencePlate(String licencePlate) {
         QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
         List<Taxi> list = queryGenerator.select(getColumnNames())
-                                          .from(getTableName())
-                                          .where(LICENCE_PLATE_COLUMN_NAME, licencePlate)
-                                          .fetch(this::extractResultCatchingException);
+                                        .from(getTableName())
+                                        .where(LICENCE_PLATE_COLUMN_NAME, licencePlate)
+                                        .fetch(this::extractResultCatchingException);
 
         return list.isEmpty()? Optional.empty() : Optional.of(list.get(0));
     }

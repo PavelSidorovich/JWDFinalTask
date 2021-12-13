@@ -19,8 +19,8 @@ public class PersonalInfoValidatorTest {
     @Test
     public void validate_shouldReturnErrorMsg_whenPersonalInfoIsInvalid() {
         BuberUser user = BuberUser.with().firstName("Pavel4")
-                                   .lastName("")
-                                   .build();
+                                  .lastName("")
+                                  .build();
         Map<String, String> actual = validator.validate(user, rs);
         HashMap<String, String> expected = new HashMap<>();
 

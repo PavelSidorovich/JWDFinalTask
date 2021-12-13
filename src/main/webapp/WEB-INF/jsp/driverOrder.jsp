@@ -65,11 +65,13 @@
                                 <c:choose>
                                     <c:when test="${requestScope.order.status eq OrderStatus.NEW}">
                                         <h2>${pendingHeaderLabel}</h2>
-                                        <div id="statusSpinner" class="spinner-grow text-danger ml-2" role="status"></div>
+                                        <div id="statusSpinner" class="spinner-grow text-danger ml-2"
+                                             role="status"></div>
                                     </c:when>
                                     <c:otherwise>
                                         <h2>${processHeaderLabel}</h2>
-                                        <div id="statusSpinner" class="spinner-grow text-success ml-2" role="status"></div>
+                                        <div id="statusSpinner" class="spinner-grow text-success ml-2"
+                                             role="status"></div>
                                     </c:otherwise>
                                 </c:choose>
                             </c:when>
@@ -89,7 +91,8 @@
                                 <div class="container mt-2 mb-2">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="statusCheckbox">
-                                        <label class="custom-control-label" for="statusCheckbox">${checkboxLabel}</label>
+                                        <label class="custom-control-label"
+                                               for="statusCheckbox">${checkboxLabel}</label>
                                     </div>
                                     <script>getDriverStatus()</script>
                                 </div>
@@ -231,12 +234,12 @@
                         <div class="form-row">
                             <div class="col-md-6 mb-3">
                                 <button id="cancelButton" class="form-control btn btn-outline-danger btn-block">
-                                    ${cancelButtonLabel}
+                                        ${cancelButtonLabel}
                                 </button>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <button id="takeButton" class="form-control btn btn-success">
-                                    ${takeOrderButtonLabel}
+                                        ${takeOrderButtonLabel}
                                 </button>
                             </div>
                         </div>

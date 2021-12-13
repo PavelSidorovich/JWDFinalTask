@@ -96,7 +96,7 @@
           formatterParams: {
             inputFormat: "MMM d, yyyy",
             outputFormat: "dd/MM/yyyy",
-            invalidPlaceholder:"(invalid date)",
+            invalidPlaceholder: "(invalid date)",
           }
         },
         {

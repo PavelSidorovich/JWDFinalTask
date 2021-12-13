@@ -53,7 +53,7 @@
   const positionLabel = '<fmt:message bundle="${local}" key="label.position"/>';
   const latitudeLabel = '<fmt:message bundle="${local}" key="label.latitude"/>';
   const longitudeLabel = '<fmt:message bundle="${local}" key="label.longitude"/>';
-  const pendingLabel ='<fmt:message bundle="${local}" key="label.pending"/>';
+  const pendingLabel = '<fmt:message bundle="${local}" key="label.pending"/>';
   const rejectedLabel = '<fmt:message bundle="${local}" key="label.rejected"/>';
   const freeLabel = '<fmt:message bundle="${local}" key="label.free"/>';
   const busyLabel = '<fmt:message bundle="${local}" key="label.busy"/>';

@@ -1,10 +1,10 @@
 package com.sidorovich.pavel.buber.core.service;
 
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
+import com.sidorovich.pavel.buber.api.exception.EntitySavingException;
 import com.sidorovich.pavel.buber.api.model.Bonus;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.BonusDao;
-import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
-import com.sidorovich.pavel.buber.api.exception.EntitySavingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

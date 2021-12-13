@@ -1,7 +1,6 @@
 package com.sidorovich.pavel.buber.core.validator;
 
 import com.sidorovich.pavel.buber.api.model.Bonus;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.sql.Date;

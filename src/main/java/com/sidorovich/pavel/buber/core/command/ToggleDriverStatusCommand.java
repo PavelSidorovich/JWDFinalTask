@@ -35,7 +35,8 @@ public class ToggleDriverStatusCommand extends CommonCommand {
         boolean isResting = Boolean.parseBoolean(request.getParameter(IS_RESTING_PARAM_NAME));
 
         if (optAccount.isPresent()) {
-            Optional<Driver> driver = driverService.findById(((Account) optAccount.get()).getId().orElse(INVALID_INDEX));
+            Optional<Driver> driver =
+                    driverService.findById(((Account) optAccount.get()).getId().orElse(INVALID_INDEX));
 
             if (driver.isPresent()) {
                 final Driver taxiDriver = driver.get();

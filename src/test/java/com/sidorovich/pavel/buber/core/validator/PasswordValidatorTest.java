@@ -31,7 +31,8 @@ public class PasswordValidatorTest {
 
         HashMap<String, String> expected = new HashMap<>();
 
-        expected.put("password", "Password should contain minimum eight characters, at least one letter and one number");
+        expected.put("password",
+                     "Password should contain minimum eight characters, at least one letter and one number");
 
         assertEquals(actual, expected);
     }

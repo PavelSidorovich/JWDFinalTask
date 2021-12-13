@@ -28,7 +28,8 @@ public class EmailValidator implements BiValidator<String, Boolean, Map<String, 
         return new HashMap<>(checkEmail(email, pattern, matcher, resourceBundle));
     }
 
-    private Map<String, String> checkEmail(String email, Pattern pattern, Matcher matcher, ResourceBundle resourceBundle) {
+    private Map<String, String> checkEmail(String email, Pattern pattern, Matcher matcher,
+                                           ResourceBundle resourceBundle) {
         Map<String, String> errorsByMessages = new HashMap<>();
 
         if (!isValid(matcher, pattern, email)) {

@@ -42,23 +42,28 @@
     <div class="row">
         <c:if test="${not empty driver}">
             <div class="col-md-7">
-                <img src="${contextPath}/images/taxes/${driver.taxi.photoFilepath}" class="img-fluid" alt="${taxiPhotoLabel}">
+                <img src="${contextPath}/images/taxes/${driver.taxi.photoFilepath}" class="img-fluid"
+                     alt="${taxiPhotoLabel}">
             </div>
             <div class="col-md-5">
                 <h3 class="mb-3">${driverInfoLabel}</h3>
                 <div class="mb-3 pl-3">
                     <c:choose>
                         <c:when test="${driver.driverStatus eq DriverStatus.PENDING}">
-                            <h6>${driverStatusLabel} <span class="badge badge-pill badge-warning">${pendingLabel}</span></h6>
+                            <h6>${driverStatusLabel} <span class="badge badge-pill badge-warning">${pendingLabel}</span>
+                            </h6>
                         </c:when>
                         <c:when test="${driver.driverStatus eq DriverStatus.REJECTED}">
-                            <h6>${driverStatusLabel} <span class="badge badge-pill badge-danger">${rejectedLabel}</span></h6>
+                            <h6>${driverStatusLabel} <span class="badge badge-pill badge-danger">${rejectedLabel}</span>
+                            </h6>
                         </c:when>
                         <c:when test="${driver.driverStatus eq DriverStatus.BUSY}">
-                            <h6>${driverStatusLabel} <span class="badge badge-pill badge-success">${busyLabel}</span></h6>
+                            <h6>${driverStatusLabel} <span class="badge badge-pill badge-success">${busyLabel}</span>
+                            </h6>
                         </c:when>
                         <c:when test="${driver.driverStatus eq DriverStatus.FREE}">
-                            <h6>${driverStatusLabel} <span class="badge badge-pill badge-primary">${freeLabel}</span></h6>
+                            <h6>${driverStatusLabel} <span class="badge badge-pill badge-primary">${freeLabel}</span>
+                            </h6>
                         </c:when>
                         <c:when test="${driver.driverStatus eq DriverStatus.REST}">
                             <h6>${driverStatusLabel} <span class="badge badge-pill badge-info">${restLabel}</span></h6>
@@ -83,12 +88,12 @@
                 <c:choose>
                     <c:when test="${driver.driverStatus eq DriverStatus.BUSY or driver.driverStatus eq DriverStatus.FREE}">
                         <div class="alert alert-danger" role="alert">
-                            ${alertDangerLabel}
+                                ${alertDangerLabel}
                         </div>
                     </c:when>
                     <c:when test="${driver.driverStatus eq DriverStatus.REJECTED}">
                         <div class="alert alert-info" role="alert">
-                            <strong>${infoStrongLabel}</strong> ${infoMessageLabel}                            details.
+                            <strong>${infoStrongLabel}</strong> ${infoMessageLabel} details.
                         </div>
                         <button type="button" class="btn btn-block btn-warning" data-toggle="modal"
                                 data-target="#driverInfoModal">${fillFormButtonLabel}

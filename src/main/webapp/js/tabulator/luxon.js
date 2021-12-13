@@ -64,7 +64,8 @@ var luxon = (function (exports) {
     if (typeof Proxy === "function") return true;
 
     try {
-      Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+      Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {
+      }));
       return true;
     } catch (e) {
       return false;
@@ -448,15 +449,19 @@ var luxon = (function (exports) {
   function isUndefined(o) {
     return typeof o === "undefined";
   }
+
   function isNumber(o) {
     return typeof o === "number";
   }
+
   function isInteger(o) {
     return typeof o === "number" && o % 1 === 0;
   }
+
   function isString(o) {
     return typeof o === "string";
   }
+
   function isDate(o) {
     return Object.prototype.toString.call(o) === "[object Date]";
   } // CAPABILITIES
@@ -472,6 +477,7 @@ var luxon = (function (exports) {
   function maybeArray(thing) {
     return Array.isArray(thing) ? thing : [thing];
   }
+
   function bestBy(arr, by, compare) {
     if (arr.length === 0) {
       return undefined;
@@ -489,12 +495,14 @@ var luxon = (function (exports) {
       }
     }, null)[1];
   }
+
   function pick(obj, keys) {
     return keys.reduce(function (a, k) {
       a[k] = obj[k];
       return a;
     }, {});
   }
+
   function hasOwnProperty(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop);
   } // NUMBERS AND STRINGS
@@ -506,6 +514,7 @@ var luxon = (function (exports) {
   function floorMod(x, n) {
     return x - n * Math.floor(x / n);
   }
+
   function padStart(input, n) {
     if (n === void 0) {
       n = 2;
@@ -523,6 +532,7 @@ var luxon = (function (exports) {
 
     return "" + minus + result;
   }
+
   function parseInteger(string) {
     if (isUndefined(string) || string === null || string === "") {
       return undefined;
@@ -530,6 +540,7 @@ var luxon = (function (exports) {
       return parseInt(string, 10);
     }
   }
+
   function parseFloating(string) {
     if (isUndefined(string) || string === null || string === "") {
       return undefined;
@@ -537,6 +548,7 @@ var luxon = (function (exports) {
       return parseFloat(string);
     }
   }
+
   function parseMillis(fraction) {
     // Return undefined (instead of 0) in these cases, where fraction is not set
     if (isUndefined(fraction) || fraction === null || fraction === "") {
@@ -546,6 +558,7 @@ var luxon = (function (exports) {
       return Math.floor(f);
     }
   }
+
   function roundTo(number, digits, towardZero) {
     if (towardZero === void 0) {
       towardZero = false;
@@ -559,9 +572,11 @@ var luxon = (function (exports) {
   function isLeapYear(year) {
     return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
   }
+
   function daysInYear(year) {
     return isLeapYear(year) ? 366 : 365;
   }
+
   function daysInMonth(year, month) {
     var modMonth = floorMod(month - 1, 12) + 1,
       modYear = year + (month - modMonth) / 12;
@@ -583,12 +598,14 @@ var luxon = (function (exports) {
 
     return +d;
   }
+
   function weeksInWeekYear(weekYear) {
     var p1 = (weekYear + Math.floor(weekYear / 4) - Math.floor(weekYear / 100) + Math.floor(weekYear / 400)) % 7,
       last = weekYear - 1,
       p2 = (last + Math.floor(last / 4) - Math.floor(last / 100) + Math.floor(last / 400)) % 7;
     return p1 === 4 || p2 === 3 ? 53 : 52;
   }
+
   function untruncateYear(year) {
     if (year > 99) {
       return year;
@@ -641,6 +658,7 @@ var luxon = (function (exports) {
     if (typeof value === "boolean" || value === "" || Number.isNaN(numericValue)) throw new InvalidArgumentError("Invalid unit value " + value);
     return numericValue;
   }
+
   function normalizeObject(obj, normalizer) {
     var normalized = {};
 
@@ -654,6 +672,7 @@ var luxon = (function (exports) {
 
     return normalized;
   }
+
   function formatOffset(offset, format) {
     var hours = Math.trunc(Math.abs(offset / 60)),
       minutes = Math.trunc(Math.abs(offset % 60)),
@@ -673,9 +692,11 @@ var luxon = (function (exports) {
         throw new RangeError("Value format " + format + " is out of range for property format");
     }
   }
+
   function timeObject(obj) {
     return pick(obj, ["hour", "minute", "second", "millisecond"]);
   }
+
   var ianaRegex = /[A-Za-z_+-]{1,256}(:?\/[A-Za-z0-9_+-]{1,256}(\/[A-Za-z0-9_+-]{1,256})?)?/;
 
   /**
@@ -686,6 +707,7 @@ var luxon = (function (exports) {
   var monthsLong = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var monthsShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var monthsNarrow = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+
   function months(length) {
     switch (length) {
       case "narrow":
@@ -707,9 +729,11 @@ var luxon = (function (exports) {
         return null;
     }
   }
+
   var weekdaysLong = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   var weekdaysShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   var weekdaysNarrow = ["M", "T", "W", "T", "F", "S", "S"];
+
   function weekdays(length) {
     switch (length) {
       case "narrow":
@@ -728,10 +752,12 @@ var luxon = (function (exports) {
         return null;
     }
   }
+
   var meridiems = ["AM", "PM"];
   var erasLong = ["Before Christ", "Anno Domini"];
   var erasShort = ["BC", "AD"];
   var erasNarrow = ["B", "A"];
+
   function eras(length) {
     switch (length) {
       case "narrow":
@@ -747,18 +773,23 @@ var luxon = (function (exports) {
         return null;
     }
   }
+
   function meridiemForDateTime(dt) {
     return meridiems[dt.hour < 12 ? 0 : 1];
   }
+
   function weekdayForDateTime(dt, length) {
     return weekdays(length)[dt.weekday - 1];
   }
+
   function monthForDateTime(dt, length) {
     return months(length)[dt.month - 1];
   }
+
   function eraForDateTime(dt, length) {
     return eras(length)[dt.year < 0 ? 0 : 1];
   }
+
   function formatRelativeTime(unit, count, numeric, narrow) {
     if (numeric === void 0) {
       numeric = "always";
@@ -1367,7 +1398,8 @@ var luxon = (function (exports) {
    */
 
   var Zone = /*#__PURE__*/function () {
-    function Zone() {}
+    function Zone() {
+    }
 
     var _proto = Zone.prototype;
 
@@ -1694,6 +1726,7 @@ var luxon = (function (exports) {
       _this.valid = IANAZone.isValidZone(name);
       return _this;
     }
+
     /** @override **/
 
 
@@ -1829,6 +1862,7 @@ var luxon = (function (exports) {
       _this.fixed = offset;
       return _this;
     }
+
     /** @override **/
 
 
@@ -1918,6 +1952,7 @@ var luxon = (function (exports) {
       _this.zoneName = zoneName;
       return _this;
     }
+
     /** @override **/
 
 
@@ -1988,7 +2023,7 @@ var luxon = (function (exports) {
       return input;
     } else if (isString(input)) {
       var lowered = input.toLowerCase();
-      if (lowered === "local" || lowered === "system") return defaultZone;else if (lowered === "utc" || lowered === "gmt") return FixedOffsetZone.utcInstance;else if (IANAZone.isValidSpecifier(lowered)) return IANAZone.create(input);else return FixedOffsetZone.parseSpecifier(lowered) || new InvalidZone(input);
+      if (lowered === "local" || lowered === "system") return defaultZone; else if (lowered === "utc" || lowered === "gmt") return FixedOffsetZone.utcInstance; else if (IANAZone.isValidSpecifier(lowered)) return IANAZone.create(input); else return FixedOffsetZone.parseSpecifier(lowered) || new InvalidZone(input);
     } else if (isNumber(input)) {
       return FixedOffsetZone.instance(input);
     } else if (typeof input === "object" && input.offset && typeof input.offset === "number") {
@@ -2014,7 +2049,8 @@ var luxon = (function (exports) {
 
 
   var Settings = /*#__PURE__*/function () {
-    function Settings() {}
+    function Settings() {
+    }
 
     /**
      * Reset Luxon's global caches. Should only be necessary in testing scenarios.
@@ -2302,6 +2338,7 @@ var luxon = (function (exports) {
       return loc.numberingSystem === "latn" || !loc.locale || loc.locale.startsWith("en") || new Intl.DateTimeFormat(loc.intl).resolvedOptions().numberingSystem === "latn";
     }
   }
+
   /**
    * @private
    */
@@ -2986,6 +3023,7 @@ var luxon = (function (exports) {
   var extractISOWeekTimeAndOffset = combineExtractors(extractISOWeekData, extractISOTime, extractISOOffset);
   var extractISOOrdinalDateAndTime = combineExtractors(extractISOOrdinalData, extractISOTime, extractISOOffset);
   var extractISOTimeAndOffset = combineExtractors(extractISOTime, extractISOOffset);
+
   /**
    * @private
    */
@@ -2993,23 +3031,30 @@ var luxon = (function (exports) {
   function parseISODate(s) {
     return parse(s, [isoYmdWithTimeExtensionRegex, extractISOYmdTimeAndOffset], [isoWeekWithTimeExtensionRegex, extractISOWeekTimeAndOffset], [isoOrdinalWithTimeExtensionRegex, extractISOOrdinalDateAndTime], [isoTimeCombinedRegex, extractISOTimeAndOffset]);
   }
+
   function parseRFC2822Date(s) {
     return parse(preprocessRFC2822(s), [rfc2822, extractRFC2822]);
   }
+
   function parseHTTPDate(s) {
     return parse(s, [rfc1123, extractRFC1123Or850], [rfc850, extractRFC1123Or850], [ascii, extractASCII]);
   }
+
   function parseISODuration(s) {
     return parse(s, [isoDuration, extractISODuration]);
   }
+
   var extractISOTimeOnly = combineExtractors(extractISOTime);
+
   function parseISOTimeOnly(s) {
     return parse(s, [isoTimeOnly, extractISOTimeOnly]);
   }
+
   var sqlYmdWithTimeExtensionRegex = combineRegexes(sqlYmdRegex, sqlTimeExtensionRegex);
   var sqlTimeCombinedRegex = combineRegexes(sqlTimeRegex);
   var extractISOYmdTimeOffsetAndIANAZone = combineExtractors(extractISOYmd, extractISOTime, extractISOOffset, extractIANAZone);
   var extractISOTimeOffsetAndIANAZone = combineExtractors(extractISOTime, extractISOOffset, extractIANAZone);
+
   function parseSQL(s) {
     return parse(s, [sqlYmdWithTimeExtensionRegex, extractISOYmdTimeOffsetAndIANAZone], [sqlTimeCombinedRegex, extractISOTimeOffsetAndIANAZone]);
   }
@@ -3150,6 +3195,7 @@ var luxon = (function (exports) {
       }
     }, null);
   }
+
   /**
    * A Duration object represents a period of time, like "2 months" or "1 day, 1 hour". Conceptually, it's just a map of units to their quantities, accompanied by some additional configuration and methods for creating, parsing, interrogating, transforming, and formatting them. They can be used on their own or in conjunction with other Luxon types; for example, you can use {@link DateTime#plus} to add a Duration object to a DateTime, producing another DateTime.
    *
@@ -3202,6 +3248,7 @@ var luxon = (function (exports) {
 
       this.isLuxonDuration = true;
     }
+
     /**
      * Create Duration from a number of milliseconds.
      * @param {number} count of milliseconds
@@ -3985,6 +4032,7 @@ var luxon = (function (exports) {
       return null;
     }
   }
+
   /**
    * An Interval object represents a half-open interval of time, where each endpoint is a {@link DateTime}. Conceptually, it's a container for those two endpoints, accompanied by methods for creating, parsing, interrogating, comparing, transforming, and formatting them.
    *
@@ -4024,6 +4072,7 @@ var luxon = (function (exports) {
 
       this.isLuxonInterval = true;
     }
+
     /**
      * Create an invalid Interval.
      * @param {string} reason - simple string of why this Interval is invalid. Should not contain parameters or anything else data-dependent
@@ -4689,7 +4738,8 @@ var luxon = (function (exports) {
    */
 
   var Info = /*#__PURE__*/function () {
-    function Info() {}
+    function Info() {
+    }
 
     /**
      * Return whether the specified zone contains a DST.
@@ -4977,7 +5027,7 @@ var luxon = (function (exports) {
     return [cursor, results, highWater, lowestOrder];
   }
 
-  function _diff (earlier, later, units, opts) {
+  function _diff(earlier, later, units, opts) {
     var _highOrderDiffs = highOrderDiffs(earlier, later, units),
       cursor = _highOrderDiffs[0],
       results = _highOrderDiffs[1],
@@ -5057,6 +5107,7 @@ var luxon = (function (exports) {
     tibt: [3872, 3881]
   };
   var hanidecChars = numberingSystems.hanidec.replace(/[\[|\]]/g, "").split("");
+
   function parseDigits(str) {
     var value = parseInt(str, 10);
 
@@ -5086,6 +5137,7 @@ var luxon = (function (exports) {
       return value;
     }
   }
+
   function digitRegex(_ref, append) {
     var numberingSystem = _ref.numberingSystem;
 
@@ -5601,6 +5653,7 @@ var luxon = (function (exports) {
       return maybeExpandMacroToken(t, locale);
     }));
   }
+
   /**
    * @private
    */
@@ -5650,6 +5703,7 @@ var luxon = (function (exports) {
       };
     }
   }
+
   function parseFromTokens(locale, input, format) {
     var _explainFromTokens = explainFromTokens(locale, input, format),
       result = _explainFromTokens.result,
@@ -5687,6 +5741,7 @@ var luxon = (function (exports) {
       day: day
     };
   }
+
   /**
    * @private
    */
@@ -5717,6 +5772,7 @@ var luxon = (function (exports) {
       weekday: weekday
     }, timeObject(gregObj));
   }
+
   function weekToGregorian(weekData) {
     var weekYear = weekData.weekYear,
       weekNumber = weekData.weekNumber,
@@ -5746,6 +5802,7 @@ var luxon = (function (exports) {
       day: day
     }, timeObject(weekData));
   }
+
   function gregorianToOrdinal(gregData) {
     var year = gregData.year,
       month = gregData.month,
@@ -5756,6 +5813,7 @@ var luxon = (function (exports) {
       ordinal: ordinal
     }, timeObject(gregData));
   }
+
   function ordinalToGregorian(ordinalData) {
     var year = ordinalData.year,
       ordinal = ordinalData.ordinal;
@@ -5770,6 +5828,7 @@ var luxon = (function (exports) {
       day: day
     }, timeObject(ordinalData));
   }
+
   function hasInvalidWeekData(obj) {
     var validYear = isInteger(obj.weekYear),
       validWeek = integerBetween(obj.weekNumber, 1, weeksInWeekYear(obj.weekYear)),
@@ -5783,6 +5842,7 @@ var luxon = (function (exports) {
       return unitOutOfRange("weekday", obj.weekday);
     } else return false;
   }
+
   function hasInvalidOrdinalData(obj) {
     var validYear = isInteger(obj.year),
       validOrdinal = integerBetween(obj.ordinal, 1, daysInYear(obj.year));
@@ -5793,6 +5853,7 @@ var luxon = (function (exports) {
       return unitOutOfRange("ordinal", obj.ordinal);
     } else return false;
   }
+
   function hasInvalidGregorianData(obj) {
     var validYear = isInteger(obj.year),
       validMonth = integerBetween(obj.month, 1, 12),
@@ -5806,6 +5867,7 @@ var luxon = (function (exports) {
       return unitOutOfRange("day", obj.day);
     } else return false;
   }
+
   function hasInvalidTimeData(obj) {
     var hour = obj.hour,
       minute = obj.minute,
@@ -6170,6 +6232,7 @@ var luxon = (function (exports) {
 
     return [opts, args];
   }
+
   /**
    * A DateTime is an immutable data structure representing a specific date and time and accompanying methods. It contains class and instance methods for creating, parsing, interrogating, transforming, and formatting them.
    *
@@ -8334,6 +8397,7 @@ var luxon = (function (exports) {
 
     return DateTime;
   }();
+
   function friendlyDateTime(dateTimeish) {
     if (DateTime.isDateTime(dateTimeish)) {
       return dateTimeish;
@@ -8360,7 +8424,7 @@ var luxon = (function (exports) {
   exports.VERSION = VERSION;
   exports.Zone = Zone;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+  Object.defineProperty(exports, '__esModule', {value: true});
 
   return exports;
 

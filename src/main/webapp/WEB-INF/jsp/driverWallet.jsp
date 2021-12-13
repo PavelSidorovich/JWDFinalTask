@@ -35,7 +35,8 @@
                     <h4 class="my-0 font-weight-normal">${cardHeaderLabel}</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">${requestScope.cash} <small class="text-muted">${rublesLabel}</small>
+                    <h1 class="card-title pricing-card-title">${requestScope.cash} <small
+                            class="text-muted">${rublesLabel}</small>
                     </h1>
                     <jwds:transactionsDisplayer title="${transactionsLabel}" symbol="+"
                                                 transactions="${requestScope.credits}" currency="${rublesLabel}"/>

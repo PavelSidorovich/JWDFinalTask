@@ -76,10 +76,12 @@
                                     <input type="file" name="carPhoto" class="file" accept=".jpeg,.png,.jpg" hidden>
                                     <label for="carPhotoInput">${carPhotoLabel}</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" disabled placeholder="${carPhotoPlaceholderLabel}"
+                                        <input type="text" class="form-control" disabled
+                                               placeholder="${carPhotoPlaceholderLabel}"
                                                id="carPhotoInput">
                                         <div id="browseButton" class="input-group-append">
-                                            <button type="button" class="browse btn btn-primary">${carPhotoButtonLabel}</button>
+                                            <button type="button"
+                                                    class="browse btn btn-primary">${carPhotoButtonLabel}</button>
                                         </div>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -90,7 +92,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">${cancelButtonLabel}</button>
+                <button type="button" class="btn btn-outline-secondary"
+                        data-dismiss="modal">${cancelButtonLabel}</button>
                 <button type="submit" id="submitButton" form="driverInfoForm" class="btn btn-primary">${saveButtonLabel}
                 </button>
             </div>
@@ -98,8 +101,8 @@
     </div>
 </div>
 <script>
-    const drivingLicenceFeedback = "<fmt:message bundle="${loc}" key="label.invalid.drivingLicence"/>"
-    const carBrandFeedback = "<fmt:message bundle="${loc}" key="label.invalid.carBrand"/>"
-    const carModelFeedback = "<fmt:message bundle="${loc}" key="label.invalid.carModel"/>"
-    const carLicencePlateFeedback = "<fmt:message bundle="${loc}" key="label.invalid.carLicencePlate"/>"
+  const drivingLicenceFeedback = "<fmt:message bundle="${loc}" key="label.invalid.drivingLicence"/>"
+  const carBrandFeedback = "<fmt:message bundle="${loc}" key="label.invalid.carBrand"/>"
+  const carModelFeedback = "<fmt:message bundle="${loc}" key="label.invalid.carModel"/>"
+  const carLicencePlateFeedback = "<fmt:message bundle="${loc}" key="label.invalid.carLicencePlate"/>"
 </script>

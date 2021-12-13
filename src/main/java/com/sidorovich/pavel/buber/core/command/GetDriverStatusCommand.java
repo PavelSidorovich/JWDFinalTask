@@ -19,7 +19,7 @@ public class GetDriverStatusCommand extends CommonCommand {
     private final DriverService driverService;
 
     private GetDriverStatusCommand(RequestFactory requestFactory,
-                                      DriverService driverService) {
+                                   DriverService driverService) {
         super(requestFactory);
         this.driverService = driverService;
     }

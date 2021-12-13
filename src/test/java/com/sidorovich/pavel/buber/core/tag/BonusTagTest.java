@@ -1,24 +1,18 @@
 package com.sidorovich.pavel.buber.core.tag;
 
 import com.sidorovich.pavel.buber.api.model.Bonus;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.jstl.fmt.LocalizationContext;
-import java.io.BufferedOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;

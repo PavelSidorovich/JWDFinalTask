@@ -7,7 +7,6 @@ import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Role;
 import com.sidorovich.pavel.buber.api.model.UserStatus;
 import com.sidorovich.pavel.buber.core.controller.JsonResponseStatus;
-import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.service.UserService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,7 +18,6 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
-import static org.testng.Assert.*;
 
 public class BlockUserCommandTest {
 
@@ -61,7 +59,7 @@ public class BlockUserCommandTest {
 
         verify(userService).update(user.get().withStatus(UserStatus.ACTIVE));
         verify(requestFactory).createJsonResponse(null, JsonResponseStatus.SUCCESS,
-                                                     "User status was successfully updated!");
+                                                  "User status was successfully updated!");
     }
 
 }

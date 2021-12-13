@@ -30,8 +30,8 @@ public class ImageExtValidatorTest {
     public Object[][] getFilenamesAndResult() {
         return new Object[][] {
                 { "file.jpg" },
-                {"file.jpeg"},
-                {"file.png"},
+                { "file.jpeg" },
+                { "file.png" },
         };
     }
 

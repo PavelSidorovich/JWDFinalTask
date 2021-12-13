@@ -35,7 +35,7 @@
                     <div class="input-group mb-2 mr-sm-2">
                         <label for="discount"></label>
                         <input type="text" id="discount" name="discount" class="form-control"
-                                                             aria-describedby="discountFeedback" placeholder="${discountLabel}">
+                               aria-describedby="discountFeedback" placeholder="${discountLabel}">
                         <div class="input-group-append">
                             <span class="input-group-text">%</span>
                         </div>

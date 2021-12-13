@@ -1,15 +1,12 @@
 package com.sidorovich.pavel.buber.core.util;
 
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
-import com.sidorovich.pavel.buber.core.controller.PlainCommandRequest;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.servlet.http.Cookie;
-
 import java.util.Locale;
 import java.util.ResourceBundle;
 

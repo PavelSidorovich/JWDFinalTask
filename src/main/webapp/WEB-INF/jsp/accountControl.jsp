@@ -46,11 +46,11 @@
                         <h5 class="card-title">${requestScope.user.account.phone}</h5>
                         <h5 class="card-title">${requestScope.user.email.orElse("")}</h5>
                         <a href="#" class="btn-link" data-toggle="modal" data-target="#personalInfoModal">
-                            ${editPersonalInfoLink}
+                                ${editPersonalInfoLink}
                         </a>
                         <br>
                         <a href="#" class="btn-link" data-toggle="modal" data-target="#editPasswordModal">
-                            ${changePasswordLink}
+                                ${changePasswordLink}
                         </a>
                     </div>
                 </c:if>

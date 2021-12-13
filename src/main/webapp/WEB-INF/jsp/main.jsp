@@ -36,12 +36,14 @@
                         <c:choose>
                             <c:when test="${loop.index eq 0}">
                                 <div class="carousel-item active" data-interval="5000">
-                                    <img src="${contextPath}/images/taxes/${carPhotoPath}" class="w-100" alt="${altLabel}">
+                                    <img src="${contextPath}/images/taxes/${carPhotoPath}" class="w-100"
+                                         alt="${altLabel}">
                                 </div>
                             </c:when>
                             <c:otherwise>
                                 <div class="carousel-item" data-interval="5000">
-                                    <img src="${contextPath}/images/taxes/${carPhotoPath}" class="w-100" alt="${altLabel}">
+                                    <img src="${contextPath}/images/taxes/${carPhotoPath}" class="w-100"
+                                         alt="${altLabel}">
                                 </div>
                             </c:otherwise>
                         </c:choose>
@@ -106,7 +108,8 @@
                     </div>
                 </li>
             </ul>
-            <a href="${contextPath}/controller?command=show_login" class="btn btn-warning btn-block">${makeOrderLabel}</a>
+            <a href="${contextPath}/controller?command=show_login"
+               class="btn btn-warning btn-block">${makeOrderLabel}</a>
         </div>
     </div>
 </div>

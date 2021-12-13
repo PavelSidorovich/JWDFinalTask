@@ -38,7 +38,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">${cancelButtonLabel}</button>
+                <button type="button" class="btn btn-outline-secondary"
+                        data-dismiss="modal">${cancelButtonLabel}</button>
                 <button id="editPasswordButton" type="submit" form="editPasswordForm" class="btn btn-primary" disabled>
                     ${submitButtonLabel}
                 </button>

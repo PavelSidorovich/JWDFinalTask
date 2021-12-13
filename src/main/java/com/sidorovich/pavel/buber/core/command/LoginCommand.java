@@ -12,9 +12,9 @@ import com.sidorovich.pavel.buber.core.controller.JsonResponseStatus;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.AccountService;
-import com.sidorovich.pavel.buber.core.util.CoordinateRandomizerImpl;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.UserService;
+import com.sidorovich.pavel.buber.core.util.CoordinateRandomizerImpl;
 import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 
 import java.util.Optional;

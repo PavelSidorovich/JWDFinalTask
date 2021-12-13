@@ -10,7 +10,7 @@ function addFileButtonListener() {
   });
 }
 
-function addFileChangeListener(){
+function addFileChangeListener() {
   $('input[type="file"]').change(function (e) {
     let fileName = e.target.files[0].name;
     $("#carPhotoInput").val(fileName);

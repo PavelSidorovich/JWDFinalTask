@@ -3,8 +3,6 @@ package com.sidorovich.pavel.buber.core.filter;
 import com.sidorovich.pavel.buber.api.model.Bonus;
 import com.sidorovich.pavel.buber.core.service.BonusService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

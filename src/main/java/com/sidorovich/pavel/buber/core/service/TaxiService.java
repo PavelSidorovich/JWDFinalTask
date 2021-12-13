@@ -1,11 +1,11 @@
 package com.sidorovich.pavel.buber.core.service;
 
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.CoordinatesDao;
 import com.sidorovich.pavel.buber.core.dao.TaxiDao;
-import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
