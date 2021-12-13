@@ -15,7 +15,7 @@ import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.BonusService;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
-import com.sidorovich.pavel.buber.core.service.UserOrderService;
+import com.sidorovich.pavel.buber.core.service.OrderService;
 import com.sidorovich.pavel.buber.core.service.UserService;
 
 import java.util.List;
@@ -34,13 +34,13 @@ public class MakeOrderCommand extends CommonCommand {
     private static final String TAXIS_REQUEST_ATTR_NAME = "taxis";
 
     private final DriverService driverService;
-    private final UserOrderService orderService;
+    private final OrderService orderService;
     private final UserService userService;
     private final BonusService bonusService;
 
     private MakeOrderCommand(RequestFactory requestFactory,
                              DriverService driverService,
-                             UserOrderService orderService,
+                             OrderService orderService,
                              UserService userService,
                              BonusService bonusService) {
         super(requestFactory);
@@ -98,7 +98,7 @@ public class MakeOrderCommand extends CommonCommand {
         private static final MakeOrderCommand INSTANCE = new MakeOrderCommand(
                 RequestFactoryImpl.getInstance(),
                 EntityServiceFactory.getInstance().serviceFor(DriverService.class),
-                EntityServiceFactory.getInstance().serviceFor(UserOrderService.class),
+                EntityServiceFactory.getInstance().serviceFor(OrderService.class),
                 EntityServiceFactory.getInstance().serviceFor(UserService.class),
                 EntityServiceFactory.getInstance().serviceFor(BonusService.class));
     }

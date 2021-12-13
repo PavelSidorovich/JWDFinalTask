@@ -1,7 +1,7 @@
 package com.sidorovich.pavel.buber.api.service;
 
 import com.sidorovich.pavel.buber.api.model.Entity;
-import com.sidorovich.pavel.buber.exception.DuplicateKeyException;
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 
 import java.util.List;
 import java.util.Optional;

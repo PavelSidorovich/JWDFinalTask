@@ -50,8 +50,6 @@ public class EntityServiceFactory implements ServiceFactory {
             case "UserService":
                 return new UserService(daoFactory.serviceFor(UserDao.class),
                                        serviceFor(AccountService.class));
-//            case "CoordinatesDao":
-//                return new CoordinatesDao(connectionPool);
             case "BonusService":
                 return new BonusService(daoFactory.serviceFor(BonusDao.class),
                                         serviceFor(UserService.class));
@@ -62,11 +60,11 @@ public class EntityServiceFactory implements ServiceFactory {
             case "TaxiService":
                 return new TaxiService(daoFactory.serviceFor(TaxiDao.class),
                                        daoFactory.serviceFor(CoordinatesDao.class));
-            case "UserOrderService":
-                return new UserOrderService(daoFactory.serviceFor(UserOrderDao.class),
-                                            serviceFor(DriverService.class),
-                                            serviceFor(UserService.class),
-                                            daoFactory.serviceFor(CoordinatesDao.class));
+            case "OrderService":
+                return new OrderService(daoFactory.serviceFor(UserOrderDao.class),
+                                        serviceFor(DriverService.class),
+                                        serviceFor(UserService.class),
+                                        daoFactory.serviceFor(CoordinatesDao.class));
             default:
                 throw new IllegalArgumentException(String.format(SERVICE_NOT_FOUND, className));
             }

@@ -14,18 +14,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class UserOrderService implements EntityService<UserOrder> {
+public class OrderService implements EntityService<UserOrder> {
 
-    private static final Logger LOG = LogManager.getLogger(UserOrderService.class);
+    private static final Logger LOG = LogManager.getLogger(OrderService.class);
 
     private final UserOrderDao orderDao;
     private final DriverService driverService;
     private final UserService userService;
     private final CoordinatesDao coordinatesDao;
 
-    UserOrderService(UserOrderDao orderDao, DriverService driverService,
-                     UserService userService,
-                     CoordinatesDao coordinatesDao) {
+    OrderService(UserOrderDao orderDao, DriverService driverService,
+                 UserService userService,
+                 CoordinatesDao coordinatesDao) {
         this.orderDao = orderDao;
         this.driverService = driverService;
         this.userService = userService;

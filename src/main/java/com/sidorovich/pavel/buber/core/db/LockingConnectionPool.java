@@ -1,10 +1,14 @@
 package com.sidorovich.pavel.buber.core.db;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
-import com.sidorovich.pavel.buber.exception.CouldNotInitializeConnectionPool;
+import com.sidorovich.pavel.buber.api.exception.CouldNotInitializeConnectionPool;
+import com.sidorovich.pavel.buber.api.exception.CouldNotInitializeConnectionPoolError;
+import com.sidorovich.pavel.buber.core.util.PropertyWrapper;
+import com.sidorovich.pavel.buber.core.util.ResourcePathExtractor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -24,22 +28,29 @@ public class LockingConnectionPool implements ConnectionPool {
     private static final Logger LOG = LogManager.getLogger(LockingConnectionPool.class);
 
     private static final int INITIAL_CONNECTIONS_AMOUNT = 8;
-    // TODO: 10/16/2021 to move into prop file
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/buber";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "123456";
+    private static final String DB_URL = "db.url";
+    private static final String DB_USER = "db.user";
+    private static final String DB_PASSWORD = "db.password";
+    private static final String DB_PROPERTIES_FILENAME = "db.properties";
 
     private final Queue<ProxyConnection> availableConnections = new ConcurrentLinkedDeque<>();
     private final List<ProxyConnection> givenAwayConnections = new CopyOnWriteArrayList<>();
     private final ReentrantLock lock = new ReentrantLock();
     private final Condition freeConnections = lock.newCondition();
     private final AtomicBoolean initialized = new AtomicBoolean(false);
+    private final PropertyWrapper propertyWrapper;
 
     private LockingConnectionPool() {
+        try {
+            propertyWrapper = new PropertyWrapper(ResourcePathExtractor.getInstance().extract(DB_PROPERTIES_FILENAME));
+        } catch (IOException e) {
+            LOG.error(e);
+            throw new CouldNotInitializeConnectionPoolError(e.getMessage());
+        }
     }
 
     private static class Holder {
-        static LockingConnectionPool INSTANCE = new LockingConnectionPool();
+        private final static LockingConnectionPool INSTANCE = new LockingConnectionPool();
     }
 
     public static LockingConnectionPool getInstance() {
@@ -117,7 +128,11 @@ public class LockingConnectionPool implements ConnectionPool {
         try {
             for (int i = 0; i < amount; i++) {
                 final Connection conn = DriverManager
-                        .getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                        .getConnection(
+                                propertyWrapper.getProperty(DB_URL),
+                                propertyWrapper.getProperty(DB_USER),
+                                propertyWrapper.getProperty(DB_PASSWORD)
+                        );
                 LOG.info("Initialized connection {}", conn);
                 final ProxyConnection proxyConnection = new ProxyConnection(conn, this);
                 availableConnections.add(proxyConnection);

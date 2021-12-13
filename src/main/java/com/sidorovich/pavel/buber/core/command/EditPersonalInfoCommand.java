@@ -15,7 +15,7 @@ import com.sidorovich.pavel.buber.core.service.UserService;
 import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 import com.sidorovich.pavel.buber.core.validator.EmailValidator;
 import com.sidorovich.pavel.buber.core.validator.PersonalInfoValidator;
-import com.sidorovich.pavel.buber.exception.EmptySessionException;
+import com.sidorovich.pavel.buber.api.exception.EmptySessionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

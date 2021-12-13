@@ -10,7 +10,7 @@ import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
-import com.sidorovich.pavel.buber.core.service.UserOrderService;
+import com.sidorovich.pavel.buber.core.service.OrderService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,11 +27,11 @@ public class DriverWalletCommand extends CommonCommand {
     private static final int LAST_OPERATIONS_AMOUNT = 5;
     private static final long INVALID_INDEX = -1L;
 
-    private final UserOrderService orderService;
+    private final OrderService orderService;
     private final DriverService driverService;
 
     private DriverWalletCommand(RequestFactory requestFactory,
-                                UserOrderService orderService,
+                                OrderService orderService,
                                 DriverService driverService) {
         super(requestFactory);
         this.orderService = orderService;
@@ -73,7 +73,7 @@ public class DriverWalletCommand extends CommonCommand {
     private static class Holder {
         private static final DriverWalletCommand INSTANCE = new DriverWalletCommand(
                 RequestFactoryImpl.getInstance(),
-                EntityServiceFactory.getInstance().serviceFor(UserOrderService.class),
+                EntityServiceFactory.getInstance().serviceFor(OrderService.class),
                 EntityServiceFactory.getInstance().serviceFor(DriverService.class)
         );
     }

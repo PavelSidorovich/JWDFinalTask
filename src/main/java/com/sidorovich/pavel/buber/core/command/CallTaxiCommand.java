@@ -23,7 +23,7 @@ import com.sidorovich.pavel.buber.core.dto.OrderDto;
 import com.sidorovich.pavel.buber.core.service.BonusService;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
-import com.sidorovich.pavel.buber.core.service.UserOrderService;
+import com.sidorovich.pavel.buber.core.service.OrderService;
 import com.sidorovich.pavel.buber.core.service.UserService;
 import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 import com.sidorovich.pavel.buber.core.validator.OrderValidator;
@@ -54,8 +54,7 @@ public class CallTaxiCommand extends CommonCommand {
     private static final String INVALID_LONGITUDE_KEY = "msg.invalid.longitude";
     private static final String INVALID_LATITUDE_KEY = "msg.invalid.latitude";
 
-    //todo rename service
-    private final UserOrderService orderService;
+    private final OrderService orderService;
     private final BonusService bonusService;
     private final DriverService driverService;
     private final UserService userService;
@@ -65,7 +64,7 @@ public class CallTaxiCommand extends CommonCommand {
     private final DistanceCalculator distanceCalculator;
     private final ResourceBundleExtractor resourceBundleExtractor;
 
-    private CallTaxiCommand(RequestFactory requestFactory, UserOrderService orderService,
+    private CallTaxiCommand(RequestFactory requestFactory, OrderService orderService,
                             BonusService bonusService,
                             DriverService driverService, UserService userService,
                             CoordinatesDao coordinatesDao,
@@ -185,7 +184,7 @@ public class CallTaxiCommand extends CommonCommand {
         private static final EntityServiceFactory SERVICE_FACTORY = EntityServiceFactory.getInstance();
         private static final CallTaxiCommand INSTANCE = new CallTaxiCommand(
                 RequestFactoryImpl.getInstance(),
-                SERVICE_FACTORY.serviceFor(UserOrderService.class),
+                SERVICE_FACTORY.serviceFor(OrderService.class),
                 SERVICE_FACTORY.serviceFor(BonusService.class),
                 SERVICE_FACTORY.serviceFor(DriverService.class),
                 SERVICE_FACTORY.serviceFor(UserService.class),

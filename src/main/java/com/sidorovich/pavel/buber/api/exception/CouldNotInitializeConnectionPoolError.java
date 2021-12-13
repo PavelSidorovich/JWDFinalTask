@@ -1,4 +1,4 @@
-package com.sidorovich.pavel.buber.exception;
+package com.sidorovich.pavel.buber.api.exception;
 
 public class CouldNotInitializeConnectionPoolError extends Error {
     public CouldNotInitializeConnectionPoolError(String message) {

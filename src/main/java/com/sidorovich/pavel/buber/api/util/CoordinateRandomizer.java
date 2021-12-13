@@ -1,4 +1,4 @@
-package com.sidorovich.pavel.buber.api.service;
+package com.sidorovich.pavel.buber.api.util;
 
 import java.math.BigDecimal;
 

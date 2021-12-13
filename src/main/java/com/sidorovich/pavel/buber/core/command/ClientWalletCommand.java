@@ -9,7 +9,7 @@ import com.sidorovich.pavel.buber.api.model.UserOrder;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
-import com.sidorovich.pavel.buber.core.service.UserOrderService;
+import com.sidorovich.pavel.buber.core.service.OrderService;
 import com.sidorovich.pavel.buber.core.service.UserService;
 
 import java.math.BigDecimal;
@@ -27,11 +27,11 @@ public class ClientWalletCommand extends CommonCommand {
     private static final int LAST_OPERATIONS_AMOUNT = 5;
     private static final long INVALID_INDEX = -1L;
 
-    private final UserOrderService orderService;
+    private final OrderService orderService;
     private final UserService userService;
 
     private ClientWalletCommand(RequestFactory requestFactory,
-                                UserOrderService orderService,
+                                OrderService orderService,
                                 UserService userService) {
         super(requestFactory);
         this.orderService = orderService;
@@ -75,7 +75,7 @@ public class ClientWalletCommand extends CommonCommand {
     private static class Holder {
         private static final ClientWalletCommand INSTANCE = new ClientWalletCommand(
                 RequestFactoryImpl.getInstance(),
-                EntityServiceFactory.getInstance().serviceFor(UserOrderService.class),
+                EntityServiceFactory.getInstance().serviceFor(OrderService.class),
                 EntityServiceFactory.getInstance().serviceFor(UserService.class));
     }
 

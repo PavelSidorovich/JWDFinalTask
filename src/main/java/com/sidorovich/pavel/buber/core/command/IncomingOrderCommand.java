@@ -10,7 +10,7 @@ import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
-import com.sidorovich.pavel.buber.core.service.UserOrderService;
+import com.sidorovich.pavel.buber.core.service.OrderService;
 
 import java.util.Optional;
 
@@ -23,11 +23,11 @@ public class IncomingOrderCommand extends CommonCommand {
     private static final String DRIVER_STATUS_ATTR_PARAM_NAME = "driverStatus";
 
     private final DriverService driverService;
-    private final UserOrderService orderService;
+    private final OrderService orderService;
 
     private IncomingOrderCommand(RequestFactory requestFactory,
                                  DriverService driverService,
-                                 UserOrderService orderService) {
+                                 OrderService orderService) {
         super(requestFactory);
         this.driverService = driverService;
         this.orderService = orderService;
@@ -62,7 +62,7 @@ public class IncomingOrderCommand extends CommonCommand {
         private static final IncomingOrderCommand INSTANCE = new IncomingOrderCommand(
                 RequestFactoryImpl.getInstance(),
                 EntityServiceFactory.getInstance().serviceFor(DriverService.class),
-                EntityServiceFactory.getInstance().serviceFor(UserOrderService.class));
+                EntityServiceFactory.getInstance().serviceFor(OrderService.class));
     }
 
 }

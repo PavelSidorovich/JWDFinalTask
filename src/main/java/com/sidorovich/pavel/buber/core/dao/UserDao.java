@@ -4,7 +4,7 @@ import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.UserStatus;
-import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
+import com.sidorovich.pavel.buber.api.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

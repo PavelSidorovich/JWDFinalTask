@@ -12,7 +12,7 @@ import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
-import com.sidorovich.pavel.buber.core.service.UserOrderService;
+import com.sidorovich.pavel.buber.core.service.OrderService;
 
 import java.util.Optional;
 
@@ -21,11 +21,11 @@ public class DriverProcessOrderCommand extends CommonCommand {
     public static final String USER_SESSION_PARAM_NAME = "user";
     public static final String ORDER_STATUS_REQUEST_PARAM_NAME = "orderStatus";
 
-    private final UserOrderService orderService;
+    private final OrderService orderService;
     private final DriverService driverService;
 
     private DriverProcessOrderCommand(RequestFactory requestFactory,
-                                      UserOrderService orderService,
+                                      OrderService orderService,
                                       DriverService driverService) {
         super(requestFactory);
         this.orderService = orderService;
@@ -88,7 +88,7 @@ public class DriverProcessOrderCommand extends CommonCommand {
     private static class Holder {
         private static final DriverProcessOrderCommand INSTANCE = new DriverProcessOrderCommand(
                 RequestFactoryImpl.getInstance(),
-                EntityServiceFactory.getInstance().serviceFor(UserOrderService.class),
+                EntityServiceFactory.getInstance().serviceFor(OrderService.class),
                 EntityServiceFactory.getInstance().serviceFor(DriverService.class));
     }
 

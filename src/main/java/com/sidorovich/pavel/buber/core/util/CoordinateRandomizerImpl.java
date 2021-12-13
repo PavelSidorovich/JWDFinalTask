@@ -1,6 +1,6 @@
-package com.sidorovich.pavel.buber.core.service;
+package com.sidorovich.pavel.buber.core.util;
 
-import com.sidorovich.pavel.buber.api.service.CoordinateRandomizer;
+import com.sidorovich.pavel.buber.api.util.CoordinateRandomizer;
 
 import java.math.BigDecimal;
 import java.util.Date;

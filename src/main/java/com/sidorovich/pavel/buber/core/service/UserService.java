@@ -4,8 +4,8 @@ import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.UserDao;
-import com.sidorovich.pavel.buber.exception.DuplicateKeyException;
-import com.sidorovich.pavel.buber.exception.EntitySavingException;
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
+import com.sidorovich.pavel.buber.api.exception.EntitySavingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +26,6 @@ public class UserService implements EntityService<BuberUser> {
         this.accountService = accountService;
     }
 
-    // TODO: 11/21/2021 make transactional
     @Override
     public BuberUser save(BuberUser user) throws DuplicateKeyException {
         Account account = accountService.save(user.getAccount());
@@ -67,7 +66,6 @@ public class UserService implements EntityService<BuberUser> {
         );
     }
 
-    // TODO: 11/21/2021 make transactional
     @Override
     public BuberUser update(BuberUser user) {
         try {

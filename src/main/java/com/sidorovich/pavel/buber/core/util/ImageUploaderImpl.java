@@ -1,6 +1,6 @@
-package com.sidorovich.pavel.buber.core.service;
+package com.sidorovich.pavel.buber.core.util;
 
-import com.sidorovich.pavel.buber.api.service.ImageUploader;
+import com.sidorovich.pavel.buber.api.util.ImageUploader;
 
 import javax.servlet.http.Part;
 import java.io.File;
@@ -11,14 +11,6 @@ public class ImageUploaderImpl implements ImageUploader {
     private static final String EMPTY_STRING = "";
 
     private ImageUploaderImpl() {
-    }
-
-    private static class Holder {
-        private static final ImageUploaderImpl INSTANCE = new ImageUploaderImpl();
-    }
-
-    public static ImageUploaderImpl getInstance() {
-        return Holder.INSTANCE;
     }
 
     @Override
@@ -33,6 +25,14 @@ public class ImageUploaderImpl implements ImageUploader {
         } catch (IOException e) {
             return EMPTY_STRING;
         }
+    }
+
+    public static ImageUploaderImpl getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    private static class Holder {
+        private static final ImageUploaderImpl INSTANCE = new ImageUploaderImpl();
     }
 
 }

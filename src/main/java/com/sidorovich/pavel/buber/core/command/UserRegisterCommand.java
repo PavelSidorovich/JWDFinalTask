@@ -16,7 +16,7 @@ import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.UserService;
 import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 import com.sidorovich.pavel.buber.core.validator.UserRegisterValidator;
-import com.sidorovich.pavel.buber.exception.DuplicateKeyException;
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 
 import java.math.BigDecimal;
 import java.util.Map;

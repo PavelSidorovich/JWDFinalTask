@@ -5,8 +5,8 @@ import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.DriverDao;
-import com.sidorovich.pavel.buber.exception.DuplicateKeyException;
-import com.sidorovich.pavel.buber.exception.EntitySavingException;
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
+import com.sidorovich.pavel.buber.api.exception.EntitySavingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

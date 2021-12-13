@@ -5,7 +5,7 @@ import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.CoordinatesDao;
 import com.sidorovich.pavel.buber.core.dao.TaxiDao;
-import com.sidorovich.pavel.buber.exception.DuplicateKeyException;
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +29,6 @@ public class TaxiService implements EntityService<Taxi> {
         this.coordinatesDao = coordinatesDao;
     }
 
-    // TODO: 11/21/2021 make transactional
     @Override
     public Taxi save(Taxi taxi) throws DuplicateKeyException {
         try {
@@ -73,7 +72,6 @@ public class TaxiService implements EntityService<Taxi> {
         );
     }
 
-    // TODO: 11/21/2021 make transactional
     @Override
     public Taxi update(Taxi taxi) {
         try {

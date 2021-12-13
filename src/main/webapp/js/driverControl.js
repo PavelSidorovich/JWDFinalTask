@@ -16,7 +16,7 @@ function addListenerToApproveButton() {
   })
 }
 
-//todo get message from server
+
 function sendPostRequest(e, driverStatus) {
   const id = e.target?.dataset?.id || null;
   if (id) {

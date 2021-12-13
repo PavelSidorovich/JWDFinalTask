@@ -1,6 +1,6 @@
 package com.sidorovich.pavel.buber.api.db;
 
-import com.sidorovich.pavel.buber.exception.EntityExtractionFailedException;
+import com.sidorovich.pavel.buber.api.exception.EntityExtractionFailedException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

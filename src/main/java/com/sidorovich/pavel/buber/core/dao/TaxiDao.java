@@ -5,7 +5,7 @@ import com.sidorovich.pavel.buber.api.db.QueryGenerator;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
-import com.sidorovich.pavel.buber.exception.IdIsNotDefinedException;
+import com.sidorovich.pavel.buber.api.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

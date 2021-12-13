@@ -3,7 +3,7 @@ package com.sidorovich.pavel.buber.core.db;
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
 import com.sidorovich.pavel.buber.api.db.ResultSetExtractor;
-import com.sidorovich.pavel.buber.exception.EntityExtractionFailedException;
+import com.sidorovich.pavel.buber.api.exception.EntityExtractionFailedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

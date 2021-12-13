@@ -10,10 +10,9 @@ import com.sidorovich.pavel.buber.api.model.UserOrder;
 import com.sidorovich.pavel.buber.core.controller.JsonResponseStatus;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
-import com.sidorovich.pavel.buber.core.service.UserOrderService;
+import com.sidorovich.pavel.buber.core.service.OrderService;
 import com.sidorovich.pavel.buber.core.service.UserService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,21 +22,21 @@ public class GetUsersByAmountOfOrdersCommand extends CommonCommand {
 
     private static final int ZERO_VALUE = 0;
     private final UserService userService;
-    private final UserOrderService userOrderService;
+    private final OrderService orderService;
 
     public GetUsersByAmountOfOrdersCommand(RequestFactory requestFactory,
                                            UserService userService,
-                                           UserOrderService userOrderService) {
+                                           OrderService orderService) {
         super(requestFactory);
         this.userService = userService;
-        this.userOrderService = userOrderService;
+        this.orderService = orderService;
     }
 
     private static class Holder {
         private static final GetUsersByAmountOfOrdersCommand INSTANCE = new GetUsersByAmountOfOrdersCommand(
                 RequestFactoryImpl.getInstance(),
                 EntityServiceFactory.getInstance().serviceFor(UserService.class),
-                EntityServiceFactory.getInstance().serviceFor(UserOrderService.class)
+                EntityServiceFactory.getInstance().serviceFor(OrderService.class)
         );
     }
 
@@ -51,9 +50,9 @@ public class GetUsersByAmountOfOrdersCommand extends CommonCommand {
         List<BuberUser> users = userService.findAll().stream()
                                            .filter(user -> user.getAccount().getRole() == Role.CLIENT)
                                            .collect(Collectors.toList());
-        List<UserOrder> orders = userOrderService.findAll().stream()
-                                                 .filter(order -> order.getStatus() == OrderStatus.COMPLETED)
-                                                 .collect(Collectors.toList());
+        List<UserOrder> orders = orderService.findAll().stream()
+                                             .filter(order -> order.getStatus() == OrderStatus.COMPLETED)
+                                             .collect(Collectors.toList());
 
         getUsersByOrderAmount(usersByOrderAmount, users, orders);
 
