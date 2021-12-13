@@ -12,7 +12,7 @@ function addListenerToRejectButton() {
 
 function addListenerToApproveButton() {
   $("#approveButton").on("click", function (e) {
-    sendPostRequest(e, "BUSY");
+    sendPostRequest(e, "REST");
   })
 }
 

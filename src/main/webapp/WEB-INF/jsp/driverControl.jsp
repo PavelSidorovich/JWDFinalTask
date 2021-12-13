@@ -17,7 +17,7 @@
     <link href="${contextPath}/css/applications.css?v=1.0" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="${contextPath}/js/bootstrap/bootstrap.min.js" rel="stylesheet"></script>
-    <script src="${contextPath}/js/driverControl.js?v=1.6" type="text/javascript"></script>
+    <script src="${contextPath}/js/driverControl.js?v=1.7" type="text/javascript"></script>
 </head>
 
 <body>
