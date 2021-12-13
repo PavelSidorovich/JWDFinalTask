@@ -2,6 +2,7 @@ package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
+import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.Role;
 import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
@@ -17,7 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public final class AccountDao extends CommonDao<Account> {
+public class AccountDao extends CommonDao<Account> {
 
     private static final Logger LOG = LogManager.getLogger(AccountDao.class);
 
@@ -28,12 +29,13 @@ public final class AccountDao extends CommonDao<Account> {
     private static final String PASSWORD_HASH_COLUMN_NAME = TABLE_NAME + ".password_hash";
     private static final String ROLE_NAME_COLUMN_NAME = TABLE_NAME + ".role_name";
 
-    AccountDao(ConnectionPool connectionPool) {
-        super(LOG, connectionPool);
+    AccountDao(ConnectionPool connectionPool,
+               QueryGeneratorFactory queryGeneratorFactory) {
+        super(LOG, connectionPool, queryGeneratorFactory);
     }
 
     public Optional<Account> readAccountByPhone(String phone) {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         List<Account> list = queryGenerator.select(getColumnNames())
                                            .from(getTableName())

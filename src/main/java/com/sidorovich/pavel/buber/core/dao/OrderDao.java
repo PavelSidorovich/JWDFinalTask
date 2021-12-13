@@ -2,13 +2,13 @@ package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
+import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.OrderStatus;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
-import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
 import com.sidorovich.pavel.buber.api.exception.IdIsNotDefinedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public final class UserOrderDao extends CommonDao<UserOrder> {
+public final class OrderDao extends CommonDao<UserOrder> {
 
-    private static final Logger LOG = LogManager.getLogger(UserOrderDao.class);
+    private static final Logger LOG = LogManager.getLogger(OrderDao.class);
 
     private static final String TABLE_NAME = "order";
     private static final String TABLE_NAME_WITH_DB = DATABASE_NAME + "." + TABLE_NAME;
@@ -36,12 +36,12 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
     private static final String STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
     private static final String DATE_OF_TRIP_COLUMN_NAME = TABLE_NAME + ".date_of_trip";
 
-    UserOrderDao(ConnectionPool connectionPool) {
-        super(LOG, connectionPool);
+    OrderDao(ConnectionPool connectionPool, QueryGeneratorFactory queryGeneratorFactory) {
+        super(LOG, connectionPool, queryGeneratorFactory);
     }
 
     public List<UserOrder> findByClientId(Long id) {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         return queryGenerator.select(getColumnNames())
                              .from(getTableName())
@@ -50,7 +50,7 @@ public final class UserOrderDao extends CommonDao<UserOrder> {
     }
 
     public List<UserOrder> findByDriverId(Long id) {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         return queryGenerator.select(getColumnNames())
                              .from(getTableName())

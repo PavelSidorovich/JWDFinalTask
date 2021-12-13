@@ -2,6 +2,7 @@ package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
+import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Driver;
@@ -32,12 +33,12 @@ public final class DriverDao extends CommonDao<Driver> {
     private static final String TAXI_ID_COLUMN_NAME = TABLE_NAME + ".taxi_id";
     private static final String DRIVER_STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
 
-    DriverDao(ConnectionPool connectionPool) {
-        super(LOG, connectionPool);
+    DriverDao(ConnectionPool connectionPool, QueryGeneratorFactory queryGeneratorFactory) {
+        super(LOG, connectionPool, queryGeneratorFactory);
     }
 
     public Optional<Driver> findByTaxiId(Long id) {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
         List<Driver> list = queryGenerator.select(getColumnNames())
                                           .from(getTableName())
                                           .where(TAXI_ID_COLUMN_NAME, id)

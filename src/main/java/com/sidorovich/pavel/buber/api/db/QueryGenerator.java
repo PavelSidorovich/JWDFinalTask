@@ -46,4 +46,6 @@ public interface QueryGenerator {
 
     void reset();
 
+    String getSqlQuery();
+
 }

@@ -8,9 +8,9 @@ import com.sidorovich.pavel.buber.core.dao.BonusDao;
 import com.sidorovich.pavel.buber.core.dao.CoordinatesDao;
 import com.sidorovich.pavel.buber.core.dao.DaoFactory;
 import com.sidorovich.pavel.buber.core.dao.DriverDao;
+import com.sidorovich.pavel.buber.core.dao.OrderDao;
 import com.sidorovich.pavel.buber.core.dao.TaxiDao;
 import com.sidorovich.pavel.buber.core.dao.UserDao;
-import com.sidorovich.pavel.buber.core.dao.UserOrderDao;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -61,7 +61,7 @@ public class EntityServiceFactory implements ServiceFactory {
                 return new TaxiService(daoFactory.serviceFor(TaxiDao.class),
                                        daoFactory.serviceFor(CoordinatesDao.class));
             case "OrderService":
-                return new OrderService(daoFactory.serviceFor(UserOrderDao.class),
+                return new OrderService(daoFactory.serviceFor(OrderDao.class),
                                         serviceFor(DriverService.class),
                                         serviceFor(UserService.class),
                                         daoFactory.serviceFor(CoordinatesDao.class));

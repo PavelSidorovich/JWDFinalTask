@@ -2,7 +2,9 @@ package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.dao.EntityDao;
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
 import com.sidorovich.pavel.buber.api.service.ServiceFactory;
+import com.sidorovich.pavel.buber.core.db.QueryGeneratorFactoryImpl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +16,7 @@ public class DaoFactory implements ServiceFactory {
 
     private final Map<Class<?>, EntityDao<?>> daoByEntity = new ConcurrentHashMap<>();
     private final ConnectionPool connectionPool = ConnectionPool.locking();
+    private final QueryGeneratorFactory queryGeneratorFactory = QueryGeneratorFactoryImpl.getInstance();
 
     private DaoFactory() {
     }
@@ -37,19 +40,19 @@ public class DaoFactory implements ServiceFactory {
             final String className = clazz.getSimpleName();
             switch (className) {
             case "AccountDao":
-                return new AccountDao(connectionPool);
+                return new AccountDao(connectionPool, queryGeneratorFactory);
             case "BonusDao":
-                return new BonusDao(connectionPool);
+                return new BonusDao(connectionPool, queryGeneratorFactory);
             case "UserDao":
-                return new UserDao(connectionPool);
+                return new UserDao(connectionPool, queryGeneratorFactory);
             case "CoordinatesDao":
-                return new CoordinatesDao(connectionPool);
+                return new CoordinatesDao(connectionPool, queryGeneratorFactory);
             case "DriverDao":
-                return new DriverDao(connectionPool);
+                return new DriverDao(connectionPool, queryGeneratorFactory);
             case "TaxiDao":
-                return new TaxiDao(connectionPool);
-            case "UserOrderDao":
-                return new UserOrderDao(connectionPool);
+                return new TaxiDao(connectionPool, queryGeneratorFactory);
+            case "OrderDao":
+                return new OrderDao(connectionPool, queryGeneratorFactory);
             default:
                 throw new IllegalArgumentException(String.format(SERVICE_NOT_FOUND, className));
             }

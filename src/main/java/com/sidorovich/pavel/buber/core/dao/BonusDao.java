@@ -2,21 +2,19 @@ package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
+import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.Bonus;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
-import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public final class BonusDao extends CommonDao<Bonus> {
@@ -28,14 +26,14 @@ public final class BonusDao extends CommonDao<Bonus> {
     private static final String ID_COLUMN_NAME = TABLE_NAME + ".id";
     private static final String CLIENT_ID_COLUMN_NAME = TABLE_NAME + ".client_id";
     private static final String DISCOUNT_COLUMN_NAME = TABLE_NAME + ".discount";
-    private static final String EXPIRES_ID_COLUMN_NAME = TABLE_NAME + ".expires";
+    private static final String EXPIRES_COLUMN_NAME = TABLE_NAME + ".expires";
 
-    BonusDao(ConnectionPool connectionPool) {
-        super(LOG, connectionPool);
+    BonusDao(ConnectionPool connectionPool, QueryGeneratorFactory  queryGeneratorFactory) {
+        super(LOG, connectionPool, queryGeneratorFactory);
     }
 
     public List<Bonus> findBonusesByUserId(Long id) {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         return queryGenerator.select(getColumnNames())
                              .from(getTableName())
@@ -44,7 +42,7 @@ public final class BonusDao extends CommonDao<Bonus> {
     }
 
     public List<Bonus> findBonusesByUserIdAndDiscount(Long id, Double discount) {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         return queryGenerator.select(getColumnNames())
                              .from(getTableName())
@@ -64,7 +62,7 @@ public final class BonusDao extends CommonDao<Bonus> {
 
         columns.add(ID_COLUMN_NAME);
         columns.add(DISCOUNT_COLUMN_NAME);
-        columns.add(EXPIRES_ID_COLUMN_NAME);
+        columns.add(EXPIRES_COLUMN_NAME);
         columns.add(CLIENT_ID_COLUMN_NAME);
 
         return columns;
@@ -75,7 +73,7 @@ public final class BonusDao extends CommonDao<Bonus> {
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
         map.put(DISCOUNT_COLUMN_NAME, bonus.getDiscount());
-        map.put(EXPIRES_ID_COLUMN_NAME, bonus.getExpireDate());
+        map.put(EXPIRES_COLUMN_NAME, bonus.getExpireDate());
         map.put(CLIENT_ID_COLUMN_NAME, bonus.getClient().getId().orElse(-1L));
 
         return map;
@@ -91,7 +89,7 @@ public final class BonusDao extends CommonDao<Bonus> {
         return new Bonus(
                 rs.getLong(ID_COLUMN_NAME),
                 rs.getDouble(DISCOUNT_COLUMN_NAME),
-                rs.getDate(EXPIRES_ID_COLUMN_NAME),
+                rs.getDate(EXPIRES_COLUMN_NAME),
                 BuberUser.with()
                          .account(new Account(
                                  rs.getLong(CLIENT_ID_COLUMN_NAME), null,

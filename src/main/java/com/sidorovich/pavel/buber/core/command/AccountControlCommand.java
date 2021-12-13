@@ -19,16 +19,17 @@ public class AccountControlCommand extends CommonCommand {
     private final UserService userService;
 
     private AccountControlCommand(RequestFactory requestFactory,
-                                UserService userService) {
+                                  UserService userService) {
         super(requestFactory);
         this.userService = userService;
     }
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        if (request.sessionExists()) {
-            Account account = (Account) request.retrieveFromSession(USER_SESSION_PARAM_NAME).orElseGet(null);
-            Optional<BuberUser> user = userService.findByPhone(account.getPhone());
+        Optional<Object> optAccount = request.retrieveFromSession(USER_SESSION_PARAM_NAME);
+
+        if (optAccount.isPresent()) {
+            Optional<BuberUser> user = userService.findByPhone(((Account) optAccount.get()).getPhone());
 
             user.ifPresent(buberUser -> request.addAttributeToJsp(USER_SESSION_PARAM_NAME, buberUser));
         }

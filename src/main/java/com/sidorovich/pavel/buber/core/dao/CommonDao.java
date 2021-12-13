@@ -3,6 +3,7 @@ package com.sidorovich.pavel.buber.core.dao;
 import com.sidorovich.pavel.buber.api.dao.EntityDao;
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
+import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
 import com.sidorovich.pavel.buber.api.model.Entity;
 import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
 import com.sidorovich.pavel.buber.api.exception.CannotFindEntityByIdException;
@@ -23,15 +24,17 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
 
     private final Logger logger;
     protected final ConnectionPool connectionPool;
+    protected final QueryGeneratorFactory queryGeneratorFactory;
 
-    CommonDao(Logger logger, ConnectionPool connectionPool) {
+    CommonDao(Logger logger, ConnectionPool connectionPool, QueryGeneratorFactory queryGeneratorFactory) {
         this.logger = logger;
         this.connectionPool = connectionPool;
+        this.queryGeneratorFactory = queryGeneratorFactory;
     }
 
     @Override
     public T save(T entity) throws SQLException {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         long id = queryGenerator.insertInto(getTableName(), getColumnsAndValuesToBeInserted(entity).keySet())
                                 .values(getColumnsAndValuesToBeInserted(entity).values())
@@ -40,7 +43,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
     }
 
     public T update(T entity) throws SQLException {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         try {
             queryGenerator.update(getTableName())
@@ -58,7 +61,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
 
     @Override
     public Optional<T> findById(Long id) {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         List<T> list = queryGenerator.select(getColumnNames())
                                      .from(getTableName())
@@ -69,7 +72,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
 
     @Override
     public List<T> findAll() {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         return queryGenerator.select(getColumnNames())
                              .from(getTableName())
@@ -78,7 +81,7 @@ public abstract class CommonDao<T extends Entity<T>> implements EntityDao<T> {
 
     @Override
     public boolean delete(Long id) {
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
 
         try {
             return queryGenerator.delete()

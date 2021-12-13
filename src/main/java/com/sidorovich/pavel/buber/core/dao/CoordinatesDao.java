@@ -1,6 +1,7 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,8 +23,8 @@ public final class CoordinatesDao extends CommonDao<Coordinates> {
     private static final String LATITUDE_COLUMN_NAME = TABLE_NAME + ".latitude";
     private static final String LONGITUDE_COLUMN_NAME = TABLE_NAME + ".longitude";
 
-    CoordinatesDao(ConnectionPool connectionPool) {
-        super(LOG, connectionPool);
+    CoordinatesDao(ConnectionPool connectionPool, QueryGeneratorFactory queryGeneratorFactory) {
+        super(LOG, connectionPool, queryGeneratorFactory);
     }
 
     @Override
@@ -63,4 +64,5 @@ public final class CoordinatesDao extends CommonDao<Coordinates> {
                 rs.getBigDecimal(LONGITUDE_COLUMN_NAME)
         );
     }
+
 }

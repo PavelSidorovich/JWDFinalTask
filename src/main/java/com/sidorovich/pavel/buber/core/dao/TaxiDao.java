@@ -2,6 +2,7 @@ package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
+import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
 import com.sidorovich.pavel.buber.api.model.Coordinates;
 import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
@@ -31,12 +32,12 @@ public final class TaxiDao extends CommonDao<Taxi> {
     private static final String LICENCE_PLATE_COLUMN_NAME = TABLE_NAME + ".license_plate";
     private static final String LAST_COORDINATES_ID_COLUMN_NAME = TABLE_NAME + ".last_coordinates_id";
 
-    TaxiDao(ConnectionPool connectionPool) {
-        super(LOG, connectionPool);
+    TaxiDao(ConnectionPool connectionPool, QueryGeneratorFactory queryGeneratorFactory) {
+        super(LOG, connectionPool, queryGeneratorFactory);
     }
 
     public Optional<Taxi> findByLicencePlate(String licencePlate){
-        QueryGenerator queryGenerator = new QueryGeneratorImpl(connectionPool);
+        QueryGenerator queryGenerator = queryGeneratorFactory.of(connectionPool);
         List<Taxi> list = queryGenerator.select(getColumnNames())
                                           .from(getTableName())
                                           .where(LICENCE_PLATE_COLUMN_NAME, licencePlate)

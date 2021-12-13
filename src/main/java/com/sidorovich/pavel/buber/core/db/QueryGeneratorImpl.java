@@ -224,7 +224,7 @@ public class QueryGeneratorImpl implements QueryGenerator {
 
     @Override
     public QueryGenerator desc() {
-        sqlQuery += DESC + WHITE_SPACE;
+        sqlQuery += DESC;
 
         return this;
     }
@@ -256,6 +256,11 @@ public class QueryGeneratorImpl implements QueryGenerator {
     public void reset() {
         sqlQuery = "";
         preparedStatementValues.clear();
+    }
+
+    @Override
+    public String getSqlQuery() {
+        return sqlQuery;
     }
 
 }

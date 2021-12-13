@@ -1,6 +1,7 @@
 package com.sidorovich.pavel.buber.core.dao;
 
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
+import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.UserStatus;
@@ -28,8 +29,8 @@ public final class UserDao extends CommonDao<BuberUser> {
     private static final String MONEY_COLUMN_NAME = TABLE_NAME + ".money";
     private static final String STATUS_NAME_COLUMN_NAME = TABLE_NAME + ".status_name";
 
-    UserDao(ConnectionPool connectionPool) {
-        super(LOG, connectionPool);
+    UserDao(ConnectionPool connectionPool, QueryGeneratorFactory queryGeneratorFactory) {
+        super(LOG, connectionPool, queryGeneratorFactory);
     }
 
     @Override

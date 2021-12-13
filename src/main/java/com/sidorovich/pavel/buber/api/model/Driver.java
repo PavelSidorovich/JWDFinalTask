@@ -75,17 +75,15 @@ public class Driver implements Entity<Driver> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
         Driver driver = (Driver) o;
-        return Objects.equals(drivingLicence, driver.drivingLicence) &&
+        return Objects.equals(user, driver.user) &&
+               Objects.equals(drivingLicence, driver.drivingLicence) &&
                Objects.equals(taxi, driver.taxi) && driverStatus == driver.driverStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), drivingLicence, taxi, driverStatus);
+        return Objects.hash(user, drivingLicence, taxi, driverStatus);
     }
 
     @Override

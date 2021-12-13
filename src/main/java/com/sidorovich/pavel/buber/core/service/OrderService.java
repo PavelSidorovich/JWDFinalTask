@@ -5,7 +5,7 @@ import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.CoordinatesDao;
-import com.sidorovich.pavel.buber.core.dao.UserOrderDao;
+import com.sidorovich.pavel.buber.core.dao.OrderDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,12 +18,12 @@ public class OrderService implements EntityService<UserOrder> {
 
     private static final Logger LOG = LogManager.getLogger(OrderService.class);
 
-    private final UserOrderDao orderDao;
+    private final OrderDao orderDao;
     private final DriverService driverService;
     private final UserService userService;
     private final CoordinatesDao coordinatesDao;
 
-    OrderService(UserOrderDao orderDao, DriverService driverService,
+    OrderService(OrderDao orderDao, DriverService driverService,
                  UserService userService,
                  CoordinatesDao coordinatesDao) {
         this.orderDao = orderDao;
