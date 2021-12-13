@@ -10,6 +10,7 @@ import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.DriverStatus;
 import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
+import com.sidorovich.pavel.buber.api.util.ResourceBundleExtractor;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.BonusService;
@@ -17,16 +18,19 @@ import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.OrderService;
 import com.sidorovich.pavel.buber.core.service.UserService;
+import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import static com.sidorovich.pavel.buber.api.model.OrderStatus.*;
 
 public class MakeOrderCommand extends CommonCommand {
 
-    private static final String NO_FREE_DRIVERS_MSG = "No free drivers. Please, wait for few minutes :(";
+    private static final String ERROR_BASE_NAME = "l10n.msg.error";
+    private static final String NO_FREE_DRIVERS_KEY = "msg.busyDrivers";
     private static final String ORDER_ATTR_PARAM_NAME = "order";
     private static final String BONUSES_ATTR_PARAM_NAME = "bonuses";
     private static final String TAXI_ERROR_ATTR_PARAM_NAME = "taxiError";
@@ -37,36 +41,42 @@ public class MakeOrderCommand extends CommonCommand {
     private final OrderService orderService;
     private final UserService userService;
     private final BonusService bonusService;
+    private final ResourceBundleExtractor bundleExtractor;
 
     private MakeOrderCommand(RequestFactory requestFactory,
                              DriverService driverService,
                              OrderService orderService,
                              UserService userService,
-                             BonusService bonusService) {
+                             BonusService bonusService,
+                             ResourceBundleExtractor bundleExtractor) {
         super(requestFactory);
         this.driverService = driverService;
         this.orderService = orderService;
         this.userService = userService;
         this.bonusService = bonusService;
+        this.bundleExtractor = bundleExtractor;
     }
 
     @Override
     public CommandResponse execute(CommandRequest request) {
         if (request.sessionExists()) {
-            Account account = (Account) request.retrieveFromSession(USER_SESSION_PARAM_NAME).orElseGet(null);
-            Optional<BuberUser> user = userService.findByPhone(account.getPhone());
-            Optional<UserOrder> userOrder = Optional.empty();
+            Optional<Object> account =  request.retrieveFromSession(USER_SESSION_PARAM_NAME);
 
-            if (user.isPresent()) {
-                userOrder = orderService
-                        .findByClient(user.get())
-                        .stream()
-                        .filter(order -> order.getStatus() == NEW || order.getStatus() == IN_PROCESS)
-                        .findFirst();
-                addBonusesToJsp(request, user.get());
-                addTaxisToJsp(request);
+            if (account.isPresent()) {
+                Optional<BuberUser> user = userService.findByPhone(((Account)account.get()).getPhone());
+                Optional<UserOrder> userOrder = Optional.empty();
+
+                if (user.isPresent()) {
+                    userOrder = orderService
+                            .findByClient(user.get())
+                            .stream()
+                            .filter(order -> order.getStatus() == NEW || order.getStatus() == IN_PROCESS)
+                            .findFirst();
+                    addBonusesToJsp(request, user.get());
+                    addTaxisToJsp(request);
+                }
+                userOrder.ifPresent(order -> request.addAttributeToJsp(ORDER_ATTR_PARAM_NAME, order));
             }
-            userOrder.ifPresent(order -> request.addAttributeToJsp(ORDER_ATTR_PARAM_NAME, order));
         }
 
         return requestFactory.createForwardResponse(PagePaths.CLIENT_ORDER.getJspPath());
@@ -83,9 +93,10 @@ public class MakeOrderCommand extends CommonCommand {
                                         .filter(driver -> driver.getDriverStatus() == DriverStatus.FREE)
                                         .map(Driver::getTaxi)
                                         .collect(Collectors.toList());
+        ResourceBundle bundle = bundleExtractor.extractResourceBundle(request, ERROR_BASE_NAME);
 
         if (taxis.isEmpty()) {
-            request.addAttributeToJsp(TAXI_ERROR_ATTR_PARAM_NAME, NO_FREE_DRIVERS_MSG);
+            request.addAttributeToJsp(TAXI_ERROR_ATTR_PARAM_NAME, bundle.getString(NO_FREE_DRIVERS_KEY));
         }
         request.addAttributeToJsp(TAXIS_REQUEST_ATTR_NAME, taxis);
     }
@@ -100,7 +111,9 @@ public class MakeOrderCommand extends CommonCommand {
                 EntityServiceFactory.getInstance().serviceFor(DriverService.class),
                 EntityServiceFactory.getInstance().serviceFor(OrderService.class),
                 EntityServiceFactory.getInstance().serviceFor(UserService.class),
-                EntityServiceFactory.getInstance().serviceFor(BonusService.class));
+                EntityServiceFactory.getInstance().serviceFor(BonusService.class),
+                ResourceBundleExtractorImpl.getInstance()
+        );
     }
 
 }
