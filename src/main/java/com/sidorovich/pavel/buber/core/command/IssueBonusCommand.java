@@ -3,6 +3,7 @@ package com.sidorovich.pavel.buber.core.command;
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 import com.sidorovich.pavel.buber.api.model.Bonus;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.util.ResourceBundleExtractor;
@@ -14,7 +15,6 @@ import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.UserService;
 import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 import com.sidorovich.pavel.buber.core.validator.BonusValidator;
-import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -64,7 +64,8 @@ public class IssueBonusCommand extends CommonCommand {
     @Override
     public CommandResponse execute(CommandRequest request) {
         ResourceBundle resourceBundle = resourceBundleExtractor.extractResourceBundle(request, ERRORS_BASE_NAME);
-        ResourceBundle successResourceBundle = resourceBundleExtractor.extractResourceBundle(request, SUCCESS_BASE_NAME);
+        ResourceBundle successResourceBundle =
+                resourceBundleExtractor.extractResourceBundle(request, SUCCESS_BASE_NAME);
         Map<String, String> errorsByMessages = new HashMap<>();
         Double discount = getDiscount(request, errorsByMessages, resourceBundle);
         Date expireDate = getExpireDate(request, errorsByMessages, resourceBundle);
@@ -118,7 +119,7 @@ public class IssueBonusCommand extends CommonCommand {
         try {
             discount = Double.parseDouble(request.getParameter(DISCOUNT_REQUEST_PARAM_NAME));
         } catch (NumberFormatException e) {
-            errorsByMessages.put(DISCOUNT_REQUEST_PARAM_NAME,resourceBundle.getString(INVALID_DISCOUNT_KEY));
+            errorsByMessages.put(DISCOUNT_REQUEST_PARAM_NAME, resourceBundle.getString(INVALID_DISCOUNT_KEY));
         }
 
         return discount;

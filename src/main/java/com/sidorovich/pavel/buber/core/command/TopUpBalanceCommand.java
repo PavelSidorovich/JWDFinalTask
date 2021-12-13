@@ -3,13 +3,13 @@ package com.sidorovich.pavel.buber.core.command;
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
+import com.sidorovich.pavel.buber.api.exception.EmptySessionException;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.UserService;
-import com.sidorovich.pavel.buber.api.exception.EmptySessionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

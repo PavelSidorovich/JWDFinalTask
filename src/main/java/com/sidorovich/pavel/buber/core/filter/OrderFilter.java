@@ -41,10 +41,10 @@ public class OrderFilter implements Filter {
         List<UserOrder> toCancel =
                 orderService.findAll().stream()
                             .filter(order -> (order.getStatus() == NEW
-                                                  || order.getStatus() == IN_PROCESS)
-                                                 && (order.getDriver().getUser().getStatus() == BLOCKED
-                                                     || order.getClient().getStatus() == BLOCKED)
-                                ).collect(Collectors.toList());
+                                              || order.getStatus() == IN_PROCESS)
+                                             && (order.getDriver().getUser().getStatus() == BLOCKED
+                                                 || order.getClient().getStatus() == BLOCKED)
+                            ).collect(Collectors.toList());
 
         for (UserOrder userOrder : toCancel) {
             orderService.update(userOrder.withStatus(CANCELLED));

@@ -3,6 +3,7 @@ package com.sidorovich.pavel.buber.core.command;
 import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Role;
@@ -16,7 +17,6 @@ import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.UserService;
 import com.sidorovich.pavel.buber.core.util.ResourceBundleExtractorImpl;
 import com.sidorovich.pavel.buber.core.validator.UserRegisterValidator;
-import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -47,7 +47,6 @@ public class UserRegisterCommand extends CommonCommand {
     }
 
 
-
     @Override
     public CommandResponse execute(CommandRequest request) {
         String fName = request.getParameter(F_NAME_REQUEST_PARAM_NAME);
@@ -64,7 +63,8 @@ public class UserRegisterCommand extends CommonCommand {
     }
 
 
-    private CommandResponse processRegisterRequest(BuberUser user, String passwordRepeat, ResourceBundle resourceBundle) {
+    private CommandResponse processRegisterRequest(BuberUser user, String passwordRepeat,
+                                                   ResourceBundle resourceBundle) {
         Map<String, String> errorsByMessages = validator.validate(user, passwordRepeat, resourceBundle);
 
         if (errorsByMessages.isEmpty()) {

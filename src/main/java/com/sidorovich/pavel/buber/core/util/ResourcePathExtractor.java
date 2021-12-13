@@ -9,7 +9,7 @@ public class ResourcePathExtractor implements Extractor<String, String> {
 
     private static final String CANNOT_FIND_PROPERTY_FILE_MSG = "Cannot find property file: %s";
 
-    private ResourcePathExtractor(){
+    private ResourcePathExtractor() {
     }
 
     @Override

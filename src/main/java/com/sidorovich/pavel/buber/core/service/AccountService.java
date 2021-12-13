@@ -1,10 +1,10 @@
 package com.sidorovich.pavel.buber.core.service;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 import com.sidorovich.pavel.buber.api.model.Account;
 import com.sidorovich.pavel.buber.api.service.EntityService;
 import com.sidorovich.pavel.buber.core.dao.AccountDao;
-import com.sidorovich.pavel.buber.api.exception.DuplicateKeyException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

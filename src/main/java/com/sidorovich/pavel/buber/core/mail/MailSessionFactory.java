@@ -10,7 +10,7 @@ public class MailSessionFactory {
     private static final String MAIL_USER_NAME_PROPERTY_NAME = "mail.user.name";
     private static final String MAIL_USER_PASSWORD_PROPERTY_NAME = "mail.user.password";
 
-    private MailSessionFactory(){
+    private MailSessionFactory() {
     }
 
     public Session createSession(Properties configProperties) {

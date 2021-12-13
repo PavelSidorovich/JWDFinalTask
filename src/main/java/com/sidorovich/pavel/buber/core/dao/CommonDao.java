@@ -4,11 +4,10 @@ import com.sidorovich.pavel.buber.api.dao.EntityDao;
 import com.sidorovich.pavel.buber.api.db.ConnectionPool;
 import com.sidorovich.pavel.buber.api.db.QueryGenerator;
 import com.sidorovich.pavel.buber.api.db.QueryGeneratorFactory;
-import com.sidorovich.pavel.buber.api.model.Entity;
-import com.sidorovich.pavel.buber.core.db.QueryGeneratorImpl;
 import com.sidorovich.pavel.buber.api.exception.CannotFindEntityByIdException;
 import com.sidorovich.pavel.buber.api.exception.EntityExtractionFailedException;
 import com.sidorovich.pavel.buber.api.exception.IdIsNotDefinedException;
+import com.sidorovich.pavel.buber.api.model.Entity;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;

@@ -36,7 +36,8 @@ public class UserRegisterValidator implements BiValidator<BuberUser, String, Map
         errorsByMessages.putAll(personalInfoValidator.validate(user, resourceBundle));
         errorsByMessages.putAll(phoneValidator.validate(user.getPhone(), resourceBundle));
         errorsByMessages.putAll(passwordValidator.validate(user.getPasswordHash(), passwordRepeat, resourceBundle));
-        errorsByMessages.putAll(emailValidator.validate(user.getEmail().orElse(EMPTY_STRING), EMAIL_IS_OPTIONAL, resourceBundle));
+        errorsByMessages.putAll(
+                emailValidator.validate(user.getEmail().orElse(EMPTY_STRING), EMAIL_IS_OPTIONAL, resourceBundle));
 
         return errorsByMessages;
     }
