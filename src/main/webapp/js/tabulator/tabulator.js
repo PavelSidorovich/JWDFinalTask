@@ -1,10 +1,9 @@
 /* Tabulator v5.0.7 (c) Oliver Folkerd 2021 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Tabulator = factory());
-}(this, (function () {
-  'use strict';
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Tabulator = factory());
+}(this, (function () { 'use strict';
 
   function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -81,8 +80,7 @@
     if (typeof Proxy === "function") return true;
 
     try {
-      Date.prototype.toString.call(Reflect.construct(Date, [], function () {
-      }));
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
       return true;
     } catch (e) {
       return false;
@@ -110,7 +108,7 @@
 
     return function _createSuperInternal() {
       var Super = _getPrototypeOf(Derived),
-        result;
+          result;
 
       if (hasNativeReflectConstruct) {
         var NewTarget = _getPrototypeOf(this).constructor;
@@ -165,8 +163,7 @@
         if (it) o = it;
         var i = 0;
 
-        var F = function () {
-        };
+        var F = function () {};
 
         return {
           s: F,
@@ -190,8 +187,8 @@
     }
 
     var normalCompletion = true,
-      didErr = false,
-      err;
+        didErr = false,
+        err;
     return {
       s: function () {
         it = o[Symbol.iterator]();
@@ -791,17 +788,17 @@
         var _this2 = this;
 
         var element = this.element,
-          field = this.column.getField(),
-          vertAligns = {
-            top: "flex-start",
-            bottom: "flex-end",
-            middle: "center"
-          },
-          hozAligns = {
-            left: "flex-start",
-            right: "flex-end",
-            center: "center"
-          }; //set text alignment
+            field = this.column.getField(),
+            vertAligns = {
+          top: "flex-start",
+          bottom: "flex-end",
+          middle: "center"
+        },
+            hozAligns = {
+          left: "flex-start",
+          right: "flex-end",
+          center: "center"
+        }; //set text alignment
 
         element.style.textAlign = this.column.hozAlign;
 
@@ -1329,9 +1326,9 @@
         var _this5 = this;
 
         var def = this.definition,
-          dblTap,
-          tapHold,
-          tap; //setup header click event bindings
+            dblTap,
+            tapHold,
+            tap; //setup header click event bindings
 
         if (typeof def.headerClick == "function") {
           this.element.addEventListener("click", function (e) {
@@ -1410,7 +1407,7 @@
         var _this6 = this;
 
         var def = this.definition,
-          table = this.table;
+            table = this.table;
         this.dispatch("column-layout", this); //set column visibility
 
         if (typeof def.visible != "undefined") {
@@ -1452,7 +1449,7 @@
       key: "_buildColumnHeaderContent",
       value: function _buildColumnHeaderContent() {
         var def = this.definition,
-          table = this.table;
+            table = this.table;
         var contentElement = document.createElement("div");
         contentElement.classList.add("tabulator-col-content");
         this.titleHolderElement = document.createElement("div");
@@ -1563,9 +1560,9 @@
       key: "_getNestedData",
       value: function _getNestedData(data) {
         var dataObj = data,
-          structure = this.fieldStructure,
-          length = structure.length,
-          output;
+            structure = this.fieldStructure,
+            length = structure.length,
+            output;
 
         for (var i = 0; i < length; i++) {
           dataObj = dataObj[structure[i]];
@@ -1591,8 +1588,8 @@
       key: "_setNestedData",
       value: function _setNestedData(data, value) {
         var dataObj = data,
-          structure = this.fieldStructure,
-          length = structure.length;
+            structure = this.fieldStructure,
+            length = structure.length;
 
         for (var i = 0; i < length; i++) {
           if (i == length - 1) {
@@ -2171,7 +2168,7 @@
 
         var list = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
         var objectProto = {}.__proto__,
-          arrayProto = [].__proto__;
+            arrayProto = [].__proto__;
 
         if (!clone) {
           clone = Object.assign(Array.isArray(obj) ? [] : {}, obj);
@@ -2179,8 +2176,8 @@
 
         var _loop = function _loop() {
           var subject = obj[i],
-            match = void 0,
-            copy = void 0;
+              match = void 0,
+              copy = void 0;
 
           if (subject != null && _typeof(subject) === "object" && (subject.__proto__ === objectProto || subject.__proto__ === arrayProto)) {
             match = list.findIndex(function (item) {
@@ -2405,8 +2402,8 @@
         var _this2 = this;
 
         var rowIndex = this.rows().indexOf(row),
-          rowEl = row.getElement(),
-          offset = 0;
+            rowEl = row.getElement(),
+            offset = 0;
         return new Promise(function (resolve, reject) {
           if (rowIndex > -1) {
             if (typeof ifVisible === "undefined") {
@@ -2535,8 +2532,8 @@
       key: "compatabilityCheck",
       value: function compatabilityCheck() {
         var columns = this.options("columns"),
-          frozen = false,
-          ok = true;
+            frozen = false,
+            ok = true;
 
         if (this.options("layout") == "fitDataTable") {
           console.warn("Horizontal Vitrual DOM is not compatible with fitDataTable layout mode");
@@ -2700,10 +2697,10 @@
         var _this3 = this;
 
         var change = false,
-          collsWidth = 0,
-          colEnd = 0,
-          row,
-          rowEl;
+            collsWidth = 0,
+            colEnd = 0,
+            row,
+            rowEl;
 
         if (this.options("layout") === "fitData") {
           this.table.columnManager.columnsByIndex.forEach(function (column) {
@@ -2814,7 +2811,7 @@
       key: "addColRight",
       value: function addColRight() {
         var column = this.columns[this.rightCol + 1],
-          rows;
+            rows;
 
         if (column && column.modules.vdomHoz.leftPos <= this.vDomScrollPosRight) {
           rows = this.table.rowManager.getVisibleRows();
@@ -2842,7 +2839,7 @@
       key: "addColLeft",
       value: function addColLeft() {
         var column = this.columns[this.leftCol - 1],
-          rows;
+            rows;
 
         if (column && column.modules.vdomHoz.rightPos >= this.vDomScrollPosLeft) {
           var rows = this.table.rowManager.getVisibleRows();
@@ -2870,7 +2867,7 @@
       key: "removeColRight",
       value: function removeColRight(column) {
         var column = this.columns[this.rightCol],
-          rows;
+            rows;
 
         if (column && column.modules.vdomHoz.leftPos > this.vDomScrollPosRight) {
           rows = this.table.rowManager.getVisibleRows();
@@ -2891,7 +2888,7 @@
       key: "removeColLeft",
       value: function removeColLeft() {
         var column = this.columns[this.leftCol],
-          rows;
+            rows;
 
         if (column && column.modules.vdomHoz.rightPos < this.vDomScrollPosLeft) {
           rows = this.table.rowManager.getVisibleRows();
@@ -3066,7 +3063,7 @@
       key: "scrollHorizontal",
       value: function scrollHorizontal(left) {
         var hozAdjust = 0,
-          scrollWidth = this.element.scrollWidth - this.table.element.clientWidth; // this.tempScrollBlock();
+            scrollWidth = this.element.scrollWidth - this.table.element.clientWidth; // this.tempScrollBlock();
 
         this.element.scrollLeft = left; //adjust for vertical scrollbar moving table when present
 
@@ -3085,9 +3082,9 @@
       key: "generateColumnsFromRowData",
       value: function generateColumnsFromRowData(data) {
         var cols = [],
-          definitions = this.table.options.autoColumnsDefinitions,
-          row,
-          sorter;
+            definitions = this.table.options.autoColumnsDefinitions,
+            row,
+            sorter;
 
         if (data && data.length) {
           row = data[0];
@@ -3197,8 +3194,8 @@
       key: "_addColumn",
       value: function _addColumn(definition, before, nextToColumn) {
         var column = new Column$1(definition, this),
-          colEl = column.getElement(),
-          index = nextToColumn ? this.findColumnIndex(nextToColumn) : nextToColumn;
+            colEl = column.getElement(),
+            index = nextToColumn ? this.findColumnIndex(nextToColumn) : nextToColumn;
 
         if (nextToColumn && index > -1) {
           var topColumn = nextToColumn.getTopColumn();
@@ -3377,7 +3374,7 @@
       key: "getComponents",
       value: function getComponents(structured) {
         var output = [],
-          columns = structured ? this.columns : this.columnsByIndex;
+            columns = structured ? this.columns : this.columnsByIndex;
         columns.forEach(function (column) {
           output.push(column.getComponent());
         });
@@ -3429,8 +3426,8 @@
       key: "_moveColumnInArray",
       value: function _moveColumnInArray(columns, from, to, after, updateRows) {
         var fromIndex = columns.indexOf(from),
-          toIndex,
-          rows = [];
+            toIndex,
+            rows = [];
 
         if (fromIndex > -1) {
           columns.splice(fromIndex, 1);
@@ -3464,9 +3461,9 @@
         var _this5 = this;
 
         var left = 0,
-          offset = 0,
-          adjust = 0,
-          colEl = column.getElement();
+            offset = 0,
+            adjust = 0,
+            colEl = column.getElement();
         return new Promise(function (resolve, reject) {
           if (typeof position === "undefined") {
             position = _this5.table.options.scrollToColumnPosition;
@@ -3528,8 +3525,8 @@
       key: "getFlexBaseWidth",
       value: function getFlexBaseWidth() {
         var totalWidth = this.table.element.clientWidth,
-          //table element width
-          fixedWidth = 0; //adjust for vertical scrollbar if present
+            //table element width
+        fixedWidth = 0; //adjust for vertical scrollbar if present
 
         if (this.table.rowManager.element.scrollHeight > this.table.rowManager.element.clientHeight) {
           totalWidth -= this.table.rowManager.element.offsetWidth - this.table.rowManager.element.clientWidth;
@@ -3587,7 +3584,7 @@
       key: "deregisterColumn",
       value: function deregisterColumn(column) {
         var field = column.getField(),
-          index; //remove from field list
+            index; //remove from field list
 
         if (field) {
           delete this.columnsByField[field];
@@ -3899,7 +3896,7 @@
       key: "calcHeight",
       value: function calcHeight(force) {
         var maxHeight = 0,
-          minHeight = this.table.options.resizableRows ? this.element.clientHeight : 0;
+            minHeight = this.table.options.resizableRows ? this.element.clientHeight : 0;
         this.cells.forEach(function (cell) {
           var height = cell.getHeight();
 
@@ -3993,8 +3990,8 @@
         var _this2 = this;
 
         var visible = this.element && Helpers.elVisible(this.element),
-          tempData = {},
-          newRowData;
+            tempData = {},
+            newRowData;
         return new Promise(function (resolve, reject) {
           if (typeof updatedData === "string") {
             updatedData = JSON.parse(updatedData);
@@ -4246,7 +4243,7 @@
         var _this2 = this;
 
         var element = this.tableElement,
-          onlyGroupHeaders = true;
+            onlyGroupHeaders = true;
         this.rows().forEach(function (row, index) {
           _this2.styleRow(row, index);
 
@@ -4483,11 +4480,11 @@
       key: "visibleRows",
       value: function visibleRows(includingBuffer) {
         var topEdge = this.elementVertical.scrollTop,
-          bottomEdge = this.elementVertical.clientHeight + topEdge,
-          topFound = false,
-          topRow = 0,
-          bottomRow = 0,
-          rows = this.rows();
+            bottomEdge = this.elementVertical.clientHeight + topEdge,
+            topFound = false,
+            topRow = 0,
+            bottomRow = 0,
+            rows = this.rows();
 
         if (includingBuffer) {
           topRow = this.vDomTop;
@@ -4528,15 +4525,15 @@
       key: "_virtualRenderFill",
       value: function _virtualRenderFill(position, forceMove, offset) {
         var element = this.tableElement,
-          holder = this.elementVertical,
-          topPad = 0,
-          rowsHeight = 0,
-          heightOccupied = 0,
-          topPadHeight = 0,
-          i = 0,
-          rows = this.rows(),
-          rowsCount = rows.length,
-          containerHeight = this.elementVertical.clientHeight;
+            holder = this.elementVertical,
+            topPad = 0,
+            rowsHeight = 0,
+            heightOccupied = 0,
+            topPadHeight = 0,
+            i = 0,
+            rows = this.rows(),
+            rowsCount = rows.length,
+            containerHeight = this.elementVertical.clientHeight;
         position = position || 0;
         offset = offset || 0;
 
@@ -4569,8 +4566,8 @@
 
           while ((rowsHeight <= containerHeight + this.vDomWindowBuffer || i < this.vDomWindowMinTotalRows) && this.vDomBottom < rowsCount - 1) {
             var index = this.vDomBottom + 1,
-              row = rows[index],
-              rowHeight = 0;
+                row = rows[index],
+                rowHeight = 0;
             this.styleRow(row, index);
             element.appendChild(row.getElement());
             row.initialize();
@@ -4629,16 +4626,16 @@
       key: "_addTopRow",
       value: function _addTopRow(rows, fillableSpace) {
         var table = this.tableElement,
-          addedRows = [],
-          paddingAdjust = 0,
-          index = this.vDomTop - 1,
-          i = 0;
+            addedRows = [],
+            paddingAdjust = 0,
+            index = this.vDomTop - 1,
+            i = 0;
 
         while (true) {
           if (this.vDomTop) {
             var row = rows[index],
-              rowHeight = void 0,
-              initialized = void 0;
+                rowHeight = void 0,
+                initialized = void 0;
 
             if (row && i < this.vDomMaxRenderChain) {
               rowHeight = row.getHeight() || this.vDomRowHeight;
@@ -4705,12 +4702,12 @@
       key: "_removeTopRow",
       value: function _removeTopRow(rows, fillableSpace) {
         var removableRows = [],
-          paddingAdjust = 0,
-          i = 0;
+            paddingAdjust = 0,
+            i = 0;
 
         while (true) {
           var row = rows[this.vDomTop],
-            rowHeight = void 0;
+              rowHeight = void 0;
 
           if (row && i < this.vDomMaxRenderChain) {
             rowHeight = row.getHeight() || this.vDomRowHeight;
@@ -4749,15 +4746,15 @@
       key: "_addBottomRow",
       value: function _addBottomRow(rows, fillableSpace) {
         var table = this.tableElement,
-          addedRows = [],
-          paddingAdjust = 0,
-          index = this.vDomBottom + 1,
-          i = 0;
+            addedRows = [],
+            paddingAdjust = 0,
+            index = this.vDomBottom + 1,
+            i = 0;
 
         while (true) {
           var row = rows[index],
-            rowHeight = void 0,
-            initialized = void 0;
+              rowHeight = void 0,
+              initialized = void 0;
 
           if (row && i < this.vDomMaxRenderChain) {
             rowHeight = row.getHeight() || this.vDomRowHeight;
@@ -4817,12 +4814,12 @@
       key: "_removeBottomRow",
       value: function _removeBottomRow(rows, fillableSpace) {
         var removableRows = [],
-          paddingAdjust = 0,
-          i = 0;
+            paddingAdjust = 0,
+            i = 0;
 
         while (true) {
           var row = rows[this.vDomBottom],
-            rowHeight = void 0;
+              rowHeight = void 0;
 
           if (row && i < this.vDomMaxRenderChain) {
             rowHeight = row.getHeight() || this.vDomRowHeight;
@@ -4866,7 +4863,7 @@
       key: "_quickNormalizeRowHeight",
       value: function _quickNormalizeRowHeight(rows) {
         var _iterator = _createForOfIteratorHelper(rows),
-          _step;
+            _step;
 
         try {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -4880,7 +4877,7 @@
         }
 
         var _iterator2 = _createForOfIteratorHelper(rows),
-          _step2;
+            _step2;
 
         try {
           for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -5004,9 +5001,9 @@
 
         this.element.addEventListener("scroll", function () {
           var left = _this2.element.scrollLeft,
-            leftDir = _this2.scrollLeft > left,
-            top = _this2.element.scrollTop,
-            topDir = _this2.scrollTop > top; //handle horizontal scrolling
+              leftDir = _this2.scrollLeft > left,
+              top = _this2.element.scrollTop,
+              topDir = _this2.scrollTop > top; //handle horizontal scrolling
 
           if (_this2.scrollLeft != left) {
             _this2.scrollLeft = left;
@@ -5158,7 +5155,7 @@
       key: "deleteRow",
       value: function deleteRow(row, blockRedraw) {
         var allIndex = this.rows.indexOf(row),
-          activeIndex = this.activeRows.indexOf(row);
+            activeIndex = this.activeRows.indexOf(row);
 
         if (activeIndex > -1) {
           this.activeRows.splice(activeIndex, 1);
@@ -5259,10 +5256,10 @@
       key: "addRowActual",
       value: function addRowActual(data, pos, index, blockRedraw) {
         var row = data instanceof Row ? data : new Row(data || {}, this),
-          top = this.findAddRowPos(pos),
-          allIndex = -1,
-          activeIndex,
-          chainResult;
+            top = this.findAddRowPos(pos),
+            allIndex = -1,
+            activeIndex,
+            chainResult;
 
         if (!index) {
           chainResult = this.chain("row-adding-position", [row, top], null, {
@@ -5404,7 +5401,7 @@
       key: "nextDisplayRow",
       value: function nextDisplayRow(row, rowOnly) {
         var index = this.getDisplayRowIndex(row),
-          nextRow = false;
+            nextRow = false;
 
         if (index !== false && index < this.displayRowsCount - 1) {
           nextRow = this.getDisplayRows()[index + 1];
@@ -5420,7 +5417,7 @@
       key: "prevDisplayRow",
       value: function prevDisplayRow(row, rowOnly) {
         var index = this.getDisplayRowIndex(row),
-          prevRow = false;
+            prevRow = false;
 
         if (index) {
           prevRow = this.getDisplayRows()[index - 1];
@@ -5452,7 +5449,7 @@
       key: "getData",
       value: function getData(active, transform) {
         var output = [],
-          rows = this.getRows(active);
+            rows = this.getRows(active);
         rows.forEach(function (row) {
           if (row.type == "row") {
             output.push(row.getData(transform || "data"));
@@ -5464,7 +5461,7 @@
       key: "getComponents",
       value: function getComponents(active) {
         var output = [],
-          rows = this.getRows(active);
+            rows = this.getRows(active);
         rows.forEach(function (row) {
           output.push(row.getComponent());
         });
@@ -5518,9 +5515,9 @@
       key: "refreshActiveData",
       value: function refreshActiveData(handler, skipStage, renderInPosition) {
         var table = this.table,
-          stage = "",
-          index = 0,
-          cascadeOrder = ["all", "dataPipeline", "display", "displayPipeline", "end"];
+            stage = "",
+            index = 0,
+            cascadeOrder = ["all", "dataPipeline", "display", "displayPipeline", "end"];
 
         if (typeof handler === "function") {
           index = this.dataPipeline.findIndex(function (item) {
@@ -5573,7 +5570,7 @@
             };
           }
 
-
+          return;
         } else {
           this.dispatch("data-refeshing");
 
@@ -6132,13 +6129,13 @@
       key: "bindSubscriptionWatchers",
       value: function bindSubscriptionWatchers() {
         var listeners = Object.keys(this.listeners),
-          components = Object.values(this.componentMap);
+            components = Object.values(this.componentMap);
 
         for (var _i = 0, _components = components; _i < _components.length; _i++) {
           var comp = _components[_i];
 
           var _iterator = _createForOfIteratorHelper(listeners),
-            _step;
+              _step;
 
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -6157,8 +6154,8 @@
       key: "subscriptionChanged",
       value: function subscriptionChanged(component, key, added) {
         var listener = this.listeners[key].components,
-          index = listener.indexOf(component),
-          changed = false;
+            index = listener.indexOf(component),
+            changed = false;
 
         if (added) {
           if (index === -1) {
@@ -6214,7 +6211,7 @@
         var componentMap = Object.keys(this.componentMap);
 
         var _iterator2 = _createForOfIteratorHelper(path),
-          _step2;
+            _step2;
 
         try {
           for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -6233,7 +6230,7 @@
             });
 
             var _iterator3 = _createForOfIteratorHelper(elTargets),
-              _step3;
+                _step3;
 
             try {
               for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
@@ -6265,11 +6262,11 @@
 
         //ensure row component is looked up before cell
         var keys = Object.keys(targets).reverse(),
-          listener = this.listeners[type],
-          targetMatches = {};
+            listener = this.listeners[type],
+            targetMatches = {};
 
         var _iterator4 = _createForOfIteratorHelper(keys),
-          _step4;
+            _step4;
 
         try {
           var _loop = function _loop() {
@@ -6683,8 +6680,8 @@
         var _this = this;
 
         var args = Array.from(arguments),
-          key = args.shift(),
-          result;
+            key = args.shift(),
+            result;
 
         if (this.events[key]) {
           this.events[key].forEach(function (callback, i) {
@@ -6702,7 +6699,7 @@
       key: "_debugDispatch",
       value: function _debugDispatch() {
         var args = Array.from(arguments),
-          key = args[0];
+            key = args[0];
         args[0] = "ExternalEvent:" + args[0];
 
         if (this.debug === true || this.debug.includes(key)) {
@@ -6850,7 +6847,7 @@
         var _this3 = this;
 
         var args = Array.from(arguments),
-          key = args.shift();
+            key = args.shift();
 
         if (this.events[key]) {
           this.events[key].forEach(function (subscriber) {
@@ -6862,7 +6859,7 @@
       key: "_debugDispatch",
       value: function _debugDispatch() {
         var args = Array.from(arguments),
-          key = args[0];
+            key = args[0];
         args[0] = "InternalEvent:" + key;
 
         if (this.debug === true || this.debug.includes(key)) {
@@ -6877,7 +6874,7 @@
       key: "_debugChain",
       value: function _debugChain() {
         var args = Array.from(arguments),
-          key = args[0];
+            key = args[0];
         args[0] = "InternalEvent:" + key;
 
         if (this.debug === true || this.debug.includes(key)) {
@@ -6892,7 +6889,7 @@
       key: "_debugConfirm",
       value: function _debugConfirm() {
         var args = Array.from(arguments),
-          key = args[0];
+            key = args[0];
         args[0] = "InternalEvent:" + key;
 
         if (this.debug === true || this.debug.includes(key)) {
@@ -6931,8 +6928,8 @@
       key: "lookupTable",
       value: function lookupTable(query, silent) {
         var results = [],
-          matches,
-          match;
+            matches,
+            match;
 
         if (typeof query === "string") {
           matches = document.querySelectorAll(query);
@@ -7059,7 +7056,7 @@
   }(CoreFeature);
 
   //resize columns to fit data they contain
-  function fitData(columns) {
+  function fitData (columns) {
     this.table.columnManager.renderer.reinitializeColumnWidths(columns);
 
     if (this.table.options.responsiveLayout && this.table.modExists("responsiveLayout", true)) {
@@ -7068,7 +7065,7 @@
   }
 
   //resize columns to fit data they contain and stretch row to fill table, also used for fitDataTable
-  function fitDataGeneral(columns) {
+  function fitDataGeneral (columns) {
     columns.forEach(function (column) {
       column.reinitializeWidth();
     });
@@ -7079,13 +7076,13 @@
   }
 
   //resize columns to fit data the contain and stretch last column to fill table
-  function fitDataStretch(columns) {
+  function fitDataStretch (columns) {
     var _this = this;
 
     var colsWidth = 0,
-      tableWidth = this.table.rowManager.element.clientWidth,
-      gap = 0,
-      lastCol = false;
+        tableWidth = this.table.rowManager.element.clientWidth,
+        gap = 0,
+        lastCol = false;
     columns.forEach(function (column, i) {
       if (!column.widthFixed) {
         column.reinitializeWidth();
@@ -7121,7 +7118,7 @@
   }
 
   //resize columns to fit
-  function fitColumns(columns) {
+  function fitColumns (columns) {
     var totalWidth = this.table.element.clientWidth; //table element width
 
     var fixedWidth = 0; //total width of columns with a defined width
@@ -7161,13 +7158,13 @@
 
     function scaleColumns(columns, freeSpace, colWidth, shrinkCols) {
       var oversizeCols = [],
-        oversizeSpace = 0,
-        remainingSpace = 0,
-        nextColWidth = 0,
-        remainingFlexGrowUnits = flexGrowUnits,
-        gap = 0,
-        changeUnits = 0,
-        undersizeCols = [];
+          oversizeSpace = 0,
+          remainingSpace = 0,
+          nextColWidth = 0,
+          remainingFlexGrowUnits = flexGrowUnits,
+          gap = 0,
+          changeUnits = 0,
+          undersizeCols = [];
 
       function calcGrow(col) {
         return colWidth * (col.column.definition.widthGrow || 1);
@@ -7541,8 +7538,8 @@
       key: "getText",
       value: function getText(path, value) {
         var path = value ? path + "|" + value : path,
-          pathArray = path.split("|"),
-          text = this._getLangElement(pathArray, this.locale); // if(text === false){
+            pathArray = path.split("|"),
+            text = this._getLangElement(pathArray, this.locale); // if(text === false){
         // 	console.warn("Localization Error - Matching localized text not found for given path: ", path);
         // }
 
@@ -7627,7 +7624,7 @@
         var _this = this;
 
         var connections = [],
-          connection;
+            connection;
         connection = TableRegistry.lookupTable(selectors);
         connection.forEach(function (con) {
           if (_this.table !== con) {
@@ -7941,8 +7938,8 @@
       key: "_buildElement",
       value: function _buildElement() {
         var element = this.element,
-          options = this.options,
-          newElement;
+            options = this.options,
+            newElement;
 
         if (element.tagName === "TABLE") {
           this.originalElement = this.element;
@@ -7991,7 +7988,7 @@
       key: "_initializeTable",
       value: function _initializeTable() {
         var element = this.element,
-          options = this.options;
+            options = this.options;
         this.columnManager.initialize();
         this.rowManager.initialize();
 
@@ -8108,8 +8105,8 @@
           input.accept = extensions || ".json,application/json";
           input.addEventListener("change", function (e) {
             var file = input.files[0],
-              reader = new FileReader(),
-              data;
+                reader = new FileReader(),
+                data;
             reader.readAsText(file);
 
             reader.onload = function (e) {
@@ -8252,7 +8249,7 @@
         var _this5 = this;
 
         var rows = [],
-          responses = 0;
+            responses = 0;
 
         if (this.initialized) {
           return new Promise(function (resolve, reject) {
@@ -8337,7 +8334,7 @@
 
 
         var _iterator = _createForOfIteratorHelper(index),
-          _step;
+            _step;
 
         try {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -8644,7 +8641,7 @@
         var _this$externalEvents;
 
         var args = Array.from(arguments),
-          key = args.shift();
+            key = args.shift();
 
         (_this$externalEvents = this.externalEvents).dispatch.apply(_this$externalEvents, arguments);
       } ////////////// Extension Management //////////////
@@ -8738,10 +8735,10 @@
         var _this2 = this;
 
         var match = false,
-          config = {};
+            config = {};
         this.allowedTypes.forEach(function (type) {
           var key = "accessor" + (type.charAt(0).toUpperCase() + type.slice(1)),
-            accessor;
+              accessor;
 
           if (column.definition[key]) {
             accessor = _this2.lookupAccessor(column.definition[key]);
@@ -8787,7 +8784,7 @@
       key: "transformRow",
       value: function transformRow(row, type) {
         var key = "accessor" + (type.charAt(0).toUpperCase() + type.slice(1)),
-          rowComponent = row.getComponent(); //clone data object with deep copy to isolate internal data from returned result
+            rowComponent = row.getComponent(); //clone data object with deep copy to isolate internal data from returned result
 
         var data = Helpers.deepClone(row.data || {});
         this.table.columnManager.traverse(function (column) {
@@ -8846,14 +8843,14 @@
 
   function serializeParams(params) {
     var output = generateParamsList(params),
-      encoded = [];
+        encoded = [];
     output.forEach(function (item) {
       encoded.push(encodeURIComponent(item.key) + "=" + encodeURIComponent(item.value));
     });
     return encoded.join("&");
   }
 
-  function defaultURLGenerator(url, config, params) {
+  function defaultURLGenerator (url, config, params) {
     if (url) {
       if (params && Object.keys(params).length) {
         if (!config.method || config.method.toLowerCase() == "get") {
@@ -8866,7 +8863,7 @@
     return url;
   }
 
-  function defaultLoaderPromise(url, config, params) {
+  function defaultLoaderPromise (url, config, params) {
     var _this = this;
 
     var contentType;
@@ -8985,7 +8982,7 @@
       headers: {},
       body: function body(url, config, params) {
         var output = generateParamsList$1(params),
-          form = new FormData();
+            form = new FormData();
         output.forEach(function (item) {
           form.append(item.key, item.value);
         });
@@ -9031,8 +9028,7 @@
       _this.registerTableOption("ajaxRequestFunc", false); //promise function
 
 
-      _this.registerTableOption("ajaxRequesting", function () {
-      });
+      _this.registerTableOption("ajaxRequesting", function () {});
 
       _this.registerTableOption("ajaxResponse", false);
 
@@ -9195,10 +9191,10 @@
   var defaultPasteParsers = {
     table: function table(clipboard) {
       var data = [],
-        headerFindSuccess = true,
-        columns = this.table.columnManager.columns,
-        columnMap = [],
-        rows = []; //get data from clipboard into array of columns and rows.
+          headerFindSuccess = true,
+          columns = this.table.columnManager.columns,
+          columnMap = [],
+          rows = []; //get data from clipboard into array of columns and rows.
 
       clipboard = clipboard.split("\n");
       clipboard.forEach(function (row) {
@@ -9273,11 +9269,9 @@
       _this = _super.call(this, table);
       _this.mode = true;
 
-      _this.pasteParser = function () {
-      };
+      _this.pasteParser = function () {};
 
-      _this.pasteAction = function () {
-      };
+      _this.pasteAction = function () {};
 
       _this.customSelection = false;
       _this.rowRange = false;
@@ -9630,7 +9624,7 @@
   var defaultCalculations = {
     "avg": function avg(values, data, calcParams) {
       var output = 0,
-        precision = typeof calcParams.precision !== "undefined" ? calcParams.precision : 2;
+          precision = typeof calcParams.precision !== "undefined" ? calcParams.precision : 2;
 
       if (values.length) {
         output = values.reduce(function (sum, value) {
@@ -9644,7 +9638,7 @@
     },
     "max": function max(values, data, calcParams) {
       var output = null,
-        precision = typeof calcParams.precision !== "undefined" ? calcParams.precision : false;
+          precision = typeof calcParams.precision !== "undefined" ? calcParams.precision : false;
       values.forEach(function (value) {
         value = Number(value);
 
@@ -9656,7 +9650,7 @@
     },
     "min": function min(values, data, calcParams) {
       var output = null,
-        precision = typeof calcParams.precision !== "undefined" ? calcParams.precision : false;
+          precision = typeof calcParams.precision !== "undefined" ? calcParams.precision : false;
       values.forEach(function (value) {
         value = Number(value);
 
@@ -9668,7 +9662,7 @@
     },
     "sum": function sum(values, data, calcParams) {
       var output = 0,
-        precision = typeof calcParams.precision !== "undefined" ? calcParams.precision : false;
+          precision = typeof calcParams.precision !== "undefined" ? calcParams.precision : false;
 
       if (values.length) {
         values.forEach(function (value) {
@@ -9895,8 +9889,7 @@
 
     }, {
       key: "registerColumnField",
-      value: function registerColumnField() {
-      }
+      value: function registerColumnField() {}
     }, {
       key: "removeCalcs",
       value: function removeCalcs() {
@@ -10072,7 +10065,7 @@
         var _this4 = this;
 
         var rowData = this.generateRowData(pos, data),
-          row;
+            row;
 
         if (this.table.modExists("mutator")) {
           this.table.modules.mutator.disable();
@@ -10141,10 +10134,10 @@
       key: "generateRowData",
       value: function generateRowData(pos, data) {
         var rowData = {},
-          calcs = pos == "top" ? this.topCalcs : this.botCalcs,
-          type = pos == "top" ? "topCalc" : "botCalc",
-          params,
-          paramKey;
+            calcs = pos == "top" ? this.topCalcs : this.botCalcs,
+            type = pos == "top" ? "topCalc" : "botCalc",
+            params,
+            paramKey;
         calcs.forEach(function (column) {
           var values = [];
 
@@ -10188,7 +10181,7 @@
         var _this5 = this;
 
         var results = {},
-          groups;
+            groups;
 
         if (this.table.options.groupBy && this.table.modExists("groupRows")) {
           groups = this.table.modules.groupRows.getGroups(true);
@@ -10211,9 +10204,9 @@
         var _this6 = this;
 
         var groupObj = group._getSelf(),
-          subGroups = group.getSubGroups(),
-          subGroupResults = {},
-          results = {};
+            subGroups = group.getSubGroups(),
+            subGroupResults = {},
+            results = {};
 
         subGroups.forEach(function (subgroup) {
           subGroupResults[subgroup.getKey()] = _this6.getGroupResults(subgroup);
@@ -10252,8 +10245,7 @@
       _this.branchEl = null;
       _this.elementField = false;
 
-      _this.startOpen = function () {
-      };
+      _this.startOpen = function () {};
 
       _this.displayIndex = 0;
 
@@ -10312,8 +10304,8 @@
       value: function initialize() {
         if (this.table.options.dataTree) {
           var dummyEl = null,
-            firstCol = this.table.columnManager.getFirstVisibileColumn(),
-            options = this.table.options;
+              firstCol = this.table.columnManager.getFirstVisibileColumn(),
+              options = this.table.options;
           this.field = options.dataTreeChildField;
           this.indent = options.dataTreeChildIndent;
           this.elementField = options.dataTreeElementColumn || (firstCol ? firstCol.field : false);
@@ -10456,8 +10448,8 @@
       key: "layoutRow",
       value: function layoutRow(row) {
         var cell = this.elementField ? row.getCell(this.elementField) : row.getCells()[0],
-          el = cell.getElement(),
-          config = row.modules.dataTree;
+            el = cell.getElement(),
+            config = row.modules.dataTree;
 
         if (config.branchEl) {
           if (config.branchEl.parentNode) {
@@ -10503,8 +10495,8 @@
         var _this3 = this;
 
         var config = row.modules.dataTree,
-          el = el || row.getCells()[0].getElement(),
-          oldControl = config.controlEl;
+            el = el || row.getCells()[0].getElement(),
+            oldControl = config.controlEl;
 
         if (config.children !== false) {
           if (config.open) {
@@ -10575,8 +10567,8 @@
         var _this5 = this;
 
         var config = row.modules.dataTree,
-          children = [],
-          output = [];
+            children = [],
+            output = [];
 
         if (config.children !== false && (config.open || allChildren)) {
           if (!Array.isArray(config.children)) {
@@ -10678,8 +10670,8 @@
       key: "getFilteredTreeChildren",
       value: function getFilteredTreeChildren(row) {
         var config = row.modules.dataTree,
-          output = [],
-          children;
+            output = [],
+            children;
 
         if (config.children) {
           if (!Array.isArray(config.children)) {
@@ -10705,7 +10697,7 @@
       key: "rowDelete",
       value: function rowDelete(row) {
         var parent = row.modules.dataTree.parent,
-          childIndex;
+            childIndex;
 
         if (parent) {
           childIndex = this.findChildIndex(row, parent);
@@ -10811,7 +10803,7 @@
         var _this8 = this;
 
         var config = row.modules.dataTree,
-          output = [];
+            output = [];
 
         if (config.children) {
           if (!Array.isArray(config.children)) {
@@ -10855,10 +10847,10 @@
 
   DataTree.moduleName = "dataTree";
 
-  function csv(list, options, setFileContents) {
+  function csv (list, options, setFileContents) {
     var delimiter = options && options.delimiter ? options.delimiter : ",",
-      fileContents = [],
-      headers = [];
+        fileContents = [],
+        headers = [];
     list.forEach(function (row) {
       var item = [];
 
@@ -10914,7 +10906,7 @@
     setFileContents(fileContents, "text/csv");
   }
 
-  function json(list, options, setFileContents) {
+  function json (list, options, setFileContents) {
     var fileContents = [];
     list.forEach(function (row) {
       var item = {};
@@ -10945,24 +10937,24 @@
     setFileContents(fileContents, "application/json");
   }
 
-  function pdf(list, options, setFileContents) {
+  function pdf (list, options, setFileContents) {
     var header = [],
-      body = [],
-      autoTableParams = {},
-      rowGroupStyles = options.rowGroupStyles || {
-        fontStyle: "bold",
-        fontSize: 12,
-        cellPadding: 6,
-        fillColor: 220
-      },
-      rowCalcStyles = options.rowCalcStyles || {
-        fontStyle: "bold",
-        fontSize: 10,
-        cellPadding: 4,
-        fillColor: 232
-      },
-      jsPDFParams = options.jsPDF || {},
-      title = options && options.title ? options.title : "";
+        body = [],
+        autoTableParams = {},
+        rowGroupStyles = options.rowGroupStyles || {
+      fontStyle: "bold",
+      fontSize: 12,
+      cellPadding: 6,
+      fillColor: 220
+    },
+        rowCalcStyles = options.rowCalcStyles || {
+      fontStyle: "bold",
+      fontSize: 10,
+      cellPadding: 4,
+      fillColor: 232
+    },
+        jsPDFParams = options.jsPDF || {},
+        title = options && options.title ? options.title : "";
 
     if (!jsPDFParams.orientation) {
       jsPDFParams.orientation = options.orientation || "landscape";
@@ -11057,31 +11049,31 @@
     setFileContents(doc.output("arraybuffer"), "application/pdf");
   }
 
-  function xlsx(list, options, setFileContents) {
+  function xlsx (list, options, setFileContents) {
     var self = this,
-      sheetName = options.sheetName || "Sheet1",
-      workbook = XLSX.utils.book_new(),
-      tableFeatures = new CoreFeature(this),
-      output;
+        sheetName = options.sheetName || "Sheet1",
+        workbook = XLSX.utils.book_new(),
+        tableFeatures = new CoreFeature(this),
+        output;
     workbook.SheetNames = [];
     workbook.Sheets = {};
 
     function generateSheet() {
       var rows = [],
-        merges = [],
-        worksheet = {},
-        range = {
-          s: {
-            c: 0,
-            r: 0
-          },
-          e: {
-            c: list[0] ? list[0].columns.reduce(function (a, b) {
-              return a + (b && b.width ? b.width : 1);
-            }, 0) : 0,
-            r: list.length
-          }
-        }; //parse row list
+          merges = [],
+          worksheet = {},
+          range = {
+        s: {
+          c: 0,
+          r: 0
+        },
+        e: {
+          c: list[0] ? list[0].columns.reduce(function (a, b) {
+            return a + (b && b.width ? b.width : 1);
+          }, 0) : 0,
+          r: list.length
+        }
+      }; //parse row list
 
       list.forEach(function (row, i) {
         var rowData = [];
@@ -11171,7 +11163,7 @@
     setFileContents(s2ab(output), "application/octet-stream");
   }
 
-  function html(list, options, setFileContents) {
+  function html (list, options, setFileContents) {
     if (this.modExists("export", true)) {
       setFileContents(this.modules["export"].genereateHTMLTable(list), "text/html");
     }
@@ -11293,10 +11285,10 @@
       key: "triggerDownload",
       value: function triggerDownload(data, mime, type, filename, newTab) {
         var element = document.createElement('a'),
-          blob = new Blob([data], {
-            type: mime
-          }),
-          filename = filename || "Tabulator." + (typeof type === "function" ? "txt" : type);
+            blob = new Blob([data], {
+          type: mime
+        }),
+            filename = filename || "Tabulator." + (typeof type === "function" ? "txt" : type);
         blob = this.table.options.downloadReady(data, blob);
 
         if (blob) {
@@ -11341,9 +11333,9 @@
 
   function maskInput(el, options) {
     var mask = options.mask,
-      maskLetter = typeof options.maskLetterChar !== "undefined" ? options.maskLetterChar : "A",
-      maskNumber = typeof options.maskNumberChar !== "undefined" ? options.maskNumberChar : "9",
-      maskWildcard = typeof options.maskWildcardChar !== "undefined" ? options.maskWildcardChar : "*";
+        maskLetter = typeof options.maskLetterChar !== "undefined" ? options.maskLetterChar : "A",
+        maskNumber = typeof options.maskNumberChar !== "undefined" ? options.maskNumberChar : "9",
+        maskWildcard = typeof options.maskWildcardChar !== "undefined" ? options.maskWildcardChar : "*";
 
     function fillSymbols(index) {
       var symbol = mask[index];
@@ -11356,7 +11348,7 @@
 
     el.addEventListener("keydown", function (e) {
       var index = el.value.length,
-        _char = e.key;
+          _char = e.key;
 
       if (e.keyCode > 46) {
         if (index >= mask.length) {
@@ -11397,7 +11389,7 @@
         }
       }
 
-
+      return;
     });
     el.addEventListener("keyup", function (e) {
       if (e.keyCode > 46) {
@@ -11416,10 +11408,10 @@
     }
   }
 
-  function input(cell, onRendered, success, cancel, editorParams) {
+  function input (cell, onRendered, success, cancel, editorParams) {
     //create and style input
     var cellValue = cell.getValue(),
-      input = document.createElement("input");
+        input = document.createElement("input");
     input.setAttribute("type", editorParams.search ? "search" : "text");
     input.style.padding = "4px";
     input.style.width = "100%";
@@ -11483,13 +11475,13 @@
     return input;
   }
 
-  function textarea(cell, onRendered, success, cancel, editorParams) {
+  function textarea (cell, onRendered, success, cancel, editorParams) {
     var cellValue = cell.getValue(),
-      vertNav = editorParams.verticalNavigation || "hybrid",
-      value = String(cellValue !== null && typeof cellValue !== "undefined" ? cellValue : ""),
-      count = (value.match(/(?:\r\n|\r|\n)/g) || []).length + 1,
-      input = document.createElement("textarea"),
-      scrollHeight = 0; //create and style input
+        vertNav = editorParams.verticalNavigation || "hybrid",
+        value = String(cellValue !== null && typeof cellValue !== "undefined" ? cellValue : ""),
+        count = (value.match(/(?:\r\n|\r|\n)/g) || []).length + 1,
+        input = document.createElement("textarea"),
+        scrollHeight = 0; //create and style input
 
     input.style.display = "block";
     input.style.padding = "2px";
@@ -11586,10 +11578,10 @@
     return input;
   }
 
-  function number(cell, onRendered, success, cancel, editorParams) {
+  function number (cell, onRendered, success, cancel, editorParams) {
     var cellValue = cell.getValue(),
-      vertNav = editorParams.verticalNavigation || "editor",
-      input = document.createElement("input");
+        vertNav = editorParams.verticalNavigation || "editor",
+        input = document.createElement("input");
     input.setAttribute("type", "number");
 
     if (typeof editorParams.max != "undefined") {
@@ -11691,9 +11683,9 @@
   }
 
   //input element with type of number
-  function range(cell, onRendered, success, cancel, editorParams) {
+  function range (cell, onRendered, success, cancel, editorParams) {
     var cellValue = cell.getValue(),
-      input = document.createElement("input");
+        input = document.createElement("input");
     input.setAttribute("type", "range");
 
     if (typeof editorParams.max != "undefined") {
@@ -11768,25 +11760,25 @@
     return input;
   }
 
-  function select(cell, onRendered, success, cancel, editorParams) {
+  function select (cell, onRendered, success, cancel, editorParams) {
     var _this = this;
 
     var self = this,
-      cellEl = cell.getElement(),
-      initialValue = cell.getValue(),
-      vertNav = editorParams.verticalNavigation || "editor",
-      initialDisplayValue = typeof initialValue !== "undefined" || initialValue === null ? Array.isArray(initialValue) ? initialValue : [initialValue] : typeof editorParams.defaultValue !== "undefined" ? editorParams.defaultValue : [],
-      input = document.createElement("input"),
-      listEl = document.createElement("div"),
-      multiselect = editorParams.multiselect,
-      dataItems = [],
-      currentItem = {},
-      displayItems = [],
-      currentItems = [],
-      blurable = true,
-      blockListShow = false,
-      searchWord = "",
-      searchWordTimeout = null;
+        cellEl = cell.getElement(),
+        initialValue = cell.getValue(),
+        vertNav = editorParams.verticalNavigation || "editor",
+        initialDisplayValue = typeof initialValue !== "undefined" || initialValue === null ? Array.isArray(initialValue) ? initialValue : [initialValue] : typeof editorParams.defaultValue !== "undefined" ? editorParams.defaultValue : [],
+        input = document.createElement("input"),
+        listEl = document.createElement("div"),
+        multiselect = editorParams.multiselect,
+        dataItems = [],
+        currentItem = {},
+        displayItems = [],
+        currentItems = [],
+        blurable = true,
+        blockListShow = false,
+        searchWord = "",
+        searchWordTimeout = null;
 
     if (Array.isArray(editorParams) || !Array.isArray(editorParams) && _typeof(editorParams) === "object" && !editorParams.values) {
       console.warn("DEPRECATION WARNING - values for the select editor must now be passed into the values property of the editorParams object, not as the editorParams object");
@@ -11797,8 +11789,8 @@
 
     function getUniqueColumnValues(field) {
       var output = {},
-        data = self.table.getData(),
-        column;
+          data = self.table.getData(),
+          column;
 
       if (field) {
         column = self.table.columnManager.getColumnByField(field);
@@ -12321,20 +12313,20 @@
     return input;
   }
 
-  function autocomplete(cell, onRendered, success, cancel, editorParams) {
+  function autocomplete (cell, onRendered, success, cancel, editorParams) {
     var _this = this;
 
     var self = this,
-      cellEl = cell.getElement(),
-      initialValue = cell.getValue(),
-      vertNav = editorParams.verticalNavigation || "editor",
-      initialDisplayValue = typeof initialValue !== "undefined" || initialValue === null ? initialValue : typeof editorParams.defaultValue !== "undefined" ? editorParams.defaultValue : "",
-      input = document.createElement("input"),
-      listEl = document.createElement("div"),
-      displayItems = [],
-      currentItem = false,
-      blurable = true,
-      uniqueColumnValues = false; //style input
+        cellEl = cell.getElement(),
+        initialValue = cell.getValue(),
+        vertNav = editorParams.verticalNavigation || "editor",
+        initialDisplayValue = typeof initialValue !== "undefined" || initialValue === null ? initialValue : typeof editorParams.defaultValue !== "undefined" ? editorParams.defaultValue : "",
+        input = document.createElement("input"),
+        listEl = document.createElement("div"),
+        displayItems = [],
+        currentItem = false,
+        blurable = true,
+        uniqueColumnValues = false; //style input
 
     input.setAttribute("type", "search");
     input.style.padding = "4px";
@@ -12371,8 +12363,8 @@
 
     function getUniqueColumnValues(field) {
       var output = {},
-        data = self.table.getData(),
-        column;
+          data = self.table.getData(),
+          column;
 
       if (field) {
         column = self.table.columnManager.getColumnByField(field);
@@ -12407,9 +12399,9 @@
 
     function filterList(term, intialLoad) {
       var matches = [],
-        values,
-        items;
-      //lookup base values list
+          values,
+          items;
+   //lookup base values list
 
       if (uniqueColumnValues) {
         values = uniqueColumnValues;
@@ -12763,15 +12755,15 @@
   }
 
   //star rating
-  function star(cell, onRendered, success, cancel, editorParams) {
+  function star (cell, onRendered, success, cancel, editorParams) {
     var self = this,
-      element = cell.getElement(),
-      value = cell.getValue(),
-      maxStars = element.getElementsByTagName("svg").length || 5,
-      size = element.getElementsByTagName("svg")[0] ? element.getElementsByTagName("svg")[0].getAttribute("width") : 14,
-      stars = [],
-      starsHolder = document.createElement("div"),
-      star = document.createElementNS('http://www.w3.org/2000/svg', "svg"); //change star type
+        element = cell.getElement(),
+        value = cell.getValue(),
+        maxStars = element.getElementsByTagName("svg").length || 5,
+        size = element.getElementsByTagName("svg")[0] ? element.getElementsByTagName("svg")[0].getAttribute("width") : 14,
+        stars = [],
+        starsHolder = document.createElement("div"),
+        star = document.createElementNS('http://www.w3.org/2000/svg', "svg"); //change star type
 
     function starChange(val) {
       stars.forEach(function (star, i) {
@@ -12897,18 +12889,18 @@
   }
 
   //draggable progress bar
-  function progress(cell, onRendered, success, cancel, editorParams) {
+  function progress (cell, onRendered, success, cancel, editorParams) {
     var _element$getElementsB, _element$getElementsB2;
 
     var element = cell.getElement(),
-      max = typeof editorParams.max === "undefined" ? ((_element$getElementsB = element.getElementsByTagName("div")[0]) === null || _element$getElementsB === void 0 ? void 0 : _element$getElementsB.getAttribute("max")) || 100 : editorParams.max,
-      min = typeof editorParams.min === "undefined" ? ((_element$getElementsB2 = element.getElementsByTagName("div")[0]) === null || _element$getElementsB2 === void 0 ? void 0 : _element$getElementsB2.getAttribute("min")) || 0 : editorParams.min,
-      percent = (max - min) / 100,
-      value = cell.getValue() || 0,
-      handle = document.createElement("div"),
-      bar = document.createElement("div"),
-      mouseDrag,
-      mouseDragWidth; //set new value
+        max = typeof editorParams.max === "undefined" ? ((_element$getElementsB = element.getElementsByTagName("div")[0]) === null || _element$getElementsB === void 0 ? void 0 : _element$getElementsB.getAttribute("max")) || 100 : editorParams.max,
+        min = typeof editorParams.min === "undefined" ? ((_element$getElementsB2 = element.getElementsByTagName("div")[0]) === null || _element$getElementsB2 === void 0 ? void 0 : _element$getElementsB2.getAttribute("min")) || 0 : editorParams.min,
+        percent = (max - min) / 100,
+        value = cell.getValue() || 0,
+        handle = document.createElement("div"),
+        bar = document.createElement("div"),
+        mouseDrag,
+        mouseDragWidth; //set new value
 
     function updateValue() {
       var style = window.getComputedStyle(element, null);
@@ -13016,12 +13008,12 @@
   }
 
   //checkbox
-  function tickCross(cell, onRendered, success, cancel, editorParams) {
+  function tickCross (cell, onRendered, success, cancel, editorParams) {
     var value = cell.getValue(),
-      input = document.createElement("input"),
-      tristate = editorParams.tristate,
-      indetermValue = typeof editorParams.indeterminateValue === "undefined" ? null : editorParams.indeterminateValue,
-      indetermState = false;
+        input = document.createElement("input"),
+        tristate = editorParams.tristate,
+        indetermValue = typeof editorParams.indeterminateValue === "undefined" ? null : editorParams.indeterminateValue,
+        indetermState = false;
     input.setAttribute("type", "checkbox");
     input.style.marginTop = "5px";
     input.style.boxSizing = "border-box";
@@ -13209,7 +13201,7 @@
       key: "keybindingNavigateNext",
       value: function keybindingNavigateNext(e) {
         var cell = this.currentCell,
-          newRow = this.options("tabEndNewRow");
+            newRow = this.options("tabEndNewRow");
 
         if (cell) {
           if (!this.navigateNext(e)) {
@@ -13276,8 +13268,8 @@
       key: "navigatePrev",
       value: function navigatePrev(e) {
         var cell = this.currentCell,
-          nextCell,
-          prevRow;
+            nextCell,
+            prevRow;
 
         if (cell) {
           if (e) {
@@ -13308,8 +13300,8 @@
       key: "navigateNext",
       value: function navigateNext(e) {
         var cell = this.currentCell,
-          nextCell,
-          nextRow;
+            nextCell,
+            nextRow;
 
         if (cell) {
           if (e) {
@@ -13340,8 +13332,8 @@
       key: "navigateLeft",
       value: function navigateLeft(e) {
         var cell = this.currentCell,
-          index,
-          nextCell;
+            index,
+            nextCell;
 
         if (cell) {
           if (e) {
@@ -13363,8 +13355,8 @@
       key: "navigateRight",
       value: function navigateRight(e) {
         var cell = this.currentCell,
-          index,
-          nextCell;
+            index,
+            nextCell;
 
         if (cell) {
           if (e) {
@@ -13386,8 +13378,8 @@
       key: "navigateUp",
       value: function navigateUp(e) {
         var cell = this.currentCell,
-          index,
-          nextRow;
+            index,
+            nextRow;
 
         if (cell) {
           if (e) {
@@ -13409,8 +13401,8 @@
       key: "navigateDown",
       value: function navigateDown(e) {
         var cell = this.currentCell,
-          index,
-          nextRow;
+            index,
+            nextRow;
 
         if (cell) {
           if (e) {
@@ -13462,7 +13454,7 @@
         if (index > 0) {
           for (var i = index - 1; i >= 0; i--) {
             var cell = row.cells[i],
-              allowEdit = true;
+                allowEdit = true;
 
             if (cell.column.modules.edit && Helpers.elVisible(cell.getElement())) {
               if (typeof cell.column.modules.edit.check == "function") {
@@ -13557,7 +13549,7 @@
       key: "clearEditor",
       value: function clearEditor(cancel) {
         var cell = this.currentCell,
-          cellEl;
+            cellEl;
         this.invalidEdit = false;
 
         if (cell) {
@@ -13608,7 +13600,7 @@
       value: function bindEditor(cell) {
         if (cell.column.modules.edit) {
           var self = this,
-            element = cell.getElement(true);
+              element = cell.getElement(true);
           element.setAttribute("tabindex", 0);
           element.addEventListener("click", function (e) {
             if (!element.classList.contains("tabulator-editing")) {
@@ -13655,9 +13647,9 @@
       value: function focusScrollAdjust(cell) {
         if (this.table.rowManager.getRenderMode() == "virtual") {
           var topEdge = this.table.rowManager.element.scrollTop,
-            bottomEdge = this.table.rowManager.element.clientHeight + this.table.rowManager.element.scrollTop,
-            rowEl = cell.row.getElement(),
-            offset = rowEl.offsetTop;
+              bottomEdge = this.table.rowManager.element.clientHeight + this.table.rowManager.element.scrollTop,
+              rowEl = cell.row.getElement(),
+              offset = rowEl.offsetTop;
 
           if (rowEl.offsetTop < topEdge) {
             this.table.rowManager.element.scrollTop -= topEdge - rowEl.offsetTop;
@@ -13668,9 +13660,9 @@
           }
 
           var leftEdge = this.table.rowManager.element.scrollLeft,
-            rightEdge = this.table.rowManager.element.clientWidth + this.table.rowManager.element.scrollLeft,
-            cellEl = cell.getElement(),
-            offset = cellEl.offsetLeft;
+              rightEdge = this.table.rowManager.element.clientWidth + this.table.rowManager.element.scrollLeft,
+              cellEl = cell.getElement(),
+              offset = cellEl.offsetLeft;
 
           if (this.table.modExists("frozenColumns")) {
             leftEdge += parseInt(this.table.modules.frozenColumns.leftMargin);
@@ -13695,13 +13687,12 @@
       key: "edit",
       value: function edit(cell, e, forceEdit) {
         var self = this,
-          allowEdit = true,
-          rendered = function rendered() {
-          },
-          element = cell.getElement(),
-          cellEditor,
-          component,
-          params; //prevent editing if another cell is refusing to leave focus (eg. validation fail)
+            allowEdit = true,
+            rendered = function rendered() {},
+            element = cell.getElement(),
+            cellEditor,
+            component,
+            params; //prevent editing if another cell is refusing to leave focus (eg. validation fail)
 
 
         if (this.currentCell) {
@@ -14025,8 +14016,8 @@
         var _this4 = this;
 
         var subGroups = column.columns,
-          maxDepth = 0,
-          title = column.definition["title" + (this.colVisProp.charAt(0).toUpperCase() + this.colVisProp.slice(1))] || column.definition.title;
+            maxDepth = 0,
+            title = column.definition["title" + (this.colVisProp.charAt(0).toUpperCase() + this.colVisProp.slice(1))] || column.definition.title;
         var groupData = {
           title: title,
           column: column,
@@ -14072,8 +14063,8 @@
       key: "headersToExportRows",
       value: function headersToExportRows(columns) {
         var headers = [],
-          headerDepth = 0,
-          exportRows = [];
+            headerDepth = 0,
+            exportRows = [];
 
         function parseColumnGroup(column, level) {
           var depth = headerDepth - level;
@@ -14201,11 +14192,11 @@
         var _this6 = this;
 
         var table = document.createElement("table"),
-          headerEl = document.createElement("thead"),
-          bodyEl = document.createElement("tbody"),
-          styles = this.lookupTableStyles(),
-          rowFormatter = this.table.options["rowFormatter" + (this.colVisProp.charAt(0).toUpperCase() + this.colVisProp.slice(1))],
-          setup = {};
+            headerEl = document.createElement("thead"),
+            bodyEl = document.createElement("tbody"),
+            styles = this.lookupTableStyles(),
+            rowFormatter = this.table.options["rowFormatter" + (this.colVisProp.charAt(0).toUpperCase() + this.colVisProp.slice(1))],
+            setup = {};
         setup.rowFormatter = rowFormatter !== null ? rowFormatter : this.table.options.rowFormatter;
 
         if (this.table.options.dataTree && this.config.dataTree !== false && this.table.modExists("columnCalcs")) {
@@ -14326,8 +14317,8 @@
       key: "genereateGroupElement",
       value: function genereateGroupElement(row, setup, styles) {
         var rowEl = document.createElement("tr"),
-          cellEl = document.createElement("td"),
-          group = row.columns[0];
+            cellEl = document.createElement("td"),
+            group = row.columns[0];
         rowEl.classList.add("tabulator-print-table-row");
 
         if (setup.groupHeader && setup.groupHeader[row.indent]) {
@@ -14372,8 +14363,8 @@
         row.columns.forEach(function (col) {
           if (col) {
             var cellEl = document.createElement("td"),
-              column = col.component._column,
-              value = col.value;
+                column = col.component._column,
+                value = col.value;
             var cellWrapper = {
               modules: {},
               getValue: function getValue() {
@@ -14558,8 +14549,8 @@
     //contains the keywords
     "keywords": function keywords(filterVal, rowVal, rowData, filterParams) {
       var keywords = filterVal.toLowerCase().split(typeof filterParams.separator === "undefined" ? " " : filterParams.separator),
-        value = String(rowVal === null || typeof rowVal === "undefined" ? "" : rowVal).toLowerCase(),
-        matches = [];
+          value = String(rowVal === null || typeof rowVal === "undefined" ? "" : rowVal).toLowerCase(),
+          matches = [];
       keywords.forEach(function (keyword) {
         if (value.includes(keyword)) {
           matches.push(true);
@@ -14844,15 +14835,14 @@
       key: "initializeColumn",
       value: function initializeColumn(column, value) {
         var self = this,
-          field = column.getField();
-
-        //handle successfull value change
+            field = column.getField();
+   //handle successfull value change
 
         function success(value) {
           var filterType = column.modules.filter.tagType == "input" && column.modules.filter.attrType == "text" || column.modules.filter.tagType == "textarea" ? "partial" : "match",
-            type = "",
-            filterChangeCheck = "",
-            filterFunc;
+              type = "",
+              filterChangeCheck = "",
+              filterFunc;
 
           if (typeof column.modules.filter.prevSuccess === "undefined" || column.modules.filter.prevSuccess !== value) {
             column.modules.filter.prevSuccess = value;
@@ -14918,7 +14908,7 @@
                 value: value,
                 func: filterFunc,
                 type: type,
-                params: {}
+                params:  {}
               };
             } else {
               delete self.headerFilters[field];
@@ -14950,18 +14940,17 @@
         var _this3 = this;
 
         var self = this,
-          success = column.modules.filter.success,
-          field = column.getField(),
-          filterElement,
-          editor,
-          editorElement,
-          cellWrapper,
-          typingTimer,
-          searchTrigger,
-          params; //handle aborted edit
+            success = column.modules.filter.success,
+            field = column.getField(),
+            filterElement,
+            editor,
+            editorElement,
+            cellWrapper,
+            typingTimer,
+            searchTrigger,
+            params; //handle aborted edit
 
-        function cancel() {
-        }
+        function cancel() {}
 
         if (column.modules.filter.headerElement && column.modules.filter.headerElement.parentNode) {
           column.contentElement.removeChild(column.modules.filter.headerElement.parentNode);
@@ -15032,15 +15021,13 @@
               },
               getRow: function getRow() {
                 return {
-                  normalizeHeight: function normalizeHeight() {
-                  }
+                  normalizeHeight: function normalizeHeight() {}
                 };
               }
             };
             params = column.definition.headerFilterParams || {};
             params = typeof params === "function" ? params.call(self.table) : params;
-            editorElement = editor.call(this.table.modules.edit, cellWrapper, function () {
-            }, success, cancel, params);
+            editorElement = editor.call(this.table.modules.edit, cellWrapper, function () {}, success, cancel, params);
 
             if (!editorElement) {
               console.warn("Filter Error - Cannot add filter to " + field + " column, editor returned a value of false");
@@ -15456,7 +15443,7 @@
         var _this9 = this;
 
         var activeRows = [],
-          filterList = [];
+            filterList = [];
 
         if (!Array.isArray(field)) {
           field = [{
@@ -15494,7 +15481,7 @@
         var _this10 = this;
 
         var activeRows = [],
-          activeRowComponents = [];
+            activeRowComponents = [];
 
         if (this.subscribedExternal("dataFiltering")) {
           this.dispatchExternal("dataFiltering", this.getFilters());
@@ -15526,7 +15513,7 @@
         var _this11 = this;
 
         var match = true,
-          data = row.getData();
+            data = row.getData();
         this.filterList.forEach(function (filter) {
           if (!_this11.filterRecurse(filter, data)) {
             match = false;
@@ -15569,26 +15556,26 @@
 
   Filter.filters = defaultFilters;
 
-  function plaintext(cell, formatterParams, onRendered) {
+  function plaintext (cell, formatterParams, onRendered) {
     return this.emptyToSpace(this.sanitizeHTML(cell.getValue()));
   }
 
-  function html$1(cell, formatterParams, onRendered) {
+  function html$1 (cell, formatterParams, onRendered) {
     return cell.getValue();
   }
 
-  function textarea$1(cell, formatterParams, onRendered) {
+  function textarea$1 (cell, formatterParams, onRendered) {
     cell.getElement().style.whiteSpace = "pre-wrap";
     return this.emptyToSpace(this.sanitizeHTML(cell.getValue()));
   }
 
-  function money(cell, formatterParams, onRendered) {
+  function money (cell, formatterParams, onRendered) {
     var floatVal = parseFloat(cell.getValue()),
-      sign = "",
-      number,
-      integer,
-      decimal,
-      rgx;
+        sign = "",
+        number,
+        integer,
+        decimal,
+        rgx;
     var decimalSym = formatterParams.decimal || ".";
     var thousandSym = formatterParams.thousand || ",";
     var negativeSign = formatterParams.negativeSign || "-";
@@ -15618,13 +15605,13 @@
     return after ? sign + integer + decimal + symbol : sign + symbol + integer + decimal;
   }
 
-  function link(cell, formatterParams, onRendered) {
+  function link (cell, formatterParams, onRendered) {
     var value = cell.getValue(),
-      urlPrefix = formatterParams.urlPrefix || "",
-      download = formatterParams.download,
-      label = value,
-      el = document.createElement("a"),
-      data;
+        urlPrefix = formatterParams.urlPrefix || "",
+        download = formatterParams.download,
+        label = value,
+        el = document.createElement("a"),
+        data;
 
     if (formatterParams.labelField) {
       data = cell.getData();
@@ -15684,9 +15671,9 @@
     }
   }
 
-  function image(cell, formatterParams, onRendered) {
+  function image (cell, formatterParams, onRendered) {
     var el = document.createElement("img"),
-      src = cell.getValue();
+        src = cell.getValue();
 
     if (formatterParams.urlPrefix) {
       src = formatterParams.urlPrefix + cell.getValue();
@@ -15724,13 +15711,13 @@
     return el;
   }
 
-  function tickCross$1(cell, formatterParams, onRendered) {
+  function tickCross$1 (cell, formatterParams, onRendered) {
     var value = cell.getValue(),
-      element = cell.getElement(),
-      empty = formatterParams.allowEmpty,
-      truthy = formatterParams.allowTruthy,
-      tick = typeof formatterParams.tickElement !== "undefined" ? formatterParams.tickElement : '<svg enable-background="new 0 0 24 24" height="14" width="14" viewBox="0 0 24 24" xml:space="preserve" ><path fill="#2DC214" clip-rule="evenodd" d="M21.652,3.211c-0.293-0.295-0.77-0.295-1.061,0L9.41,14.34  c-0.293,0.297-0.771,0.297-1.062,0L3.449,9.351C3.304,9.203,3.114,9.13,2.923,9.129C2.73,9.128,2.534,9.201,2.387,9.351  l-2.165,1.946C0.078,11.445,0,11.63,0,11.823c0,0.194,0.078,0.397,0.223,0.544l4.94,5.184c0.292,0.296,0.771,0.776,1.062,1.07  l2.124,2.141c0.292,0.293,0.769,0.293,1.062,0l14.366-14.34c0.293-0.294,0.293-0.777,0-1.071L21.652,3.211z" fill-rule="evenodd"/></svg>',
-      cross = typeof formatterParams.crossElement !== "undefined" ? formatterParams.crossElement : '<svg enable-background="new 0 0 24 24" height="14" width="14"  viewBox="0 0 24 24" xml:space="preserve" ><path fill="#CE1515" d="M22.245,4.015c0.313,0.313,0.313,0.826,0,1.139l-6.276,6.27c-0.313,0.312-0.313,0.826,0,1.14l6.273,6.272  c0.313,0.313,0.313,0.826,0,1.14l-2.285,2.277c-0.314,0.312-0.828,0.312-1.142,0l-6.271-6.271c-0.313-0.313-0.828-0.313-1.141,0  l-6.276,6.267c-0.313,0.313-0.828,0.313-1.141,0l-2.282-2.28c-0.313-0.313-0.313-0.826,0-1.14l6.278-6.269  c0.313-0.312,0.313-0.826,0-1.14L1.709,5.147c-0.314-0.313-0.314-0.827,0-1.14l2.284-2.278C4.308,1.417,4.821,1.417,5.135,1.73  L11.405,8c0.314,0.314,0.828,0.314,1.141,0.001l6.276-6.267c0.312-0.312,0.826-0.312,1.141,0L22.245,4.015z"/></svg>';
+        element = cell.getElement(),
+        empty = formatterParams.allowEmpty,
+        truthy = formatterParams.allowTruthy,
+        tick = typeof formatterParams.tickElement !== "undefined" ? formatterParams.tickElement : '<svg enable-background="new 0 0 24 24" height="14" width="14" viewBox="0 0 24 24" xml:space="preserve" ><path fill="#2DC214" clip-rule="evenodd" d="M21.652,3.211c-0.293-0.295-0.77-0.295-1.061,0L9.41,14.34  c-0.293,0.297-0.771,0.297-1.062,0L3.449,9.351C3.304,9.203,3.114,9.13,2.923,9.129C2.73,9.128,2.534,9.201,2.387,9.351  l-2.165,1.946C0.078,11.445,0,11.63,0,11.823c0,0.194,0.078,0.397,0.223,0.544l4.94,5.184c0.292,0.296,0.771,0.776,1.062,1.07  l2.124,2.141c0.292,0.293,0.769,0.293,1.062,0l14.366-14.34c0.293-0.294,0.293-0.777,0-1.071L21.652,3.211z" fill-rule="evenodd"/></svg>',
+        cross = typeof formatterParams.crossElement !== "undefined" ? formatterParams.crossElement : '<svg enable-background="new 0 0 24 24" height="14" width="14"  viewBox="0 0 24 24" xml:space="preserve" ><path fill="#CE1515" d="M22.245,4.015c0.313,0.313,0.313,0.826,0,1.139l-6.276,6.27c-0.313,0.312-0.313,0.826,0,1.14l6.273,6.272  c0.313,0.313,0.313,0.826,0,1.14l-2.285,2.277c-0.314,0.312-0.828,0.312-1.142,0l-6.271-6.271c-0.313-0.313-0.828-0.313-1.141,0  l-6.276,6.267c-0.313,0.313-0.828,0.313-1.141,0l-2.282-2.28c-0.313-0.313-0.313-0.826,0-1.14l6.278-6.269  c0.313-0.312,0.313-0.826,0-1.14L1.709,5.147c-0.314-0.313-0.314-0.827,0-1.14l2.284-2.278C4.308,1.417,4.821,1.417,5.135,1.73  L11.405,8c0.314,0.314,0.828,0.314,1.141,0.001l6.276-6.267c0.312-0.312,0.826-0.312,1.141,0L22.245,4.015z"/></svg>';
 
     if (truthy && value || value === true || value === "true" || value === "True" || value === 1 || value === "1") {
       element.setAttribute("aria-checked", true);
@@ -15746,7 +15733,7 @@
     }
   }
 
-  function datetime(cell, formatterParams, onRendered) {
+  function datetime (cell, formatterParams, onRendered) {
     var DT = window.DateTime || luxon.DateTime;
     var inputFormat = formatterParams.inputFormat || "yyyy-MM-dd HH:mm:ss";
     var outputFormat = formatterParams.outputFormat || "dd/MM/yyyy HH:mm:ss";
@@ -15776,7 +15763,7 @@
     }
   }
 
-  function datetimediff(cell, formatterParams, onRendered) {
+  function datetimediff (cell, formatterParams, onRendered) {
     var DT = window.DateTime || luxon.DateTime;
     var inputFormat = formatterParams.inputFormat || "yyyy-MM-dd HH:mm:ss";
     var invalid = typeof formatterParams.invalidPlaceholder !== "undefined" ? formatterParams.invalidPlaceholder : "";
@@ -15807,7 +15794,7 @@
     }
   }
 
-  function lookup(cell, formatterParams, onRendered) {
+  function lookup (cell, formatterParams, onRendered) {
     var value = cell.getValue();
 
     if (typeof formatterParams[value] === "undefined") {
@@ -15818,14 +15805,14 @@
     return formatterParams[value];
   }
 
-  function star$1(cell, formatterParams, onRendered) {
+  function star$1 (cell, formatterParams, onRendered) {
     var value = cell.getValue(),
-      element = cell.getElement(),
-      maxStars = formatterParams && formatterParams.stars ? formatterParams.stars : 5,
-      stars = document.createElement("span"),
-      star = document.createElementNS('http://www.w3.org/2000/svg', "svg"),
-      starActive = '<polygon fill="#FFEA00" stroke="#C1AB60" stroke-width="37.6152" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="259.216,29.942 330.27,173.919 489.16,197.007 374.185,309.08 401.33,467.31 259.216,392.612 117.104,467.31 144.25,309.08 29.274,197.007 188.165,173.919 "/>',
-      starInactive = '<polygon fill="#D2D2D2" stroke="#686868" stroke-width="37.6152" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="259.216,29.942 330.27,173.919 489.16,197.007 374.185,309.08 401.33,467.31 259.216,392.612 117.104,467.31 144.25,309.08 29.274,197.007 188.165,173.919 "/>'; //style stars holder
+        element = cell.getElement(),
+        maxStars = formatterParams && formatterParams.stars ? formatterParams.stars : 5,
+        stars = document.createElement("span"),
+        star = document.createElementNS('http://www.w3.org/2000/svg', "svg"),
+        starActive = '<polygon fill="#FFEA00" stroke="#C1AB60" stroke-width="37.6152" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="259.216,29.942 330.27,173.919 489.16,197.007 374.185,309.08 401.33,467.31 259.216,392.612 117.104,467.31 144.25,309.08 29.274,197.007 188.165,173.919 "/>',
+        starInactive = '<polygon fill="#D2D2D2" stroke="#686868" stroke-width="37.6152" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="259.216,29.942 330.27,173.919 489.16,197.007 374.185,309.08 401.33,467.31 259.216,392.612 117.104,467.31 144.25,309.08 29.274,197.007 188.165,173.919 "/>'; //style stars holder
 
     stars.style.verticalAlign = "middle"; //style star
 
@@ -15850,15 +15837,15 @@
     return stars;
   }
 
-  function traffic(cell, formatterParams, onRendered) {
+  function traffic (cell, formatterParams, onRendered) {
     var value = this.sanitizeHTML(cell.getValue()) || 0,
-      el = document.createElement("span"),
-      max = formatterParams && formatterParams.max ? formatterParams.max : 100,
-      min = formatterParams && formatterParams.min ? formatterParams.min : 0,
-      colors = formatterParams && typeof formatterParams.color !== "undefined" ? formatterParams.color : ["red", "orange", "green"],
-      color = "#666666",
-      percent,
-      percentValue;
+        el = document.createElement("span"),
+        max = formatterParams && formatterParams.max ? formatterParams.max : 100,
+        min = formatterParams && formatterParams.min ? formatterParams.min : 0,
+        colors = formatterParams && typeof formatterParams.color !== "undefined" ? formatterParams.color : ["red", "orange", "green"],
+        color = "#666666",
+        percent,
+        percentValue;
 
     if (isNaN(value) || typeof cell.getValue() === "undefined") {
       return;
@@ -15897,19 +15884,19 @@
     return el;
   }
 
-  function progress$1(cell, formatterParams, onRendered) {
+  function progress$1 (cell, formatterParams, onRendered) {
     //progress bar
     var value = this.sanitizeHTML(cell.getValue()) || 0,
-      element = cell.getElement(),
-      max = formatterParams && formatterParams.max ? formatterParams.max : 100,
-      min = formatterParams && formatterParams.min ? formatterParams.min : 0,
-      legendAlign = formatterParams && formatterParams.legendAlign ? formatterParams.legendAlign : "center",
-      percent,
-      percentValue,
-      color,
-      legend,
-      legendColor;
-    //make sure value is in range
+        element = cell.getElement(),
+        max = formatterParams && formatterParams.max ? formatterParams.max : 100,
+        min = formatterParams && formatterParams.min ? formatterParams.min : 0,
+        legendAlign = formatterParams && formatterParams.legendAlign ? formatterParams.legendAlign : "center",
+        percent,
+        percentValue,
+        color,
+        legend,
+        legendColor;
+   //make sure value is in range
 
     percentValue = parseFloat(value) <= max ? parseFloat(value) : max;
     percentValue = parseFloat(percentValue) >= min ? parseFloat(percentValue) : min; //workout percentage
@@ -16033,31 +16020,31 @@
     return "";
   }
 
-  function color(cell, formatterParams, onRendered) {
+  function color (cell, formatterParams, onRendered) {
     cell.getElement().style.backgroundColor = this.sanitizeHTML(cell.getValue());
     return "";
   }
 
-  function buttonTick(cell, formatterParams, onRendered) {
+  function buttonTick (cell, formatterParams, onRendered) {
     return '<svg enable-background="new 0 0 24 24" height="14" width="14" viewBox="0 0 24 24" xml:space="preserve" ><path fill="#2DC214" clip-rule="evenodd" d="M21.652,3.211c-0.293-0.295-0.77-0.295-1.061,0L9.41,14.34  c-0.293,0.297-0.771,0.297-1.062,0L3.449,9.351C3.304,9.203,3.114,9.13,2.923,9.129C2.73,9.128,2.534,9.201,2.387,9.351  l-2.165,1.946C0.078,11.445,0,11.63,0,11.823c0,0.194,0.078,0.397,0.223,0.544l4.94,5.184c0.292,0.296,0.771,0.776,1.062,1.07  l2.124,2.141c0.292,0.293,0.769,0.293,1.062,0l14.366-14.34c0.293-0.294,0.293-0.777,0-1.071L21.652,3.211z" fill-rule="evenodd"/></svg>';
   }
 
-  function buttonCross(cell, formatterParams, onRendered) {
+  function buttonCross (cell, formatterParams, onRendered) {
     return '<svg enable-background="new 0 0 24 24" height="14" width="14" viewBox="0 0 24 24" xml:space="preserve" ><path fill="#CE1515" d="M22.245,4.015c0.313,0.313,0.313,0.826,0,1.139l-6.276,6.27c-0.313,0.312-0.313,0.826,0,1.14l6.273,6.272  c0.313,0.313,0.313,0.826,0,1.14l-2.285,2.277c-0.314,0.312-0.828,0.312-1.142,0l-6.271-6.271c-0.313-0.313-0.828-0.313-1.141,0  l-6.276,6.267c-0.313,0.313-0.828,0.313-1.141,0l-2.282-2.28c-0.313-0.313-0.313-0.826,0-1.14l6.278-6.269  c0.313-0.312,0.313-0.826,0-1.14L1.709,5.147c-0.314-0.313-0.314-0.827,0-1.14l2.284-2.278C4.308,1.417,4.821,1.417,5.135,1.73  L11.405,8c0.314,0.314,0.828,0.314,1.141,0.001l6.276-6.267c0.312-0.312,0.826-0.312,1.141,0L22.245,4.015z"/></svg>';
   }
 
-  function rownum(cell, formatterParams, onRendered) {
+  function rownum (cell, formatterParams, onRendered) {
     return this.table.rowManager.activeRows.indexOf(cell.getRow()._getSelf()) + 1;
   }
 
-  function handle(cell, formatterParams, onRendered) {
+  function handle (cell, formatterParams, onRendered) {
     cell.getElement().classList.add("tabulator-row-handle");
     return "<div class='tabulator-row-handle-box'><div class='tabulator-row-handle-bar'></div><div class='tabulator-row-handle-bar'></div><div class='tabulator-row-handle-bar'></div></div>";
   }
 
-  function responsiveCollapse(cell, formatterParams, onRendered) {
+  function responsiveCollapse (cell, formatterParams, onRendered) {
     var el = document.createElement("div"),
-      config = cell.getRow()._row.modules.responsiveLayout;
+        config = cell.getRow()._row.modules.responsiveLayout;
 
     el.classList.add("tabulator-responsive-collapse-toggle");
     el.innerHTML = "<span class='tabulator-responsive-collapse-toggle-open'>+</span><span class='tabulator-responsive-collapse-toggle-close'>-</span>";
@@ -16086,7 +16073,7 @@
     return el;
   }
 
-  function rowSelection(cell, formatterParams, onRendered) {
+  function rowSelection (cell, formatterParams, onRendered) {
     var _this = this;
 
     var checkbox = document.createElement("input");
@@ -16212,9 +16199,9 @@
       key: "lookupFormatter",
       value: function lookupFormatter(column, type) {
         var config = {
-            params: column.definition["formatter" + type + "Params"] || {}
-          },
-          formatter = column.definition["formatter" + type]; //set column formatter
+          params: column.definition["formatter" + type + "Params"] || {}
+        },
+            formatter = column.definition["formatter" + type]; //set column formatter
 
         switch (_typeof(formatter)) {
           case "string":
@@ -16279,7 +16266,7 @@
       key: "formatValue",
       value: function formatValue(cell) {
         var component = cell.getComponent(),
-          params = typeof cell.column.modules.format.params === "function" ? cell.column.modules.format.params(component) : cell.column.modules.format.params;
+            params = typeof cell.column.modules.format.params === "function" ? cell.column.modules.format.params(component) : cell.column.modules.format.params;
 
         function onRendered(callback) {
           if (!cell.modules.format) {
@@ -16296,7 +16283,7 @@
       key: "formatExportValue",
       value: function formatExportValue(cell, type) {
         var formatter = cell.column.modules.format[type],
-          params;
+            params;
 
         if (formatter) {
           var onRendered = function onRendered(callback) {
@@ -17059,7 +17046,7 @@
 
         if (this.hasSubGroups) {
           var groupID = this.groupManager.groupIDLookups[level].func(row.getData()),
-            groupKey = level + "_" + groupID;
+              groupKey = level + "_" + groupID;
 
           if (this.groupManager.allowedValues && this.groupManager.allowedValues[level]) {
             if (this.groups[groupKey]) {
@@ -17120,8 +17107,7 @@
       }
     }, {
       key: "getRowIndex",
-      value: function getRowIndex(row) {
-      } //update row data to match grouping contraints
+      value: function getRowIndex(row) {} //update row data to match grouping contraints
 
     }, {
       key: "conformRowData",
@@ -17172,7 +17158,7 @@
       key: "removeGroup",
       value: function removeGroup(group) {
         var groupKey = group.level + "_" + group.key,
-          index;
+            index;
 
         if (this.groups[groupKey]) {
           delete this.groups[groupKey];
@@ -17524,24 +17510,19 @@
       }
     }, {
       key: "reinitializeHeight",
-      value: function reinitializeHeight() {
-      }
+      value: function reinitializeHeight() {}
     }, {
       key: "calcHeight",
-      value: function calcHeight() {
-      }
+      value: function calcHeight() {}
     }, {
       key: "setCellHeight",
-      value: function setCellHeight() {
-      }
+      value: function setCellHeight() {}
     }, {
       key: "clearCellHeight",
-      value: function clearCellHeight() {
-      }
+      value: function clearCellHeight() {}
     }, {
       key: "deinitializeHeight",
-      value: function deinitializeHeight() {
-      } //////////////// Object Generation /////////////////
+      value: function deinitializeHeight() {} //////////////// Object Generation /////////////////
 
     }, {
       key: "getComponent",
@@ -17662,8 +17643,8 @@
 
         if (this.table.options.groupBy) {
           var groupBy = this.table.options.groupBy,
-            startOpen = this.table.options.groupStartOpen,
-            groupHeader = this.table.options.groupHeader;
+              startOpen = this.table.options.groupStartOpen,
+              groupHeader = this.table.options.groupHeader;
           this.allowedValues = this.table.options.groupValues;
 
           if (Array.isArray(groupBy) && Array.isArray(groupHeader) && groupBy.length > groupHeader.length) {
@@ -18051,7 +18032,7 @@
       key: "createGroup",
       value: function createGroup(groupID, level, oldGroups) {
         var groupKey = level + "_" + groupID,
-          group;
+            group;
         oldGroups = oldGroups || [];
         group = new Group(this, false, level, groupID, this.groupIDLookups[0].field, this.headerGenerator[0], oldGroups[groupKey]);
         this.groups[groupKey] = group;
@@ -18061,7 +18042,7 @@
       key: "assignRowToExistingGroup",
       value: function assignRowToExistingGroup(row, oldGroups) {
         var groupID = this.groupIDLookups[0].func(row.getData()),
-          groupKey = "0_" + groupID;
+            groupKey = "0_" + groupID;
 
         if (this.groups[groupKey]) {
           this.groups[groupKey].addRow(row);
@@ -18071,7 +18052,7 @@
       key: "assignRowToGroup",
       value: function assignRowToGroup(row, oldGroups) {
         var groupID = this.groupIDLookups[0].func(row.getData()),
-          newGroupNeeded = !this.groups["0_" + groupID];
+            newGroupNeeded = !this.groups["0_" + groupID];
 
         if (newGroupNeeded) {
           this.createGroup(groupID, 0, oldGroups);
@@ -18085,9 +18066,9 @@
       value: function reassignRowToGroup(row) {
         if (row.type === "row") {
           var oldRowGroup = row.modules.group,
-            oldGroupPath = oldRowGroup.getPath(),
-            newGroupPath = this.getExpectedPath(row),
-            samePath = true; // figure out if new group path is the same as old group path
+              oldGroupPath = oldRowGroup.getPath(),
+              newGroupPath = this.getExpectedPath(row),
+              samePath = true; // figure out if new group path is the same as old group path
 
           var samePath = oldGroupPath.length == newGroupPath.length && oldGroupPath.every(function (element, index) {
             return element === newGroupPath[index];
@@ -18104,7 +18085,7 @@
       key: "getExpectedPath",
       value: function getExpectedPath(row) {
         var groupPath = [],
-          rowData = row.getData();
+            rowData = row.getData();
         this.groupIDLookups.forEach(function (groupId) {
           groupPath.push(groupId.func(rowData));
         });
@@ -18140,7 +18121,7 @@
       key: "removeGroup",
       value: function removeGroup(group) {
         var groupKey = group.level + "_" + group.key,
-          index;
+            index;
 
         if (this.groups[groupKey]) {
           delete this.groups[groupKey];
@@ -18429,11 +18410,11 @@
       key: "parseTable",
       value: function parseTable() {
         var element = this.table.originalElement,
-          options = this.table.options,
-          columns = options.columns,
-          headers = element.getElementsByTagName("th"),
-          rows = element.getElementsByTagName("tbody")[0],
-          data = [];
+            options = this.table.options,
+            columns = options.columns,
+            headers = element.getElementsByTagName("th"),
+            rows = element.getElementsByTagName("tbody")[0],
+            data = [];
         this.hasIndex = false;
         this.dispatchExternal("htmlImporting");
         rows = rows ? rows.getElementsByTagName("tr") : []; //check for tablator inline options
@@ -18449,8 +18430,8 @@
 
         for (var index = 0; index < rows.length; index++) {
           var row = rows[index],
-            cells = row.getElementsByTagName("td"),
-            item = {}; //create index if the dont exist in table
+              cells = row.getElementsByTagName("td"),
+              item = {}; //create index if the dont exist in table
 
           if (!this.hasIndex) {
             item[options.index] = index;
@@ -18524,9 +18505,9 @@
       value: function _extractHeaders(headers, rows) {
         for (var index = 0; index < headers.length; index++) {
           var header = headers[index],
-            exists = false,
-            col = this._findCol(header.textContent),
-            width;
+              exists = false,
+              col = this._findCol(header.textContent),
+              width;
 
           if (col) {
             exists = true;
@@ -18568,10 +18549,10 @@
       value: function _generateBlankHeaders(headers, rows) {
         for (var index = 0; index < headers.length; index++) {
           var header = headers[index],
-            col = {
-              title: "",
-              field: "col" + index
-            };
+              col = {
+            title: "",
+            field: "col" + index
+          };
           this.fieldIndex[index] = col.field;
           var width = header.getAttribute("width");
 
@@ -18748,8 +18729,7 @@
             window.getSelection().removeAllRanges();
             window.getSelection().addRange(range);
           }
-        } catch (e) {
-        }
+        } catch (e) {}
       }
     }, {
       key: "initializeExternalEvents",
@@ -18800,7 +18780,7 @@
       key: "unsubscribeTouchEvents",
       value: function unsubscribeTouchEvents(key) {
         var notouch = true,
-          type = this.eventMap[key];
+            type = this.eventMap[key];
 
         if (this.subscribers[key] && !this.subscribedExternal(key)) {
           delete this.subscribers[key];
@@ -18895,7 +18875,7 @@
       key: "dispatchEvent",
       value: function dispatchEvent(action, e, component) {
         var componentObj = component.getComponent(),
-          callback;
+            callback;
 
         if (this.columnSubscribers[action]) {
           if (component instanceof Cell) {
@@ -18939,8 +18919,8 @@
     },
     scrollPageUp: function scrollPageUp(e) {
       var rowManager = this.table.rowManager,
-        newPos = rowManager.scrollTop - rowManager.element.clientHeight,
-        scrollMax = rowManager.element.scrollHeight;
+          newPos = rowManager.scrollTop - rowManager.element.clientHeight,
+          scrollMax = rowManager.element.scrollHeight;
       e.preventDefault();
 
       if (rowManager.displayRowsCount) {
@@ -18955,8 +18935,8 @@
     },
     scrollPageDown: function scrollPageDown(e) {
       var rowManager = this.table.rowManager,
-        newPos = rowManager.scrollTop + rowManager.element.clientHeight,
-        scrollMax = rowManager.element.scrollHeight;
+          newPos = rowManager.scrollTop + rowManager.element.clientHeight,
+          scrollMax = rowManager.element.scrollHeight;
       e.preventDefault();
 
       if (rowManager.displayRowsCount) {
@@ -19069,7 +19049,7 @@
       key: "initialize",
       value: function initialize() {
         var bindings = this.table.options.keybindings,
-          mergedBindings = {};
+            mergedBindings = {};
         this.watchKeys = {};
         this.pressedKeys = [];
 
@@ -19336,8 +19316,8 @@
         var _this3 = this;
 
         var element = component.getElement(),
-          tapHold = null,
-          loaded = false;
+            tapHold = null,
+            loaded = false;
         element.addEventListener("touchstart", function (e) {
           clearTimeout(tapHold);
           loaded = false;
@@ -19432,8 +19412,8 @@
 
         menu.forEach(function (item) {
           var itemEl = document.createElement("div"),
-            label = item.label,
-            disabled = item.disabled;
+              label = item.label,
+              disabled = item.disabled;
 
           if (item.separator) {
             itemEl.classList.add("tabulator-menu-separator");
@@ -19513,9 +19493,9 @@
         var _this5 = this;
 
         var docHeight = Math.max(document.body.offsetHeight, window.innerHeight),
-          x,
-          y,
-          parentOffset;
+            x,
+            y,
+            parentOffset;
 
         if (!parentEl) {
           x = touch ? e.touches[0].pageX : e.pageX;
@@ -19654,8 +19634,8 @@
       key: "initializeColumn",
       value: function initializeColumn(column) {
         var self = this,
-          config = {},
-          colEl;
+            config = {},
+            colEl;
 
         if (!column.modules.frozen) {
           colEl = column.getElement();
@@ -19703,13 +19683,13 @@
         var _this2 = this;
 
         var colEl = column.getElement(),
-          startXMove = false,
-          nextCol,
-          prevCol,
-          nextColWidth,
-          prevColWidth,
-          nextColWidthLast,
-          prevColWidthLast;
+            startXMove = false,
+            nextCol,
+            prevCol,
+            nextColWidth,
+            prevColWidth,
+            nextColWidthLast,
+            prevColWidthLast;
         colEl.addEventListener("touchstart", function (e) {
           _this2.checkTimeout = setTimeout(function () {
             _this2.touchMove = true;
@@ -19788,8 +19768,8 @@
       key: "startMove",
       value: function startMove(e, column) {
         var element = column.getElement(),
-          headerElement = this.table.columnManager.getElement(),
-          headersElement = this.table.columnManager.getHeadersElement();
+            headerElement = this.table.columnManager.getElement(),
+            headersElement = this.table.columnManager.getHeadersElement();
         this.moving = column;
         this.startX = (this.touchMove ? e.touches[0].pageX : e.pageX) - Helpers.elOffset(element).left;
         this.table.element.classList.add("tabulator-block-select"); //create placeholder
@@ -19888,9 +19868,9 @@
         var _this3 = this;
 
         var columnHolder = this.table.columnManager.getElement(),
-          scrollLeft = columnHolder.scrollLeft,
-          xPos = (this.touchMove ? e.touches[0].pageX : e.pageX) - Helpers.elOffset(columnHolder).left + scrollLeft,
-          scrollPos;
+            scrollLeft = columnHolder.scrollLeft,
+            xPos = (this.touchMove ? e.touches[0].pageX : e.pageX) - Helpers.elOffset(columnHolder).left + scrollLeft,
+            scrollPos;
         this.hoverElement.style.left = xPos - this.startX + "px";
 
         if (xPos - scrollLeft < this.autoScrollMargin) {
@@ -20004,8 +19984,8 @@
       key: "initializeGroupHeader",
       value: function initializeGroupHeader(group) {
         var self = this,
-          config = {};
-        //inter table drag drop
+            config = {};
+   //inter table drag drop
 
         config.mouseup = function (e) {
           self.tableRowDrop(e, row);
@@ -20037,8 +20017,8 @@
       key: "initializeRow",
       value: function initializeRow(row) {
         var self = this,
-          config = {},
-          rowEl; //inter table drag drop
+            config = {},
+            rowEl; //inter table drag drop
 
         config.mouseup = function (e) {
           self.tableRowDrop(e, row);
@@ -20094,7 +20074,7 @@
       value: function initializeCell(cell) {
         if (cell.column.definition.rowHandle && this.table.options.movableRows !== false) {
           var self = this,
-            cellEl = cell.getElement(true);
+              cellEl = cell.getElement(true);
           cellEl.addEventListener("mousedown", function (e) {
             if (e.which === 1) {
               self.checkTimeout = setTimeout(function () {
@@ -20118,12 +20098,12 @@
         var _this2 = this;
 
         var startYMove = false,
-          nextRow,
-          prevRow,
-          nextRowHeight,
-          prevRowHeight,
-          nextRowHeightLast,
-          prevRowHeightLast;
+            nextRow,
+            prevRow,
+            nextRowHeight,
+            prevRowHeight,
+            nextRowHeightLast,
+            prevRowHeightLast;
         element.addEventListener("touchstart", function (e) {
           _this2.checkTimeout = setTimeout(function () {
             _this2.touchMove = true;
@@ -20266,9 +20246,9 @@
       key: "setStartPosition",
       value: function setStartPosition(e, row) {
         var pageX = this.touchMove ? e.touches[0].pageX : e.pageX,
-          pageY = this.touchMove ? e.touches[0].pageY : e.pageY,
-          element,
-          position;
+            pageY = this.touchMove ? e.touches[0].pageY : e.pageY,
+            element,
+            position;
         element = row.getElement();
 
         if (this.connection) {
@@ -20328,8 +20308,8 @@
       key: "moveHoverTable",
       value: function moveHoverTable(e) {
         var rowHolder = this.table.rowManager.getElement(),
-          scrollTop = rowHolder.scrollTop,
-          yPos = (this.touchMove ? e.touches[0].pageY : e.pageY) - rowHolder.getBoundingClientRect().top + scrollTop;
+            scrollTop = rowHolder.scrollTop,
+            yPos = (this.touchMove ? e.touches[0].pageY : e.pageY) - rowHolder.getBoundingClientRect().top + scrollTop;
         this.hoverElement.style.top = yPos - this.startY + "px";
       }
     }, {
@@ -20478,7 +20458,7 @@
       key: "tableRowDrop",
       value: function tableRowDrop(e, row) {
         var receiver = false,
-          success = false;
+            success = false;
         e.stopImmediatePropagation();
 
         switch (_typeof(this.table.options.movableRowsReceiver)) {
@@ -20617,10 +20597,10 @@
         var _this2 = this;
 
         var match = false,
-          config = {};
+            config = {};
         this.allowedTypes.forEach(function (type) {
           var key = "mutator" + (type.charAt(0).toUpperCase() + type.slice(1)),
-            mutator;
+              mutator;
 
           if (column.definition[key]) {
             mutator = _this2.lookupMutator(column.definition[key]);
@@ -20666,7 +20646,7 @@
       key: "transformRow",
       value: function transformRow(data, type, updatedData) {
         var key = "mutator" + (type.charAt(0).toUpperCase() + type.slice(1)),
-          value;
+            value;
 
         if (this.enabled) {
           this.table.columnManager.traverse(function (column) {
@@ -20696,7 +20676,7 @@
       value: function transformCell(cell, value) {
         if (cell.column.modules.mutate) {
           var mutator = cell.column.modules.mutate.mutatorEdit || cell.column.modules.mutate.mutator || false,
-            tempData = {};
+              tempData = {};
 
           if (mutator) {
             tempData = Object.assign(tempData, cell.row.getData());
@@ -20850,8 +20830,8 @@
       key: "rowAddingPosition",
       value: function rowAddingPosition(row, top) {
         var rowManager = this.table.rowManager,
-          dispRows = rowManager.getDisplayRows(),
-          index;
+            dispRows = rowManager.getDisplayRows(),
+            index;
 
         if (top) {
           if (dispRows.length) {
@@ -21537,10 +21517,10 @@
     },
     cookie: function cookie(id, type) {
       var cookie = document.cookie,
-        key = id + "-" + type,
-        cookiePos = cookie.indexOf(key + "="),
-        end,
-        data; //if cookie exists, decode and load column data into tabulator
+          key = id + "-" + type,
+          cookiePos = cookie.indexOf(key + "="),
+          end,
+          data; //if cookie exists, decode and load column data into tabulator
 
       if (cookiePos > -1) {
         cookie = cookie.substr(cookiePos);
@@ -21626,8 +21606,8 @@
         if (this.table.options.persistence) {
           //determine persistent layout storage type
           var mode = this.table.options.persistenceMode,
-            id = this.table.options.persistenceID,
-            retreivedData;
+              id = this.table.options.persistenceID,
+              retreivedData;
           this.mode = mode !== true ? mode : this.localStorageTest() ? "local" : "cookie";
 
           if (this.table.options.persistenceReaderFunc) {
@@ -21741,8 +21721,8 @@
       key: "tableBuilt",
       value: function tableBuilt() {
         var options = this.table.options,
-          sorters,
-          filters;
+            sorters,
+            filters;
 
         if (this.config.sort) {
           sorters = this.load("sort");
@@ -21851,7 +21831,7 @@
         newCols = newCols || [];
         newCols.forEach(function (column, to) {
           var from = _this2._findColumn(oldCols, column),
-            keys;
+              keys;
 
           if (from) {
             if (_this2.config.columns === true || _this2.config.columns == undefined) {
@@ -21992,11 +21972,11 @@
         var _this3 = this;
 
         var definitions = [],
-          excludedKeys = ["headerContextMenu", "headerMenu", "contextMenu", "clickMenu"];
+            excludedKeys = ["headerContextMenu", "headerMenu", "contextMenu", "clickMenu"];
         columns.forEach(function (column) {
           var defStore = {},
-            colDef = column.getDefinition(),
-            keys;
+              colDef = column.getDefinition(),
+              keys;
 
           if (column.isGroup) {
             defStore.title = colDef.title;
@@ -22127,12 +22107,12 @@
       key: "printFullscreen",
       value: function printFullscreen(visible, style, config) {
         var scrollX = window.scrollX,
-          scrollY = window.scrollY,
-          headerEl = document.createElement("div"),
-          footerEl = document.createElement("div"),
-          tableEl = this.table.modules["export"].genereateTable(typeof config != "undefined" ? config : this.table.options.printConfig, typeof style != "undefined" ? style : this.table.options.printStyled, visible || this.table.options.printRowRange, "print"),
-          headerContent,
-          footerContent;
+            scrollY = window.scrollY,
+            headerEl = document.createElement("div"),
+            footerEl = document.createElement("div"),
+            tableEl = this.table.modules["export"].genereateTable(typeof config != "undefined" ? config : this.table.options.printConfig, typeof style != "undefined" ? style : this.table.options.printStyled, visible || this.table.options.printRowRange, "print"),
+            headerContent,
+            footerContent;
         this.manualBlock = true;
         this.element = document.createElement("div");
         this.element.classList.add("tabulator-print-fullscreen");
@@ -22225,7 +22205,7 @@
       key: "watchData",
       value: function watchData(data) {
         var self = this,
-          version;
+            version;
         this.currentVersion++;
         version = this.currentVersion;
         this.unwatchData();
@@ -22313,10 +22293,10 @@
           configurable: true,
           value: function value() {
             var args = Array.from(arguments),
-              start = args[0] < 0 ? data.length + args[0] : args[0],
-              end = args[1],
-              newRows = args[2] ? args.slice(2) : false,
-              startRow;
+                start = args[0] < 0 ? data.length + args[0] : args[0],
+                end = args[1],
+                newRows = args[2] ? args.slice(2) : false,
+                startRow;
 
             if (!self.blocked && version === self.currentVersion) {
               //add new rows
@@ -22391,7 +22371,7 @@
       value: function watchTreeChildren(row) {
         var _arguments = arguments;
         var childField = row.getData()[this.table.options.dataTreeChildField],
-          origFuncs = {};
+            origFuncs = {};
 
         function rebuildTree() {
           this.table.modules.dataTree.initializeRow(row);
@@ -22458,8 +22438,8 @@
         var _this2 = this;
 
         var props = Object.getOwnPropertyDescriptor(data, key),
-          value = data[key],
-          version = this.currentVersion;
+            value = data[key],
+            version = this.currentVersion;
         Object.defineProperty(data, key, {
           set: function set(newValue) {
             value = newValue;
@@ -22556,8 +22536,8 @@
       key: "initializeColumn",
       value: function initializeColumn(type, column, element) {
         var self = this,
-          variableHeight = false,
-          mode = column.definition.resizable; //set column resize mode
+            variableHeight = false,
+            mode = column.definition.resizable; //set column resize mode
 
         if (type === "header") {
           variableHeight = column.definition.formatter == "textarea" || column.definition.variableHeight;
@@ -22743,7 +22723,7 @@
       key: "initializeRow",
       value: function initializeRow(row) {
         var self = this,
-          rowEl = row.getElement();
+            rowEl = row.getElement();
         var handle = document.createElement('div');
         handle.className = "tabulator-row-resize-handle";
         var prevHandle = document.createElement('div');
@@ -22861,7 +22841,7 @@
 
         if (this.table.options.autoResize) {
           var table = this.table,
-            tableStyle;
+              tableStyle;
           this.tableHeight = table.element.clientHeight;
           this.tableWidth = table.element.clientWidth;
 
@@ -23058,7 +23038,7 @@
 
 
         var _iterator = _createForOfIteratorHelper(this.table.columnManager.columnsByIndex),
-          _step;
+            _step;
 
         try {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -23173,7 +23153,7 @@
       key: "update",
       value: function update() {
         var self = this,
-          working = true;
+            working = true;
 
         while (working) {
           var width = self.table.modules.layout.getMode() == "fitColumns" ? self.table.columnManager.getFlexBaseWidth() : self.table.columnManager.getWidth();
@@ -23218,7 +23198,7 @@
       key: "generateCollapsedContent",
       value: function generateCollapsedContent() {
         var self = this,
-          rows = this.table.rowManager.getDisplayRows();
+            rows = this.table.rowManager.getDisplayRows();
         rows.forEach(function (row) {
           self.generateCollapsedRowContent(row);
         });
@@ -23246,9 +23226,9 @@
       key: "generateCollapsedRowData",
       value: function generateCollapsedRowData(row) {
         var self = this,
-          data = row.getData(),
-          output = [],
-          mockCellComponent;
+            data = row.getData(),
+            output = [],
+            mockCellComponent;
         this.hiddenColumns.forEach(function (column) {
           var value = column.getFieldValue(data);
 
@@ -23429,7 +23409,7 @@
       key: "initializeRow",
       value: function initializeRow(row) {
         var self = this,
-          element = row.getElement(); // trigger end of row selection
+            element = row.getElement(); // trigger end of row selection
 
         var endSelect = function endSelect() {
           setTimeout(function () {
@@ -23660,7 +23640,7 @@
       key: "deselectRows",
       value: function deselectRows(rows, silent) {
         var self = this,
-          rowCount;
+            rowCount;
 
         if (typeof rows == "undefined") {
           rowCount = self.selectedRows.length;
@@ -23687,8 +23667,8 @@
       key: "_deselectRow",
       value: function _deselectRow(rowInfo, silent) {
         var self = this,
-          row = self.table.rowManager.findRow(rowInfo),
-          index;
+            row = self.table.rowManager.findRow(rowInfo),
+            index;
 
         if (row) {
           index = self.selectedRows.findIndex(function (selectedRow) {
@@ -23785,7 +23765,7 @@
 
         if (select) {
           var _iterator = _createForOfIteratorHelper(children),
-            _step;
+              _step;
 
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -23800,7 +23780,7 @@
           }
         } else {
           var _iterator2 = _createForOfIteratorHelper(children),
-            _step2;
+              _step2;
 
           try {
             for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -23823,7 +23803,7 @@
   SelectRow.moduleName = "selectRow";
 
   //sort numbers
-  function number$1(a, b, aRow, bRow, column, dir, params) {
+  function number$1 (a, b, aRow, bRow, column, dir, params) {
     var alignEmptyValues = params.alignEmptyValues;
     var decimal = params.decimalSeparator;
     var thousand = params.thousandSeparator;
@@ -23862,7 +23842,7 @@
   }
 
   //sort strings
-  function string(a, b, aRow, bRow, column, dir, params) {
+  function string (a, b, aRow, bRow, column, dir, params) {
     var alignEmptyValues = params.alignEmptyValues;
     var emptyAlign = 0;
     var locale; //handle empty values
@@ -23898,11 +23878,11 @@
   }
 
   //sort datetime
-  function datetime$1(a, b, aRow, bRow, column, dir, params) {
+  function datetime$1 (a, b, aRow, bRow, column, dir, params) {
     var DT = window.DateTime || luxon.DateTime;
     var format = params.format || "dd/MM/yyyy HH:mm:ss",
-      alignEmptyValues = params.alignEmptyValues,
-      emptyAlign = 0;
+        alignEmptyValues = params.alignEmptyValues,
+        emptyAlign = 0;
 
     if (typeof DT != "undefined") {
       a = DT.fromFormat(a, format);
@@ -23928,7 +23908,7 @@
     }
   }
 
-  function date(a, b, aRow, bRow, column, dir, params) {
+  function date (a, b, aRow, bRow, column, dir, params) {
     if (!params.format) {
       params.format = "dd/MM/yyyy";
     }
@@ -23936,7 +23916,7 @@
     return datetime$1.call(this, a, b, aRow, bRow, column, dir, params);
   }
 
-  function time(a, b, aRow, bRow, column, dir, params) {
+  function time (a, b, aRow, bRow, column, dir, params) {
     if (!params.format) {
       params.format = "HH:mm";
     }
@@ -23945,14 +23925,14 @@
   }
 
   //sort booleans
-  function _boolean(a, b, aRow, bRow, column, dir, params) {
+  function _boolean (a, b, aRow, bRow, column, dir, params) {
     var el1 = a === true || a === "true" || a === "True" || a === 1 ? 1 : 0;
     var el2 = b === true || b === "true" || b === "True" || b === 1 ? 1 : 0;
     return el1 - el2;
   }
 
   //sort if element contains any data
-  function array(a, b, aRow, bRow, column, dir, params) {
+  function array (a, b, aRow, bRow, column, dir, params) {
     var el1 = 0;
     var el2 = 0;
     var type = params.type || "length";
@@ -24003,22 +23983,22 @@
   }
 
   //sort if element contains any data
-  function exists(a, b, aRow, bRow, column, dir, params) {
+  function exists (a, b, aRow, bRow, column, dir, params) {
     var el1 = typeof a == "undefined" ? 0 : 1;
     var el2 = typeof b == "undefined" ? 0 : 1;
     return el1 - el2;
   }
 
   //sort alpha numeric strings
-  function alphanum(as, bs, aRow, bRow, column, dir, params) {
+  function alphanum (as, bs, aRow, bRow, column, dir, params) {
     var a,
-      b,
-      a1,
-      b1,
-      i = 0,
-      L,
-      rx = /(\d+)|(\D+)/g,
-      rd = /\d/;
+        b,
+        a1,
+        b1,
+        i = 0,
+        L,
+        rx = /(\d+)|(\D+)/g,
+        rd = /\d/;
     var alignEmptyValues = params.alignEmptyValues;
     var emptyAlign = 0; //handle empty values
 
@@ -24173,8 +24153,8 @@
         var _this2 = this;
 
         var sorter = false,
-          colEl,
-          arrowEl;
+            colEl,
+            arrowEl;
 
         switch (_typeof(column.definition.sorter)) {
           case "string":
@@ -24217,8 +24197,8 @@
 
           colEl.addEventListener("click", function (e) {
             var dir = "",
-              sorters = [],
-              match = false;
+                sorters = [],
+                match = false;
 
             if (column.modules.sort) {
               if (column.modules.sort.tristate) {
@@ -24313,7 +24293,7 @@
       key: "getSort",
       value: function getSort() {
         var self = this,
-          sorters = [];
+            sorters = [];
         self.sortList.forEach(function (item) {
           if (item.column) {
             sorters.push({
@@ -24330,7 +24310,7 @@
       key: "setSort",
       value: function setSort(sortList, dir) {
         var self = this,
-          newSortList = [];
+            newSortList = [];
 
         if (!Array.isArray(sortList)) {
           sortList = [{
@@ -24365,9 +24345,9 @@
       key: "findSorter",
       value: function findSorter(column) {
         var row = this.table.rowManager.activeRows[0],
-          sorter = "string",
-          field,
-          value;
+            sorter = "string",
+            field,
+            value;
 
         if (row) {
           row = row.getData();
@@ -24406,9 +24386,9 @@
       key: "sort",
       value: function sort(data) {
         var self = this,
-          sortList = this.table.options.sortOrderReverse ? self.sortList.slice().reverse() : self.sortList,
-          sortListActual = [],
-          rowComponents = [];
+            sortList = this.table.options.sortOrderReverse ? self.sortList.slice().reverse() : self.sortList,
+            sortListActual = [],
+            rowComponents = [];
 
         if (this.subscribedExternal("dataSorting")) {
           this.dispatchExternal("dataSorting", self.getSort());
@@ -24781,8 +24761,8 @@
       key: "initializeColumn",
       value: function initializeColumn(column) {
         var self = this,
-          config = [],
-          validator;
+            config = [],
+            validator;
 
         if (column.definition.validator) {
           if (Array.isArray(column.definition.validator)) {
@@ -24849,8 +24829,8 @@
       key: "validate",
       value: function validate(validators, cell, value) {
         var self = this,
-          valid = [],
-          invalidIndex = this.invalidCells.indexOf(cell);
+            valid = [],
+            invalidIndex = this.invalidCells.indexOf(cell);
 
         if (validators) {
           validators.forEach(function (item) {
