@@ -1,6 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.driverRegister" var="loc"/>
@@ -24,13 +24,10 @@
 <fmt:message bundle="${loc}" key="label.button.carPhoto" var="carPhotoButtonLabel"/>
 <fmt:message bundle="${loc}" key="label.button.submit" var="submitButtonLabel"/>
 
-<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
     <title>${pageTitle}</title>
     <link href="${contextPath}/css/register.css?v=1.0" rel="stylesheet" type="text/css"/>
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +37,7 @@
 
 <body class="bg-light m-md-5">
 <img class="taxi-above d-block mx-auto" id="taxi-above" src="${contextPath}/images/taxi-above.png"
-     alt="taxi above" width="500" height="500">
+     alt="taxi above" width="550" height="500">
 <div class="container">
     <div class="py-5 text-left">
         <h1>${headerLabel}</h1>
@@ -127,7 +124,7 @@
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
-                    <input type="file" name="carPhoto" class="file" accept="image/*">
+                    <input type="file" name="carPhoto" class="file" accept="image/*" hidden>
                     <label for="carPhoto">${carPhotoLabel}</label>
                     <div class="input-group">
                         <input type="text" class="form-control" disabled placeholder="${carPhotoPlaceholderLabel}"

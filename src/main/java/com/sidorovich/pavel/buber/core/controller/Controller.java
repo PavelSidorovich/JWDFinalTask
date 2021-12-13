@@ -6,7 +6,6 @@ import com.sidorovich.pavel.buber.api.controller.CommandRequest;
 import com.sidorovich.pavel.buber.api.controller.CommandResponse;
 import com.sidorovich.pavel.buber.api.controller.RequestFactory;
 import com.sidorovich.pavel.buber.core.command.CommandRegistry;
-import com.sun.org.apache.xml.internal.serializer.Encodings;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,11 +85,13 @@ public class Controller extends HttpServlet {
         }
     }
 
-    private void redirectToResponseLocation(HttpServletResponse resp, CommandResponse commandResponse) throws IOException {
+    private void redirectToResponseLocation(HttpServletResponse resp, CommandResponse commandResponse)
+            throws IOException {
         resp.sendRedirect(commandResponse.getPath());
     }
 
-    private void forwardToResponseLocation(HttpServletRequest req, HttpServletResponse resp, CommandResponse commandResponse)
+    private void forwardToResponseLocation(HttpServletRequest req, HttpServletResponse resp,
+                                           CommandResponse commandResponse)
             throws ServletException, IOException {
         final String desiredPath = commandResponse.getPath();
         final RequestDispatcher dispatcher = req.getRequestDispatcher(desiredPath);
