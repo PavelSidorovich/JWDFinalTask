@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StatisticsService {
@@ -20,7 +21,7 @@ public class StatisticsService {
             "SELECT count(status_name) as amount, status_name as status FROM buber.order group by status_name";
     private static final String LINE_CHART_SQL_QUERY =
             "SELECT count(date_of_trip) as amount, date_of_trip as tripDate FROM buber.order" +
-            " where date_of_trip between now() - INTERVAL 7 DAY and now() group by date_of_trip";
+            " where date_of_trip between now() - INTERVAL 7 DAY and now() group by date_of_trip order by tripDate";
     public static final String AMOUNT_COLUMN_NAME = "amount";
     public static final String STATUS_COLUMN_NAME = "status";
     public static final String TRIP_DATE_COLUMN_NAME = "tripDate";
@@ -56,7 +57,7 @@ public class StatisticsService {
     }
 
     private Map<String, Integer> extractResult(ResultSet resultSet, String column) throws SQLException {
-        final Map<String, Integer> chartData = new HashMap<>();
+        final Map<String, Integer> chartData = new LinkedHashMap<>();
 
         while (resultSet.next()) {
             chartData.put(

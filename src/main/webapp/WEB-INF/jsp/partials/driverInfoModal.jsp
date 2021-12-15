@@ -37,7 +37,7 @@
                     </div>
                     <div class="row">
                         <div id="photoContainer" class="col-md-7">
-                            <img id="taxiPhoto" src="${contextPath}/images/taxes/${driver.taxi.photoFilepath}"
+                            <img id="taxiPhoto" src="${pageContext.servletContext.contextPath}/images/taxes/${driver.taxi.photoFilepath}"
                                  class="img-fluid"
                                  alt="${taxiPhotoAltLabel}">
                         </div>

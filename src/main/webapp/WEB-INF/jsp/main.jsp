@@ -35,13 +35,13 @@
                         <c:choose>
                             <c:when test="${loop.index eq 0}">
                                 <div class="carousel-item active" data-interval="5000">
-                                    <img src="${contextPath}/images/taxes/${carPhotoPath}" class="w-100"
+                                    <img src="${pageContext.servletContext.contextPath}/images/taxes/${carPhotoPath}" class="w-100"
                                          alt="${altLabel}">
                                 </div>
                             </c:when>
                             <c:otherwise>
                                 <div class="carousel-item" data-interval="5000">
-                                    <img src="${contextPath}/images/taxes/${carPhotoPath}" class="w-100"
+                                    <img src="${pageContext.servletContext.contextPath}/images/taxes/${carPhotoPath}" class="w-100"
                                          alt="${altLabel}">
                                 </div>
                             </c:otherwise>

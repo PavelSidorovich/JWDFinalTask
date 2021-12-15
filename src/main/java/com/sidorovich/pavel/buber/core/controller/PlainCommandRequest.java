@@ -80,4 +80,9 @@ public class PlainCommandRequest implements CommandRequest {
         return request.getCookies();
     }
 
+    @Override
+    public String getContextPath(){
+        return request.getServletContext().getRealPath("/");
+    }
+
 }

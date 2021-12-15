@@ -29,4 +29,6 @@ public interface CommandRequest {
 
     Cookie[] getCookies();
 
+    String getContextPath();
+
 }

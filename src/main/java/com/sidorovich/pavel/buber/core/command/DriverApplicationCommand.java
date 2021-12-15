@@ -26,6 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -100,7 +101,9 @@ public class DriverApplicationCommand extends CommonCommand {
         errorsByMessages.putAll(validator.validate(driver, passwordRepeat, resourceBundle));
         if (errorsByMessages.isEmpty()) {
             try {
-                imageUploader.upload(request.getPart(PHOTO_PATH_PARAM_NAME), IMAGES_FOLDER);
+                Part photo = request.getPart(PHOTO_PATH_PARAM_NAME);
+//                imageUploader.upload(request.getPart(PHOTO_PATH_PARAM_NAME), IMAGES_FOLDER);
+                imageUploader.upload(photo, request.getContextPath() + "images\\taxes");
                 driverService.save(driver);
 
                 return requestFactory.createRedirectJsonResponse(PagePaths.DRIVER_APPLICATION_SUCCESS.getCommand());

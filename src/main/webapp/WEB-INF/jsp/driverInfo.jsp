@@ -42,7 +42,7 @@
     <div class="row">
         <c:if test="${not empty driver}">
             <div class="col-md-7">
-                <img src="${contextPath}/images/taxes/${driver.taxi.photoFilepath}" class="img-fluid"
+                <img src="${pageContext.servletContext.contextPath}/images/taxes/${driver.taxi.photoFilepath}" class="img-fluid"
                      alt="${taxiPhotoLabel}">
             </div>
             <div class="col-md-5">

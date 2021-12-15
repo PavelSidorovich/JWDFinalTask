@@ -17,8 +17,8 @@ import java.util.Arrays;
 public class LanguageFilter implements Filter {
 
     private static final String LANGUAGE_COOKIE_NAME = "lang";
-    public static final String DEFAULT_LANGUAGE = "en_US";
-    public static final String DEFAULT_PATH = "/";
+    private static final String DEFAULT_LANGUAGE = "en_US";
+    private static final String DEFAULT_PATH = "/";
 
     @Override
     public void init(FilterConfig filterConfig) {
