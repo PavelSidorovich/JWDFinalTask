@@ -95,7 +95,7 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         final String desiredPath = commandResponse.getPath();
         final RequestDispatcher dispatcher = req.getRequestDispatcher(desiredPath);
-
+        
         dispatcher.forward(req, resp);
     }
 

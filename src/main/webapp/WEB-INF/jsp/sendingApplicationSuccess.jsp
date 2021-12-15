@@ -19,14 +19,14 @@
     <meta name="author" content="">
     <title>${pageTitle}</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/cover/">
-    <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 </head>
 
 <body class="text-center">
 <div class="jumbotron text-center mb-0">
     <h1 class="display-3">${headerLabel}</h1>
     <p class="lead">
-        <strong>${checkEmailLabel}</strong>${furtherInstructionsLabel}
+        <strong>${checkEmailLabel}</strong> ${furtherInstructionsLabel}
     </p>
     <hr>
     <p class="lead">
