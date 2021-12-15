@@ -8,12 +8,14 @@ import com.sidorovich.pavel.buber.api.model.BuberUser;
 import com.sidorovich.pavel.buber.api.model.Driver;
 import com.sidorovich.pavel.buber.api.model.DriverStatus;
 import com.sidorovich.pavel.buber.api.model.OrderStatus;
+import com.sidorovich.pavel.buber.api.model.Taxi;
 import com.sidorovich.pavel.buber.api.model.UserOrder;
 import com.sidorovich.pavel.buber.core.controller.PagePaths;
 import com.sidorovich.pavel.buber.core.controller.RequestFactoryImpl;
 import com.sidorovich.pavel.buber.core.service.DriverService;
 import com.sidorovich.pavel.buber.core.service.EntityServiceFactory;
 import com.sidorovich.pavel.buber.core.service.OrderService;
+import com.sidorovich.pavel.buber.core.service.TaxiService;
 import com.sidorovich.pavel.buber.core.service.UserService;
 
 import java.sql.Date;
@@ -27,15 +29,18 @@ public class ConfirmPaymentCommand extends CommonCommand {
     private final OrderService orderService;
     private final UserService userService;
     private final DriverService driverService;
+    private final TaxiService taxiService;
 
     private ConfirmPaymentCommand(RequestFactory requestFactory,
                                   OrderService orderService,
                                   UserService userService,
-                                  DriverService driverService) {
+                                  DriverService driverService,
+                                  TaxiService taxiService) {
         super(requestFactory);
         this.orderService = orderService;
         this.userService = userService;
         this.driverService = driverService;
+        this.taxiService = taxiService;
     }
 
     @Override
@@ -57,18 +62,20 @@ public class ConfirmPaymentCommand extends CommonCommand {
 
     private void confirmPayment(UserOrder order) {
         debitClientCash(order);
-        creditDriverCash(order);
+        updateDriverInfo(order);
         orderService.update(
                 order.withStatus(OrderStatus.COMPLETED)
                      .withDateOfTrip(Date.valueOf(LocalDate.now()))
         );
     }
 
-    private void creditDriverCash(UserOrder order) {
+    private void updateDriverInfo(UserOrder order) {
         Driver driver = order.getDriver();
+        Taxi taxi = driver.getTaxi().withLastCoordinates(order.getEndCoordinates());
         BuberUser driverUser = driver.getUser();
 
         BuberUser withCash = driverUser.withCash(driverUser.getCash().add(order.getPrice()));
+        taxiService.update(taxi);
         driverService.update(driver.withBuberUser(withCash)
                                    .withDriverStatus(DriverStatus.FREE));
     }
@@ -93,11 +100,16 @@ public class ConfirmPaymentCommand extends CommonCommand {
     }
 
     private static class Holder {
+
+        private static final EntityServiceFactory ENTITY_SERVICE_FACTORY = EntityServiceFactory.getInstance();
+
         private static final ConfirmPaymentCommand INSTANCE = new ConfirmPaymentCommand(
                 RequestFactoryImpl.getInstance(),
-                EntityServiceFactory.getInstance().serviceFor(OrderService.class),
-                EntityServiceFactory.getInstance().serviceFor(UserService.class),
-                EntityServiceFactory.getInstance().serviceFor(DriverService.class));
+                ENTITY_SERVICE_FACTORY.serviceFor(OrderService.class),
+                ENTITY_SERVICE_FACTORY.serviceFor(UserService.class),
+                ENTITY_SERVICE_FACTORY.serviceFor(DriverService.class),
+                ENTITY_SERVICE_FACTORY.serviceFor(TaxiService.class)
+        );
     }
 
 }
