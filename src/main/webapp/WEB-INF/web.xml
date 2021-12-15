@@ -12,10 +12,6 @@
       <taglib-uri>com.sidorovich.pavel</taglib-uri>
       <taglib-location>WEB-INF/tld/buberTaxiTags.tld</taglib-location>
     </taglib>
-    <jsp-property-group>
-      <url-pattern>/*</url-pattern>
-      <page-encoding>UTF-8</page-encoding>
-    </jsp-property-group>
   </jsp-config>
 
   <filter>
