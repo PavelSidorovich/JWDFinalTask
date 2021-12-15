@@ -80,7 +80,7 @@ public class DriverStatusUpdateCommand extends CommonCommand {
         if (driverStatus == DriverStatus.REJECTED) {
             emailSubject = APPLICATION_WAS_REJECTED_SUBJECT;
             emailMessage = formatMailMessage(APPLICATION_REJECTED_MSG, driver, adminComment);
-        } else if (driverStatus == DriverStatus.BUSY) {
+        } else if (driverStatus == DriverStatus.REST) {
             emailSubject = APPLICATION_WAS_APPROVED_SUBJECT;
             emailMessage = formatMailMessage(APPLICATION_APPROVED_MSG, driver, adminComment);
         }
